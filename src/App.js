@@ -5,59 +5,92 @@ import { Box } from '@mui/system';
 import InputSlider from './components/InputSlider/InputSlider';
 import { useState } from 'react';
 import ResultCopyButton from './components/ResultCopyButton/ResultCopyButton';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 
 function App() {
 
   const [selectedWidth, setSelectedWidth] = useState(1920)
-  const [presetedWidth, setPresetedWidth] = useState([
-    {key: 1920, label: 1920},
-    {key: 2160, label: 2160},
-    {key: 1440, label: 1440},
-    {key: 1280, label: 1280}
-  ])
-  const [customPresetedWidth, setCustomPresetedWidth] = useState([
-    {key: 1920, label: 1920},
-  ])
-  const [calculatedValue, setCalculatedValue] = useState()
+  const [presetedWidth, setPresetedWidth] = useState([ 1920, 2160, 1440, 1280 ])
+  const [customPresetedWidth, setCustomPresetedWidth] = useState([ 720 ])
+  const [calculatedValue, setCalculatedValue] = useState('')
+  const [isCalculatedValueError, setIsCalculatedValueError] = useState(false)
   const [currentResult, setCurrentResult] = useState()
 
   const handlePresetClick = (e) =>{
-    console.log('handlePresetClick >>> ', e.target.innerText);
     const selectedWidth = +e.target.innerText;
     if (selectedWidth > 1 && selectedWidth <= 2160){
       setSelectedWidth(selectedWidth)
     }
   }
 
-  const handlePresetDelete = (e) => {
-    console.log('handlePresetDelete >>> ', e);
+  const handlePresetDelete = (customWidthToDelete) => {
+    setCustomPresetedWidth((customPresetedWidth) => customPresetedWidth.filter((width) => width !== customWidthToDelete))
   }
 
   const handleChangeCalculatedValue = (e) =>{
     const valueForCheck = e.target.value;
-    if (+valueForCheck && valueForCheck > 0 && valueForCheck <= 2160){
+
+    if (+valueForCheck && valueForCheck >= 0 && valueForCheck <= 2160){
       setCalculatedValue(e.target.value)
     } else if(valueForCheck < 0){
-      setCalculatedValue(1)
+      setCalculatedValue(0)
     } else if( valueForCheck > 2160){
       setCalculatedValue(2160)
     }
+
+    /**
+     * Turn off Error State in any case
+     */
+    if(isCalculatedValueError){
+      setIsCalculatedValueError(false)
+    }
+  }
+
+  const handleCalculatedValueKeyPress = (e) =>{
+
+    /**
+     * If Enter has been pressed launch Calculation function
+     */
+    if(e.key === 'Enter'){
+      handleCalculateClick();
+    }
+
+    /**
+     * Listen for Backspace and clear input if it has only one char
+     */
+    if(e.keyCode === 8){
+      if(calculatedValue.length === 1){
+        setCalculatedValue('')
+      }
+    }
+
   }
 
   const handleCalculateClick = () => {
     if(calculatedValue <= 0 || !calculatedValue){
-      console.log('fail');
+      setCurrentResult();
+      setIsCalculatedValueError(true) // Turn on Error state
       return;
     }
 
-    let result = (calculatedValue / selectedWidth) * 100
+    /**
+     * Adding selected width to custom viewport array if it's new one
+     */
+    if( !presetedWidth.includes(selectedWidth) && !customPresetedWidth.includes(selectedWidth)){
+      setCustomPresetedWidth([...customPresetedWidth, selectedWidth])
+    }
 
+    /**
+     * Calculating VW and set up result
+     */
+    let result = (calculatedValue / selectedWidth) * 100
     setCurrentResult(result.toFixed(3));
   }
 
 
 
+  console.log('customPresetedWidth >>> ', customPresetedWidth);
   return (
     <Grid 
       container 
@@ -81,14 +114,13 @@ function App() {
               InputLabelProps={{
                 shrink: true,
               }}
+              onKeyDown={handleCalculatedValueKeyPress}
               value={calculatedValue}
               onChange={handleChangeCalculatedValue}
+              error={isCalculatedValueError === true}
             />
             <Button variant="outlined" style={{marginRight: 15 }} onClick={handleCalculateClick}>Calculate</Button>
-            {currentResult &&
-            <>
-              <ResultCopyButton value={currentResult} />
-            </>}
+            { currentResult && <Box ml={'auto'}><ResultCopyButton value={currentResult} /></Box> }
           </Box>
         </Paper>
       </Grid>
@@ -100,19 +132,22 @@ function App() {
             </Typography>
             <Box>
               {presetedWidth.length > 0 && presetedWidth.map(width => (
-                <Chip style={{marginRight: 10, marginBottom: 10 }} key={width.key} label={width.label} onClick={handlePresetClick}/>
+                <Chip style={{marginRight: 10, marginBottom: 10 }} key={width} label={width} onClick={handlePresetClick}/>
               ))}
             </Box>
-
+            <Typography gutterBottom>
+                Custom Viewport Width Presets:
+                <Tooltip style={{cursor: 'pointer' }} title="The new value of viewport width will be added automatically on a new calculation if it has not been used previously.">
+                  <HelpOutlineIcon fontSize='small' color="disabled" />
+                </Tooltip>
+            </Typography>
             {customPresetedWidth.length > 0
               ?
               <>
-                <Typography gutterBottom>
-                    Custom Presets:
-                </Typography>
+                
                 <Box>
                   {customPresetedWidth.map(width => (
-                    <Chip style={{marginRight: 10, marginBottom: 10 }} key={width.key} label={width.label} onClick={handlePresetClick} onDelete={handlePresetDelete}/>
+                    <Chip style={{marginRight: 10, marginBottom: 10 }} key={width} label={width} onClick={handlePresetClick} onDelete={() => handlePresetDelete(width)}/>
                   ))}
                 </Box>
               </>
