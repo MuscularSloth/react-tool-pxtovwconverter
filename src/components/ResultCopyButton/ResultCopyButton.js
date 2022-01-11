@@ -21,7 +21,7 @@ export default function ResultCopyButton({value}) {
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={isNotificationOpen}
                 onClose={() => setIsNotificationOpen(false)}
-                message="Result has been copied!"
+                message={`Result has been copied! - ${value}vw`}
                 key={value}
             />
             <Tooltip style={{cursor: 'pointer' }} title="Click To Copy" onClick={handleCopyResultClick}>

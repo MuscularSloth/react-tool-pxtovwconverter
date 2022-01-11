@@ -1,20 +1,31 @@
 import './App.css';
 import Grid from '@mui/material/Grid';
-import { Button, Checkbox, Chip, FormControlLabel, Paper, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Paper, Snackbar, TextField} from '@mui/material';
 import { Box } from '@mui/system';
 import InputSlider from './components/InputSlider/InputSlider';
 import { useState } from 'react';
 import ResultCopyButton from './components/ResultCopyButton/ResultCopyButton';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import WidthPresetsBlock from './components/WidthPresets/WidthPresetsBlock';
+import PreviousCalcTable from './components/PreviousCalcTable/PreviousCalcTable';
 
 
 function App() {
+
+  /**
+   * TODO 10. Delete Table Values
+   * TODO 11. DragDrop Table Values
+   * TODO 20. Localstore all custom data
+   * TODO 30. Button for reset all custom data
+   * 
+   * TODO 40. Text convertation page
+   */
 
   const [selectedWidth, setSelectedWidth] = useState(1920)
   const [presetedWidth, setPresetedWidth] = useState([ 1920, 2160, 1440, 1280 ])
   const [customPresetedWidth, setCustomPresetedWidth] = useState([ 720 ])
   const [calculatedValue, setCalculatedValue] = useState('')
   const [currentResult, setCurrentResult] = useState()
+  const [previousCalcValues, setPreviousCalcValues] = useState([])
   const [isCalculatedValueError, setIsCalculatedValueError] = useState(false)
   const [isAutoCopyOn, setIsAutoCopyOn] = useState(false)
   const [isNotificationOpen, setIsNotificationOpen] = useState(false)
@@ -88,9 +99,17 @@ function App() {
      */
     let result = ((calculatedValue / selectedWidth) * 100).toFixed(3)
     setCurrentResult(result);
+
     if(isAutoCopyOn){
       navigator.clipboard.writeText(result+'vw')
       setIsNotificationOpen(true)
+    }
+
+    if(previousCalcValues.some( (valueObject) => valueObject.selectedWidth === selectedWidth && valueObject.calculatedValue === calculatedValue)){
+      console.log('Already calc >>> ', calculatedValue);
+    }else{
+      console.log('New calc >>> ', calculatedValue);
+      setPreviousCalcValues([...previousCalcValues, {selectedWidth, calculatedValue, result}])
     }
   }
 
@@ -140,7 +159,7 @@ function App() {
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={isNotificationOpen}
                 onClose={() => setIsNotificationOpen(false)}
-                message="Result has been copied!"
+                message={`Result has been copied! - ${currentResult}vw`}
                 key='autocopynotification'
             />
           </Box>
@@ -149,45 +168,38 @@ function App() {
       <Grid item xs={5}>
         <Paper>
           <Box p={2}>
-            <Typography gutterBottom>
-                Viewport Width Presets:
-                <Tooltip style={{cursor: 'pointer', marginLeft: '5px' }} title="Clicking on a preset sets the width value.">
-                  <HelpOutlineIcon fontSize='12px' color="disabled" />
-                </Tooltip>
-            </Typography>
-            <Box>
-              {presetedWidth.length > 0 && presetedWidth.map(width => (
-                <Chip style={{marginRight: 10, marginBottom: 10 }} key={width} label={width} onClick={handlePresetClick}/>
-              ))}
-            </Box>
-            <Typography gutterBottom>
-                Custom Viewport Width Presets:
-                <Tooltip style={{cursor: 'pointer', marginLeft: '5px' }} title="The new value of viewport width will be added automatically on a new calculation if it has not been used previously.">
-                  <HelpOutlineIcon fontSize='12px' color="disabled" />
-                </Tooltip>
-            </Typography>
-            {customPresetedWidth.length > 0
-              ?
-              <>
-                
-                <Box>
-                  {customPresetedWidth.map(width => (
-                    <Chip style={{marginRight: 10, marginBottom: 10 }} key={width} label={width} onClick={handlePresetClick} onDelete={() => handlePresetDelete(width)}/>
-                  ))}
-                </Box>
-              </>
-            : ''}
+            <WidthPresetsBlock
+              title="Viewport Width Presets:"
+              hintText="Clicking on a preset sets the width value."
+              widthList={presetedWidth}
+              canDelete={false}
+              handlePresetClick={handlePresetClick}
+              handlePresetDelete={handlePresetDelete}
+             />
+
+            <WidthPresetsBlock
+              title="Custom Viewport Width Presets:"
+              hintText="The new value of viewport width will be added automatically on a new calculation if it has not been used previously."
+              widthList={customPresetedWidth}
+              canDelete={true}
+              handlePresetClick={handlePresetClick}
+              handlePresetDelete={handlePresetDelete}
+             />
+            
           </Box>
         </Paper>
       </Grid>
       <Grid item xs={4}>
         <Paper>
-          <p>xs=4</p>
+        <p>Placeholder xs=4</p>
         </Paper>
       </Grid>
       <Grid item xs={8}>
         <Paper>
-          <p>xs=8</p>
+          <PreviousCalcTable 
+            previousCalcValues={previousCalcValues}
+            setPreviousCalcValues={setPreviousCalcValues}
+          />
         </Paper>
       </Grid>
     </Grid>
