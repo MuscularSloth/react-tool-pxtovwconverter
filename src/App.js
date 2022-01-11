@@ -1,9 +1,10 @@
 import './App.css';
 import Grid from '@mui/material/Grid';
-import { Button, Chip, Input, Paper, Slider, TextField, Typography } from '@mui/material';
+import { Button, Chip, Paper, TextField, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import InputSlider from './components/InputSlider/InputSlider';
 import { useState } from 'react';
+import ResultCopyButton from './components/ResultCopyButton/ResultCopyButton';
 
 
 function App() {
@@ -14,6 +15,9 @@ function App() {
     {key: 2160, label: 2160},
     {key: 1440, label: 1440},
     {key: 1280, label: 1280}
+  ])
+  const [customPresetedWidth, setCustomPresetedWidth] = useState([
+    {key: 1920, label: 1920},
   ])
   const [calculatedValue, setCalculatedValue] = useState()
   const [currentResult, setCurrentResult] = useState()
@@ -53,6 +57,7 @@ function App() {
   }
 
 
+
   return (
     <Grid 
       container 
@@ -61,14 +66,14 @@ function App() {
       maxWidth={900}
       margin="auto"
       spacing={2}>
-      <Grid item xs={8}>
+      <Grid item xs={7}>
         <Paper>
           <Box p={2}>
             <InputSlider selectedWidth={selectedWidth} setSelectedWidth={setSelectedWidth}  />
           </Box>
           <Box p={2} sx={{ display: 'flex', alignItems: 'center' }}>
             <TextField
-              style={{marginRight: 15 }}
+              style={{marginRight: 15, width: 150 }}
               id="outlined-number"
               label="Calculated Value"
               type="number"
@@ -80,23 +85,38 @@ function App() {
               onChange={handleChangeCalculatedValue}
             />
             <Button variant="outlined" style={{marginRight: 15 }} onClick={handleCalculateClick}>Calculate</Button>
-            <Typography id="current-calculated-value">
-              Result: {currentResult}{currentResult && "vw" }
-            </Typography>
+            {currentResult &&
+            <>
+              <ResultCopyButton value={currentResult} />
+            </>}
           </Box>
         </Paper>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={5}>
         <Paper>
           <Box p={2}>
             <Typography gutterBottom>
-                Presets:
+                Viewport Width Presets:
             </Typography>
             <Box>
               {presetedWidth.length > 0 && presetedWidth.map(width => (
-                <Chip style={{marginRight: 10, marginBottom: 10 }} key={width.key} label={width.label} onClick={handlePresetClick} onDelete={width.key === 1920 ? undefined : handlePresetDelete}/>
+                <Chip style={{marginRight: 10, marginBottom: 10 }} key={width.key} label={width.label} onClick={handlePresetClick}/>
               ))}
             </Box>
+
+            {customPresetedWidth.length > 0
+              ?
+              <>
+                <Typography gutterBottom>
+                    Custom Presets:
+                </Typography>
+                <Box>
+                  {customPresetedWidth.map(width => (
+                    <Chip style={{marginRight: 10, marginBottom: 10 }} key={width.key} label={width.label} onClick={handlePresetClick} onDelete={handlePresetDelete}/>
+                  ))}
+                </Box>
+              </>
+            : ''}
           </Box>
         </Paper>
       </Grid>
