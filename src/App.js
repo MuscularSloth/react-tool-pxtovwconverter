@@ -14,8 +14,8 @@ function App() {
   const [presetedWidth, setPresetedWidth] = useState([ 1920, 2160, 1440, 1280 ])
   const [customPresetedWidth, setCustomPresetedWidth] = useState([ 720 ])
   const [calculatedValue, setCalculatedValue] = useState('')
-  const [isCalculatedValueError, setIsCalculatedValueError] = useState(false)
   const [currentResult, setCurrentResult] = useState()
+  const [isCalculatedValueError, setIsCalculatedValueError] = useState(false)
   const [isAutoCopyOn, setIsAutoCopyOn] = useState(false)
   const [isNotificationOpen, setIsNotificationOpen] = useState(false)
 
@@ -86,10 +86,10 @@ function App() {
     /**
      * Calculating VW and set up result
      */
-    let result = (calculatedValue / selectedWidth) * 100
-    setCurrentResult(result.toFixed(3));
+    let result = ((calculatedValue / selectedWidth) * 100).toFixed(3)
+    setCurrentResult(result);
     if(isAutoCopyOn){
-      navigator.clipboard.writeText(result.toFixed(3)+'vw')
+      navigator.clipboard.writeText(result+'vw')
       setIsNotificationOpen(true)
     }
   }
@@ -151,6 +151,9 @@ function App() {
           <Box p={2}>
             <Typography gutterBottom>
                 Viewport Width Presets:
+                <Tooltip style={{cursor: 'pointer', marginLeft: '5px' }} title="Clicking on a preset sets the width value.">
+                  <HelpOutlineIcon fontSize='12px' color="disabled" />
+                </Tooltip>
             </Typography>
             <Box>
               {presetedWidth.length > 0 && presetedWidth.map(width => (
@@ -159,8 +162,8 @@ function App() {
             </Box>
             <Typography gutterBottom>
                 Custom Viewport Width Presets:
-                <Tooltip style={{cursor: 'pointer' }} title="The new value of viewport width will be added automatically on a new calculation if it has not been used previously.">
-                  <HelpOutlineIcon fontSize='small' color="disabled" />
+                <Tooltip style={{cursor: 'pointer', marginLeft: '5px' }} title="The new value of viewport width will be added automatically on a new calculation if it has not been used previously.">
+                  <HelpOutlineIcon fontSize='12px' color="disabled" />
                 </Tooltip>
             </Typography>
             {customPresetedWidth.length > 0
