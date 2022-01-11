@@ -1,17 +1,29 @@
-import { Button, Tooltip, Typography } from '@mui/material'
-import React from 'react'
+import { Button, Snackbar, Tooltip, Typography } from '@mui/material'
+import React, { useState } from 'react'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
 export default function ResultCopyButton({value}) {
 
+
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false)
     
-  const handleCopyResultClick = () => {
-    navigator.clipboard.writeText(value+'vw')
-  }
+    const handleCopyResultClick = () => {
+        navigator.clipboard.writeText(value+'vw')
+        setIsNotificationOpen(true)
+    }
 
 
     return (
+        <>
+            <Snackbar
+                autoHideDuration={2000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={isNotificationOpen}
+                onClose={() => setIsNotificationOpen(false)}
+                message="Result has been copied!"
+                key={value}
+            />
             <Tooltip style={{cursor: 'pointer' }} title="Click To Copy" onClick={handleCopyResultClick}>
                 <Button style={{textTransform: 'none'}} size='small' endIcon={<ContentCopyIcon />}>
                     <Typography id="current-calculated-value">
@@ -19,5 +31,6 @@ export default function ResultCopyButton({value}) {
                     </Typography>
                 </Button>
             </Tooltip>
+        </>
     )
 }

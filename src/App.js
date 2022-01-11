@@ -1,6 +1,6 @@
 import './App.css';
 import Grid from '@mui/material/Grid';
-import { Button, Chip, Paper, TextField, Tooltip, Typography } from '@mui/material';
+import { Button, Checkbox, Chip, FormControlLabel, Paper, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import InputSlider from './components/InputSlider/InputSlider';
 import { useState } from 'react';
@@ -16,6 +16,8 @@ function App() {
   const [calculatedValue, setCalculatedValue] = useState('')
   const [isCalculatedValueError, setIsCalculatedValueError] = useState(false)
   const [currentResult, setCurrentResult] = useState()
+  const [isAutoCopyOn, setIsAutoCopyOn] = useState(false)
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false)
 
   const handlePresetClick = (e) =>{
     const selectedWidth = +e.target.innerText;
@@ -86,11 +88,14 @@ function App() {
      */
     let result = (calculatedValue / selectedWidth) * 100
     setCurrentResult(result.toFixed(3));
+    if(isAutoCopyOn){
+      navigator.clipboard.writeText(result.toFixed(3)+'vw')
+      setIsNotificationOpen(true)
+    }
   }
 
 
 
-  console.log('customPresetedWidth >>> ', customPresetedWidth);
   return (
     <Grid 
       container 
@@ -121,6 +126,23 @@ function App() {
             />
             <Button variant="outlined" style={{marginRight: 15 }} onClick={handleCalculateClick}>Calculate</Button>
             { currentResult && <Box ml={'auto'}><ResultCopyButton value={currentResult} /></Box> }
+          </Box>
+          <Box p={2}>
+            <FormControlLabel
+              value="end"
+              control={<Checkbox size="small" checked={isAutoCopyOn}/>}
+              label="Copy result to the clipboard automatically"
+              labelPlacement="end"
+              onChange={()=>setIsAutoCopyOn(!isAutoCopyOn)}
+            />
+            <Snackbar
+                autoHideDuration={2000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={isNotificationOpen}
+                onClose={() => setIsNotificationOpen(false)}
+                message="Result has been copied!"
+                key='autocopynotification'
+            />
           </Box>
         </Paper>
       </Grid>
