@@ -58,7 +58,7 @@ export default function PreviousCalcTable({ previousCalcValues, setPreviousCalcV
 
                 :
 
-                <Box p={2} textAlign="center">No data yet</Box>
+                <Box p={2} textAlign="center"><p>No calculated results yet</p></Box>
                 }
         </>
     )
