@@ -1,9 +1,10 @@
-import { Button, Grid, Paper, TextField } from '@mui/material'
+import { Button, Grid, Paper, Snackbar, TextField, Tooltip } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
 import InputSlider from '../../components/InputSlider/InputSlider'
 import WidthPresetsBlock from '../../components/WidthPresets/WidthPresetsBlock'
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import './TextConverterPage.css'
 
 export default function TextConverterPage() {
@@ -15,6 +16,7 @@ export default function TextConverterPage() {
     const [customPresetedWidth, setCustomPresetedWidth] = useState([ 720 ])
     const [textToConvert, setTextToConvert] = useState();
     const [textConverted, setTextConverted] = useState();
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false)
     
     const handlePresetClick = (e) =>{
         const selectedWidth = +e.target.innerText;
@@ -36,6 +38,11 @@ export default function TextConverterPage() {
     const hanldeConvertClick = () =>{
         let convertedText = textToConvert.replace(regexRule, replaceFunction)
         setTextConverted(convertedText);
+    }
+
+    const handleCopyResultClick = () =>{
+        navigator.clipboard.writeText(textConverted)
+        setIsNotificationOpen(true)
     }
 
     
@@ -119,7 +126,7 @@ export default function TextConverterPage() {
                 </Grid>
                 <Grid item xs={5}>
                     <Paper>
-                        <Box  p={1}>
+                        <Box p={1} className='TextConverterPage__result-container'>
                             <TextField
                                         InputProps={{
                                             style:{fontSize: '12px'},
@@ -130,6 +137,24 @@ export default function TextConverterPage() {
                                         fullWidth
                                         value={textConverted}
                                     />
+                            {textConverted && 
+                            <>
+                                <Tooltip style={{cursor: 'pointer' }} title="Click To Copy" onClick={handleCopyResultClick}>
+                                    <Button className='TextConverterPage__copy-result-button'>
+                                        <ContentCopyIcon />
+                                    </Button>
+                                </Tooltip>
+                                <Snackbar
+                                    autoHideDuration={2000}
+                                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                                    open={isNotificationOpen}
+                                    onClose={() => setIsNotificationOpen(false)}
+                                    message={`Result has been copied!`}
+                                    key='textCopiedNotification'
+                                />
+                            </>
+                            }
+                            
                         </Box>
                     </Paper>
                 </Grid>

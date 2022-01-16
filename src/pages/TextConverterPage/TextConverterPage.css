@@ -5,3 +5,13 @@
 .TextConverterPage__convert-icon:hover{
     transform: rotate(180deg);
 }
+
+.TextConverterPage__result-container{
+    position: relative !important;
+}
+
+.TextConverterPage__copy-result-button{
+    position: absolute !important;
+    right: 45px;
+    top: 15px;
+}
