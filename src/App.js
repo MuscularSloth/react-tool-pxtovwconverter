@@ -20,8 +20,11 @@ function App() {
    * 
    * +TODO 40. Text convertation page
    * +TODO 50. Add Routes or tabs
-   * TODO 60. Add navbar
+   * +TODO 60. Add navbar
    * TODO 70. Add text convertation logic
+   * TODO 80. Add options to text convertation:
+   * TODO 81. Exclude rows when value less than 5px
+   * TODO 82. Exclude rows with specific rules (box-shadows, and other if needed)
    * 
    */
 
@@ -35,7 +38,7 @@ function App() {
           container 
           direction="row"
           justifyContent="center"
-          maxWidth={900}
+          maxWidth={1200}
           margin="auto"
           spacing={2}
         >

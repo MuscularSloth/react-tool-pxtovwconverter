@@ -1,0 +1,7 @@
+.TextConverterPage__convert-icon{
+    transition: all 1s ease;
+}
+
+.TextConverterPage__convert-icon:hover{
+    transform: rotate(180deg);
+}

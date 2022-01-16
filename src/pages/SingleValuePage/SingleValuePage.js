@@ -107,94 +107,101 @@ export default function SingleValuePage() {
     return (
         <div>
             <Grid 
+              container 
+              direction="row"
+              justifyContent="center"
+            >
+              <Grid item xs={7}>
+                  <Paper>
+                  <Box p={2}>
+                      <InputSlider selectedWidth={selectedWidth} setSelectedWidth={setSelectedWidth}  />
+                  </Box>
+                  <Box p={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                      <TextField
+                      style={{marginRight: 15, width: 150 }}
+                      id="outlined-number"
+                      label="Calculated Value"
+                      type="number"
+                      size='small'
+                      InputLabelProps={{
+                          shrink: true,
+                      }}
+                      onKeyDown={handleCalculatedValueKeyPress}
+                      value={calculatedValue}
+                      onChange={handleChangeCalculatedValue}
+                      error={isCalculatedValueError === true}
+                      />
+                      <Button variant="outlined" style={{marginRight: 15 }} onClick={handleCalculateClick}>Calculate</Button>
+                      { currentResult && <Box ml={'auto'}><ResultCopyButton value={currentResult} /></Box> }
+                  </Box>
+                  <Box p={2}>
+                      <FormControlLabel
+                      value="end"
+                      control={<Checkbox size="small" checked={isAutoCopyOn}/>}
+                      label="Copy result to the clipboard automatically"
+                      labelPlacement="end"
+                      onChange={()=>setIsAutoCopyOn(!isAutoCopyOn)}
+                      />
+                      <Snackbar
+                          autoHideDuration={2000}
+                          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                          open={isNotificationOpen}
+                          onClose={() => setIsNotificationOpen(false)}
+                          message={`Result has been copied! - ${currentResult}vw`}
+                          key='autocopynotification'
+                      />
+                  </Box>
+                  </Paper>
+              </Grid>
+              <Grid item xs={5}>
+                  <Paper>
+                  <Box p={2}>
+                      <WidthPresetsBlock
+                      title="Viewport Width Presets:"
+                      hintText="Clicking on a preset sets the width value."
+                      widthList={presetedWidth}
+                      canDelete={false}
+                      handlePresetClick={handlePresetClick}
+                      handlePresetDelete={handlePresetDelete}
+                      />
+
+                      <WidthPresetsBlock
+                      title="Custom Viewport Width Presets:"
+                      hintText="The new value of viewport width will be added automatically on a new calculation if it has not been used previously."
+                      widthList={customPresetedWidth}
+                      canDelete={true}
+                      handlePresetClick={handlePresetClick}
+                      handlePresetDelete={handlePresetDelete}
+                      />
+                      
+                  </Box>
+                  </Paper>
+              </Grid>
+            </Grid>
+
+            <Grid 
             container 
             direction="row"
             justifyContent="center"
-            maxWidth={900}
-            margin="auto"
-            spacing={2}>
-            <Grid item xs={7}>
-                <Paper>
-                <Box p={2}>
-                    <InputSlider selectedWidth={selectedWidth} setSelectedWidth={setSelectedWidth}  />
-                </Box>
-                <Box p={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                    <TextField
-                    style={{marginRight: 15, width: 150 }}
-                    id="outlined-number"
-                    label="Calculated Value"
-                    type="number"
-                    size='small'
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    onKeyDown={handleCalculatedValueKeyPress}
-                    value={calculatedValue}
-                    onChange={handleChangeCalculatedValue}
-                    error={isCalculatedValueError === true}
-                    />
-                    <Button variant="outlined" style={{marginRight: 15 }} onClick={handleCalculateClick}>Calculate</Button>
-                    { currentResult && <Box ml={'auto'}><ResultCopyButton value={currentResult} /></Box> }
-                </Box>
-                <Box p={2}>
-                    <FormControlLabel
-                    value="end"
-                    control={<Checkbox size="small" checked={isAutoCopyOn}/>}
-                    label="Copy result to the clipboard automatically"
-                    labelPlacement="end"
-                    onChange={()=>setIsAutoCopyOn(!isAutoCopyOn)}
-                    />
-                    <Snackbar
-                        autoHideDuration={2000}
-                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                        open={isNotificationOpen}
-                        onClose={() => setIsNotificationOpen(false)}
-                        message={`Result has been copied! - ${currentResult}vw`}
-                        key='autocopynotification'
-                    />
-                </Box>
-                </Paper>
+            mt={2}
+            >
+              {/* <Grid item xs={4} mt={2}>
+                  <Paper>
+                  <Box p={2} textAlign="center">
+                      <p>Placeholder xs=4</p>
+                  </Box>
+                  </Paper>
+              </Grid> */}
+              <Grid item xs={12}>
+                  <Paper>
+                  <PreviousCalcTable 
+                      previousCalcValues={previousCalcValues}
+                      setPreviousCalcValues={setPreviousCalcValues}
+                  />
+                  </Paper>
+              </Grid>
             </Grid>
-            <Grid item xs={5}>
-                <Paper>
-                <Box p={2}>
-                    <WidthPresetsBlock
-                    title="Viewport Width Presets:"
-                    hintText="Clicking on a preset sets the width value."
-                    widthList={presetedWidth}
-                    canDelete={false}
-                    handlePresetClick={handlePresetClick}
-                    handlePresetDelete={handlePresetDelete}
-                    />
-
-                    <WidthPresetsBlock
-                    title="Custom Viewport Width Presets:"
-                    hintText="The new value of viewport width will be added automatically on a new calculation if it has not been used previously."
-                    widthList={customPresetedWidth}
-                    canDelete={true}
-                    handlePresetClick={handlePresetClick}
-                    handlePresetDelete={handlePresetDelete}
-                    />
-                    
-                </Box>
-                </Paper>
-            </Grid>
-            <Grid item xs={4}>
-                <Paper>
-                <Box p={2} textAlign="center">
-                    <p>Placeholder xs=4</p>
-                </Box>
-                </Paper>
-            </Grid>
-            <Grid item xs={8}>
-                <Paper>
-                <PreviousCalcTable 
-                    previousCalcValues={previousCalcValues}
-                    setPreviousCalcValues={setPreviousCalcValues}
-                />
-                </Paper>
-            </Grid>
-            </Grid>
+            
         </div>
     )
 }
