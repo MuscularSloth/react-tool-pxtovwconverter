@@ -17,6 +17,9 @@ export default function TextConverterPage() {
     const [textToConvert, setTextToConvert] = useState();
     const [textConverted, setTextConverted] = useState();
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)
+    const [isDropAreaActive, setIsDropAreaActive] = useState(false)
+    const [isDropError, setIsDropError] = useState(false)
+    
     
     const handlePresetClick = (e) =>{
         const selectedWidth = +e.target.innerText;
@@ -45,7 +48,68 @@ export default function TextConverterPage() {
         setIsNotificationOpen(true)
     }
 
-    
+
+    function filesValidation(files){
+        
+        let allowedExtensions = /(\.txt|\.css|\.scss|\.sass)$/i;
+        
+        for(const file of files){
+          if(!allowedExtensions.exec(file.name)){
+              alert('Please upload file having extensions .txt/.css/.scss/.sass only.');
+              return false;
+          }
+        }
+
+        return true;
+    }
+
+    const handlerOnDrop = (event) =>{
+        event.stopPropagation();
+        event.preventDefault();
+        setIsDropError(false)
+        setIsDropAreaActive(false)
+        if (event.dataTransfer.items.length > 1) {
+            alert('Please upload SINGLE file having extensions .txt/.css/.scss/.sass only.');
+            return;
+        }
+        if (!filesValidation(event.dataTransfer.files)) return;
+
+        let file = event.dataTransfer.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function(event) {
+            setTextToConvert(event.target.result);
+        };
+
+        reader.readAsText(file);
+
+        return false;
+    }
+
+    const handleDragOver = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        if(event.dataTransfer.items.length > 1){
+            setIsDropError(true)
+        }
+    }
+
+    const handleDragEnter = (event) => {
+        console.log("DragEnter");
+        event.stopPropagation();
+        event.preventDefault();
+        setIsDropAreaActive(true)
+    }
+
+    const handleDragLeave = (event) => {
+        console.log("DragLeave");
+        event.stopPropagation();
+        event.preventDefault();
+        setIsDropError(false)
+        setIsDropAreaActive(false)
+    }
+
+    // console.log('isDropAreaActive', isDropAreaActive);
     return (
         <div>
             <Grid 
@@ -99,13 +163,17 @@ export default function TextConverterPage() {
                                 InputProps={{
                                     style:{fontSize: '12px'}
                                 }}
-                                
-                                label="Text to convert"
+                                className={`${isDropAreaActive ? 'drop-area-active' : ''} ${isDropError ? 'drop-area-active-error' : ''}`}
+                                placeholder="Enter text to convert or drop single file here..."
                                 multiline
                                 rows={30}
                                 fullWidth
                                 value={textToConvert}
                                 onChange={(e)=>setTextToConvert(e.target.value)}
+                                onDrop={(e)=>handlerOnDrop(e)}
+                                onDragOver={(e)=>handleDragOver(e)}
+                                onDragEnter={(e)=>handleDragEnter(e)}
+                                onDragLeave={(e)=>handleDragLeave(e)}
                             />
                         </Box>
                     </Paper>
