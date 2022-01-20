@@ -21,11 +21,13 @@ function App() {
    * +TODO 40. Text convertation page
    * +TODO 50. Add Routes or tabs
    * +TODO 60. Add navbar
-   * TODO 70. Add text convertation logic
-   * TODO 80. Add options to text convertation:
-   * TODO 81. Exclude rows when value less than 5px
+   * +TODO 70. Add text convertation logic
+   * +TODO 80. Add options to text convertation:
+   * +TODO 81. Exclude rows when value less than 5px
    * TODO 82. Exclude rows with specific rules (box-shadows, and other if needed)
-   * 
+   * +TODO 90. Drag & Drop file to convert
+   * +TODO 91. Check extensions
+   * +TODO 100. Clear all texareas button
    */
 
 

@@ -1,11 +1,13 @@
-import { Button, Grid, Paper, Snackbar, TextField, Tooltip } from '@mui/material'
+import { Button, Checkbox, FormControlLabel, Grid, Input, Paper, Snackbar, TextField, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
 import InputSlider from '../../components/InputSlider/InputSlider'
 import WidthPresetsBlock from '../../components/WidthPresets/WidthPresetsBlock'
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ClearIcon from '@mui/icons-material/Clear';
 import './TextConverterPage.css'
+import DragDropTextArea from '../../components/DragDropTextArea/DragDropTextArea'
 
 export default function TextConverterPage() {
 
@@ -17,8 +19,8 @@ export default function TextConverterPage() {
     const [textToConvert, setTextToConvert] = useState();
     const [textConverted, setTextConverted] = useState();
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)
-    const [isDropAreaActive, setIsDropAreaActive] = useState(false)
-    const [isDropError, setIsDropError] = useState(false)
+    const [dontCalculateLessThan, setDontCalculateLessThan] = useState(false)
+    const [dontCalculateValue, setDontCalculateValue] = useState(5)
     
     
     const handlePresetClick = (e) =>{
@@ -33,8 +35,9 @@ export default function TextConverterPage() {
     }
 
     const replaceFunction = (match, value) => {
-        // console.log('match', match);
-        // console.log('value',value);
+        if (dontCalculateLessThan && value <= dontCalculateValue){
+            return match;
+        }
         return ((value / selectedWidth) * 100).toFixed(3) + 'vw';
     }
 
@@ -48,68 +51,12 @@ export default function TextConverterPage() {
         setIsNotificationOpen(true)
     }
 
-
-    function filesValidation(files){
-        
-        let allowedExtensions = /(\.txt|\.css|\.scss|\.sass)$/i;
-        
-        for(const file of files){
-          if(!allowedExtensions.exec(file.name)){
-              alert('Please upload file having extensions .txt/.css/.scss/.sass only.');
-              return false;
-          }
-        }
-
-        return true;
+    const hanldeClearAllClick = () =>{
+        setTextToConvert('');
+        setTextConverted('');
     }
 
-    const handlerOnDrop = (event) =>{
-        event.stopPropagation();
-        event.preventDefault();
-        setIsDropError(false)
-        setIsDropAreaActive(false)
-        if (event.dataTransfer.items.length > 1) {
-            alert('Please upload SINGLE file having extensions .txt/.css/.scss/.sass only.');
-            return;
-        }
-        if (!filesValidation(event.dataTransfer.files)) return;
 
-        let file = event.dataTransfer.files[0];
-        let reader = new FileReader();
-
-        reader.onload = function(event) {
-            setTextToConvert(event.target.result);
-        };
-
-        reader.readAsText(file);
-
-        return false;
-    }
-
-    const handleDragOver = (event) => {
-        event.stopPropagation();
-        event.preventDefault();
-        if(event.dataTransfer.items.length > 1){
-            setIsDropError(true)
-        }
-    }
-
-    const handleDragEnter = (event) => {
-        console.log("DragEnter");
-        event.stopPropagation();
-        event.preventDefault();
-        setIsDropAreaActive(true)
-    }
-
-    const handleDragLeave = (event) => {
-        console.log("DragLeave");
-        event.stopPropagation();
-        event.preventDefault();
-        setIsDropError(false)
-        setIsDropAreaActive(false)
-    }
-
-    // console.log('isDropAreaActive', isDropAreaActive);
     return (
         <div>
             <Grid 
@@ -121,6 +68,36 @@ export default function TextConverterPage() {
                     <Paper>
                     <Box p={2}>
                         <InputSlider selectedWidth={selectedWidth} setSelectedWidth={setSelectedWidth}  />
+                    </Box>
+                    <Box p={2}>
+                        <Typography gutterBottom>
+                            Options
+                        </Typography>
+                        <Box>
+                            <FormControlLabel
+                                value="end"
+                                control={<Checkbox size="small" checked={dontCalculateLessThan}/>}
+                                label="Don't convert values less (or equal) than"
+                                labelPlacement="end"
+                                onChange={()=>setDontCalculateLessThan(!dontCalculateLessThan)}
+                            />
+                            <Input
+                                style ={{width: '35px', marginRight: '5px'}}
+                                value={dontCalculateValue}
+                                size="small"
+                                onChange={(e)=>setDontCalculateValue(e.target.value)}
+                                
+                                inputProps={{
+                                    step: 1,
+                                    min: 1,
+                                    max: 2160,
+                                    type: 'number',
+                                    'aria-labelledby': 'input-slider',
+                                }}
+                            /> 
+                            px
+
+                        </Box>
                     </Box>
                     </Paper>
                 </Grid>
@@ -158,24 +135,11 @@ export default function TextConverterPage() {
             mt={2}>
                 <Grid item xs={5}>
                     <Paper>
-                        <Box p={1}>
-                            <TextField
-                                InputProps={{
-                                    style:{fontSize: '12px'}
-                                }}
-                                className={`${isDropAreaActive ? 'drop-area-active' : ''} ${isDropError ? 'drop-area-active-error' : ''}`}
-                                placeholder="Enter text to convert or drop single file here..."
-                                multiline
-                                rows={30}
-                                fullWidth
-                                value={textToConvert}
-                                onChange={(e)=>setTextToConvert(e.target.value)}
-                                onDrop={(e)=>handlerOnDrop(e)}
-                                onDragOver={(e)=>handleDragOver(e)}
-                                onDragEnter={(e)=>handleDragEnter(e)}
-                                onDragLeave={(e)=>handleDragLeave(e)}
+                        <DragDropTextArea 
+                            text={textToConvert} 
+                            setText={setTextToConvert} 
+                            placeholder="Enter text to convert or drop single file here..."
                             />
-                        </Box>
                     </Paper>
                 </Grid>
                 <Grid 
@@ -185,11 +149,16 @@ export default function TextConverterPage() {
                     justifyContent="center"
                 >
                     <Paper
-                        style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                        style={{height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
                     >
-                        <Button onClick={hanldeConvertClick}>
-                            <AutorenewIcon className='TextConverterPage__convert-icon' fontSize='large'/>
+                        <Button onClick={hanldeConvertClick} startIcon={<AutorenewIcon /> } disabled={!textToConvert}>
+                            Convert
                         </Button>
+
+                        <Button onClick={hanldeClearAllClick} startIcon={<ClearIcon />} color="warning" disabled={!textToConvert}>
+                             Clear All
+                        </Button>
+                        
                     </Paper>
                 </Grid>
                 <Grid item xs={5}>

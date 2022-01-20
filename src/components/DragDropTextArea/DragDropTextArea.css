@@ -1,0 +1,26 @@
+.DragDropTextArea__drop-area-active{
+    border: dashed rgba(0, 153, 255, 0.5) 2px !important;
+    background-color: rgba(0, 153, 255, 0.25);
+}
+
+.DragDropTextArea__drop-area-active-error{
+    border: dashed rgba(255, 0, 0, 0.5) 2px !important;
+    background-color: rgba(255, 0, 0, 0.25);
+}
+
+.DragDropTextArea__drop-area-active textarea{
+    pointer-events: none;
+
+}
+
+.DragDropTextArea__upload-file-wrapper{
+    position: relative;
+}
+
+.DragDropTextArea__upload-file-icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: .25;
+    transform: translate(-50%, -50%);
+}
