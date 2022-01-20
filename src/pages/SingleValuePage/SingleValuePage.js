@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { Button, Checkbox, FormControlLabel, Paper, Snackbar, TextField} from '@mui/material';
@@ -10,15 +10,50 @@ import PreviousCalcTable from '../../components/PreviousCalcTable/PreviousCalcTa
 
 export default function SingleValuePage() {
 
-    const [selectedWidth, setSelectedWidth] = useState(1920)
+    const [selectedWidth, setSelectedWidth] = useState(()=>{
+      const saved = localStorage.getItem("selectedWidth");
+      const initialValue = JSON.parse(saved);
+      return +initialValue || 1920;
+    })
     const [presetedWidth, setPresetedWidth] = useState([ 1920, 2160, 1440, 1280 ])
-    const [customPresetedWidth, setCustomPresetedWidth] = useState([ 720 ])
+    const [customPresetedWidth, setCustomPresetedWidth] = useState(()=>{
+      const saved = localStorage.getItem("customPresetedWidth");
+      const initialValue = JSON.parse(saved);
+      return initialValue || [ 720 ];
+    })
     const [calculatedValue, setCalculatedValue] = useState('')
     const [currentResult, setCurrentResult] = useState()
-    const [previousCalcValues, setPreviousCalcValues] = useState([])
+    const [previousCalcValues, setPreviousCalcValues] = useState(()=>{
+      const saved = localStorage.getItem("previousCalcValues");
+      const initialValue = JSON.parse(saved);
+      return initialValue || [];
+    })
     const [isCalculatedValueError, setIsCalculatedValueError] = useState(false)
-    const [isAutoCopyOn, setIsAutoCopyOn] = useState(false)
+    const [isAutoCopyOn, setIsAutoCopyOn] = useState(()=>{
+      const saved = localStorage.getItem("isAutoCopyOn");
+      const initialValue = JSON.parse(saved);
+      return initialValue || false;
+    })
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)
+
+
+    useEffect(() => {
+      localStorage.setItem("selectedWidth", JSON.stringify(selectedWidth));
+    }, [selectedWidth])
+
+    useEffect(() => {
+      localStorage.setItem("customPresetedWidth", JSON.stringify(customPresetedWidth));
+    }, [customPresetedWidth])
+
+    useEffect(() => {
+      localStorage.setItem("previousCalcValues", JSON.stringify(previousCalcValues));
+    }, [previousCalcValues])
+
+    useEffect(() => {
+      localStorage.setItem("isAutoCopyOn", JSON.stringify(isAutoCopyOn));
+    }, [isAutoCopyOn])
+
+
   
     const handlePresetClick = (e) =>{
       const selectedWidth = +e.target.innerText;
@@ -41,10 +76,7 @@ export default function SingleValuePage() {
       } else if( valueForCheck > 2160){
         setCalculatedValue(2160)
       }
-  
-      /**
-       * Turn off Error State in any case
-       */
+
       if(isCalculatedValueError){
         setIsCalculatedValueError(false)
       }
@@ -52,9 +84,6 @@ export default function SingleValuePage() {
   
     const handleCalculatedValueKeyPress = (e) =>{
   
-      /**
-       * If Enter has been pressed launch Calculation function
-       */
       if(e.key === 'Enter'){
         handleCalculateClick();
       }

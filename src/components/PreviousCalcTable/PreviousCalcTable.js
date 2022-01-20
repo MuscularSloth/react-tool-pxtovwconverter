@@ -28,9 +28,9 @@ export default function PreviousCalcTable({ previousCalcValues, setPreviousCalcV
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {previousCalcValues.map((row) => (
+                    {previousCalcValues.map((row, idx) => (
                         <TableRow
-                        key={row.name}
+                        key={idx}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell align="center">
