@@ -15,7 +15,7 @@ function App() {
   /**
    * +TODO 10. Delete Table Values
    * TODO 11. DragDrop Table Values at single page value
-   * TODO 20. Localstore all custom data  at single page value
+   * +TODO 20. Localstore all custom data  at single page value
    * TODO 30. Button for reset all custom data  at single page value
    * 
    * +TODO 40. Text convertation page
