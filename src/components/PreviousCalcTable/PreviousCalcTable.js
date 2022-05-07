@@ -16,7 +16,6 @@ export default function PreviousCalcTable({ previousCalcValues, setPreviousCalcV
     const onDragEnd = result =>{
         const {destination, source, draggableId} = result;
 
-        console.log('onDragEnd Start');
 
         if(!destination){
             return;

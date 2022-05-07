@@ -53,14 +53,12 @@ export default function DragDropTextArea({text, setText, placeholder}) {
     }
 
     const handleDragEnter = (event) => {
-        console.log("DragEnter");
         event.stopPropagation();
         event.preventDefault();
         setIsDropAreaActive(true)
     }
 
     const handleDragLeave = (event) => {
-        console.log("DragLeave");
         event.stopPropagation();
         event.preventDefault();
         setIsDropError(false)
