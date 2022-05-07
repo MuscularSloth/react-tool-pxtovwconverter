@@ -1,24 +1,25 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import ResultCopyButton from '../ResultCopyButton/ResultCopyButton'
 import ClearIcon from '@mui/icons-material/Clear';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { Box } from '@mui/system';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Ref } from 'semantic-ui-react';
+import { previousCalcValuesType } from '../../pages/SingleValuePage/SingleValuePage';
 
 interface propsTypes{
-    previousCalcValues: []
-    setPreviousCalcValues: ()=>void
+    previousCalcValues: previousCalcValuesType[]
+    setPreviousCalcValues: Dispatch<SetStateAction<previousCalcValuesType[] | []>>
 }
 
 export default function PreviousCalcTable({ previousCalcValues, setPreviousCalcValues }: propsTypes) {
 
-    const handleRemoveResultClick = (resultToRemove) =>{
+    const handleRemoveResultClick = (resultToRemove: any) =>{
         setPreviousCalcValues((previousCalcValues) => previousCalcValues.filter(value => !(value.selectedWidth === resultToRemove.selectedWidth && value.calculatedValue === resultToRemove.calculatedValue)))
     }
 
-    const onDragEnd = result =>{
+    const onDragEnd = (result: any) =>{
         const {destination, source, draggableId} = result;
 
 

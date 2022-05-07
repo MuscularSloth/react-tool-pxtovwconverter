@@ -2,8 +2,11 @@ import { Button, Snackbar, Tooltip, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
+interface propsTypes{
+    value: number | null | undefined
+}
 
-export default function ResultCopyButton({value}) {
+export default function ResultCopyButton({value}: propsTypes) {
 
 
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)

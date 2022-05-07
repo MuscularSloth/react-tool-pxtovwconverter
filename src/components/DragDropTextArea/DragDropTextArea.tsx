@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Box, TextField } from '@mui/material'
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 import './DragDropTextArea.css'
 
-export default function DragDropTextArea({text, setText, placeholder}) {
+interface propsTypes{
+    text: string
+    setText: Dispatch<SetStateAction<string>>
+    placeholder: string
+}
+
+export default function DragDropTextArea({text, setText, placeholder}: propsTypes) {
     const [isDropAreaActive, setIsDropAreaActive] = useState(false)
     const [isDropError, setIsDropError] = useState(false)
 
-    function filesValidation(files){
+    function filesValidation(files: any){
         let allowedExtensions = /(\.txt|\.css|\.scss|\.sass)$/i;
         
         for(const file of files){
@@ -21,7 +27,7 @@ export default function DragDropTextArea({text, setText, placeholder}) {
         return true;
     }
 
-    const handlerOnDrop = (event) =>{
+    const handlerOnDrop = (event: React.DragEvent<HTMLDivElement>) =>{
         event.stopPropagation();
         event.preventDefault();
         setIsDropError(false)
@@ -35,7 +41,7 @@ export default function DragDropTextArea({text, setText, placeholder}) {
         let file = event.dataTransfer.files[0];
         let reader = new FileReader();
 
-        reader.onload = function(event) {
+        reader.onload = function(event: any) {
             setText(event.target.result);
         };
 
@@ -44,7 +50,7 @@ export default function DragDropTextArea({text, setText, placeholder}) {
         return false;
     }
 
-    const handleDragOver = (event) => {
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
         event.stopPropagation();
         event.preventDefault();
         if(event.dataTransfer.items.length > 1){
@@ -52,13 +58,13 @@ export default function DragDropTextArea({text, setText, placeholder}) {
         }
     }
 
-    const handleDragEnter = (event) => {
+    const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
         event.stopPropagation();
         event.preventDefault();
         setIsDropAreaActive(true)
     }
 
-    const handleDragLeave = (event) => {
+    const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
         event.stopPropagation();
         event.preventDefault();
         setIsDropError(false)

@@ -8,7 +8,7 @@ import ResultCopyButton from '../../components/ResultCopyButton/ResultCopyButton
 import WidthPresetsBlock from '../../components/WidthPresets/WidthPresetsBlock';
 import PreviousCalcTable from '../../components/PreviousCalcTable/PreviousCalcTable';
 
-interface previousCalcValuesType{
+export interface previousCalcValuesType{
   selectedWidth: number
   calculatedValue: HTMLInputTypeAttribute
   result: number
