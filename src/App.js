@@ -9,7 +9,6 @@ function App() {
 	/**
 	 *
 	 * TODO 10. Implement Typescript
-	 * TODO 30. Button for reset all custom data  at single page value
 	 *
 	 * TODO 82. Exclude rows with specific rules (box-shadows, and other if needed)
 	 */

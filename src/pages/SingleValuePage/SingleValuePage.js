@@ -10,16 +10,20 @@ import PreviousCalcTable from '../../components/PreviousCalcTable/PreviousCalcTa
 
 export default function SingleValuePage() {
 
+  const initialPresetedWidthValue = [ 1920, 2160, 1440, 1280 ];
+  const initialCustomPresetedWidth = [ 720 ];
+  const initialSelectedWidthValue = 1920;
+  
     const [selectedWidth, setSelectedWidth] = useState(()=>{
       const saved = localStorage.getItem("selectedWidth");
       const initialValue = JSON.parse(saved);
-      return +initialValue || 1920;
+      return +initialValue || initialSelectedWidthValue;
     })
-    const [presetedWidth, setPresetedWidth] = useState([ 1920, 2160, 1440, 1280 ])
+    const [presetedWidth, setPresetedWidth] = useState(initialPresetedWidthValue)
     const [customPresetedWidth, setCustomPresetedWidth] = useState(()=>{
       const saved = localStorage.getItem("customPresetedWidth");
       const initialValue = JSON.parse(saved);
-      return initialValue || [ 720 ];
+      return initialValue || initialCustomPresetedWidth;
     })
     const [calculatedValue, setCalculatedValue] = useState('')
     const [currentResult, setCurrentResult] = useState()
@@ -129,6 +133,13 @@ export default function SingleValuePage() {
       }
     }
 
+    const handleReserDataClick = () => {
+      setPresetedWidth(initialPresetedWidthValue)
+      setSelectedWidth(initialSelectedWidthValue)
+      setCustomPresetedWidth(initialCustomPresetedWidth)
+      setPreviousCalcValues([])
+    }
+
 
     return (
         <div>
@@ -200,6 +211,9 @@ export default function SingleValuePage() {
                       handlePresetDelete={handlePresetDelete}
                       />
                       
+                  </Box>
+                  <Box p={2}>
+                    <Button variant="outlined" style={{marginRight: 15 }} onClick={handleReserDataClick}>Reset Data</Button>
                   </Box>
                   </Paper>
               </Grid>
