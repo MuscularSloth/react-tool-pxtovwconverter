@@ -124,10 +124,7 @@ export default function SingleValuePage() {
         setIsNotificationOpen(true)
       }
   
-      if(previousCalcValues.some( (valueObject) => valueObject.selectedWidth === selectedWidth && valueObject.calculatedValue === calculatedValue)){
-        console.log('Already calc >>> ', calculatedValue);
-      }else{
-        console.log('New calc >>> ', calculatedValue);
+      if(!previousCalcValues.some( (valueObject) => valueObject.selectedWidth === selectedWidth && valueObject.calculatedValue === calculatedValue)){
         setPreviousCalcValues([...previousCalcValues, {selectedWidth, calculatedValue, result}])
       }
     }
