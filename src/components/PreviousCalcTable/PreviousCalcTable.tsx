@@ -7,7 +7,12 @@ import { Box } from '@mui/system';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Ref } from 'semantic-ui-react';
 
-export default function PreviousCalcTable({ previousCalcValues, setPreviousCalcValues }) {
+interface propsTypes{
+    previousCalcValues: []
+    setPreviousCalcValues: ()=>void
+}
+
+export default function PreviousCalcTable({ previousCalcValues, setPreviousCalcValues }: propsTypes) {
 
     const handleRemoveResultClick = (resultToRemove) =>{
         setPreviousCalcValues((previousCalcValues) => previousCalcValues.filter(value => !(value.selectedWidth === resultToRemove.selectedWidth && value.calculatedValue === resultToRemove.calculatedValue)))
