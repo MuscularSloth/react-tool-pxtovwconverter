@@ -1,5 +1,3 @@
-//@ts-ignore
-
 import "./App.css";
 import { Navigate, Route, Routes } from "react-router-dom";
 import SingleValuePage from "./pages/SingleValuePage/SingleValuePage";
@@ -20,7 +18,7 @@ function App() {
 		<>
 			<Container
 				component="div"
-			>
+				>
 				<NavigationBar />
 				<Box>
 					<Routes>
