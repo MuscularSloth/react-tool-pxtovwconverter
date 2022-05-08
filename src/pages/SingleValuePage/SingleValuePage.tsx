@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { ChangeEvent, HTMLInputTypeAttribute, useEffect } from 'react'
 import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { Button, Checkbox, FormControlLabel, Paper, Snackbar, TextField} from '@mui/material';
@@ -8,36 +8,50 @@ import ResultCopyButton from '../../components/ResultCopyButton/ResultCopyButton
 import WidthPresetsBlock from '../../components/WidthPresets/WidthPresetsBlock';
 import PreviousCalcTable from '../../components/PreviousCalcTable/PreviousCalcTable';
 
+export interface previousCalcValuesType{
+  selectedWidth: number
+  calculatedValue: HTMLInputTypeAttribute
+  result: number
+}
+
 export default function SingleValuePage() {
 
-  const initialPresetedWidthValue = [ 1920, 2160, 1440, 1280 ];
-  const initialCustomPresetedWidth = [ 720 ];
-  const initialSelectedWidthValue = 1920;
+  const initialPresetedWidthValue: number[] = [ 1920, 2160, 1440, 1280 ];
+  const initialCustomPresetedWidth: number[] = [ 720 ];
+  const initialSelectedWidthValue: number = 1920;
   
-    const [selectedWidth, setSelectedWidth] = useState(()=>{
-      const saved = localStorage.getItem("selectedWidth");
-      const initialValue = JSON.parse(saved);
-      return +initialValue || initialSelectedWidthValue;
-    })
-    const [presetedWidth, setPresetedWidth] = useState(initialPresetedWidthValue)
-    const [customPresetedWidth, setCustomPresetedWidth] = useState(()=>{
-      const saved = localStorage.getItem("customPresetedWidth");
-      const initialValue = JSON.parse(saved);
-      return initialValue || initialCustomPresetedWidth;
-    })
-    const [calculatedValue, setCalculatedValue] = useState('')
-    const [currentResult, setCurrentResult] = useState()
-    const [previousCalcValues, setPreviousCalcValues] = useState(()=>{
-      const saved = localStorage.getItem("previousCalcValues");
-      const initialValue = JSON.parse(saved);
+  const [selectedWidth, setSelectedWidth] = useState<number>(()=>{
+    const saved: string = localStorage.getItem("selectedWidth") ?? '';
+    const initialValue = JSON.parse(saved);
+    return parseFloat(initialValue) || initialSelectedWidthValue;
+  })
+
+  const [presetedWidth, setPresetedWidth] = useState<number[]>(initialPresetedWidthValue)
+
+  const [customPresetedWidth, setCustomPresetedWidth] = useState<number[]>(()=>{
+    const saved: string = localStorage.getItem("customPresetedWidth") ?? '';
+    const initialValue: number[]  = JSON.parse(saved);
+    return initialValue || initialCustomPresetedWidth;
+  })
+
+    const [calculatedValue, setCalculatedValue] = useState<HTMLInputTypeAttribute>('')
+
+    const [currentResult, setCurrentResult] = useState<number | null>()
+
+    const [previousCalcValues, setPreviousCalcValues] = useState<previousCalcValuesType[] | []>(()=>{
+      const saved: string = localStorage.getItem("previousCalcValues") ?? '';
+      const initialValue: previousCalcValuesType[] | [] = JSON.parse(saved);
       return initialValue || [];
     })
-    const [isCalculatedValueError, setIsCalculatedValueError] = useState(false)
-    const [isAutoCopyOn, setIsAutoCopyOn] = useState(()=>{
-      const saved = localStorage.getItem("isAutoCopyOn");
-      const initialValue = JSON.parse(saved);
-      return initialValue || false;
+
+    const [isCalculatedValueError, setIsCalculatedValueError] = useState<boolean>(false)
+
+    const [isAutoCopyOn, setIsAutoCopyOn] = useState<boolean>(()=>{
+      const saved: string = localStorage.getItem("isAutoCopyOn") ?? '';
+      const initialValue: string | null = JSON.parse(saved);
+      return initialValue === "true";
     })
+
     const [isNotificationOpen, setIsNotificationOpen] = useState(false)
 
 
@@ -59,26 +73,27 @@ export default function SingleValuePage() {
 
 
   
-    const handlePresetClick = (e) =>{
-      const selectedWidth = +e.target.innerText;
+    const handlePresetClick = (e: React.MouseEvent) =>{
+      const targetEl  =  e.target as HTMLElement;
+      const selectedWidth: number = parseFloat(targetEl.innerText);
       if (selectedWidth > 1 && selectedWidth <= 2160){
         setSelectedWidth(selectedWidth)
       }
     }
   
-    const handlePresetDelete = (customWidthToDelete) => {
-      setCustomPresetedWidth((customPresetedWidth) => customPresetedWidth.filter((width) => width !== customWidthToDelete))
+    const handlePresetDelete = (customWidthToDelete: number) => {
+      setCustomPresetedWidth((customPresetedWidth: number[]) => customPresetedWidth.filter((width) => width !== customWidthToDelete))
     }
   
-    const handleChangeCalculatedValue = (e) =>{
-      const valueForCheck = e.target.value;
+    const handleChangeCalculatedValue = (e: ChangeEvent<HTMLInputElement>) =>{
+      const valueForCheck: number = parseFloat(e.target.value);
   
-      if (+valueForCheck && valueForCheck >= 0 && valueForCheck <= 2160){
+      if (valueForCheck && valueForCheck >= 0 && valueForCheck <= 2160){
         setCalculatedValue(e.target.value)
       } else if(valueForCheck < 0){
-        setCalculatedValue(0)
+        setCalculatedValue('0')
       } else if( valueForCheck > 2160){
-        setCalculatedValue(2160)
+        setCalculatedValue('2160')
       }
 
       if(isCalculatedValueError){
@@ -86,7 +101,7 @@ export default function SingleValuePage() {
       }
     }
   
-    const handleCalculatedValueKeyPress = (e) =>{
+    const handleCalculatedValueKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) =>{
   
       if(e.key === 'Enter'){
         handleCalculateClick();
@@ -104,8 +119,8 @@ export default function SingleValuePage() {
     }
   
     const handleCalculateClick = () => {
-      if(calculatedValue <= 0 || !calculatedValue){
-        setCurrentResult();
+      if(parseFloat(calculatedValue) <= 0 || !calculatedValue){
+        setCurrentResult(null);
         setIsCalculatedValueError(true) // Turn on Error state
         return;
       }
@@ -120,7 +135,7 @@ export default function SingleValuePage() {
       /**
        * Calculating VW and set up result
        */
-      let result = ((calculatedValue / selectedWidth) * 100).toFixed(3)
+      let result: number = +((parseFloat(calculatedValue) / selectedWidth) * 100).toFixed(3)
       setCurrentResult(result);
   
       if(isAutoCopyOn){

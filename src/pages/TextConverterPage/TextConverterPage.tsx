@@ -13,28 +13,29 @@ export default function TextConverterPage() {
 
     const regexRule = /([0-9]+)px/g;
 
-    const [selectedWidth, setSelectedWidth] = useState(1920)
-    const [presetedWidth, setPresetedWidth] = useState([ 1920, 2160, 1440, 1280 ])
-    const [customPresetedWidth, setCustomPresetedWidth] = useState([ 720 ])
-    const [textToConvert, setTextToConvert] = useState();
-    const [textConverted, setTextConverted] = useState();
-    const [isNotificationOpen, setIsNotificationOpen] = useState(false)
-    const [dontCalculateLessThan, setDontCalculateLessThan] = useState(false)
-    const [dontCalculateValue, setDontCalculateValue] = useState(5)
+    const [selectedWidth, setSelectedWidth] = useState<number>(1920)
+    const [presetedWidth, setPresetedWidth] = useState<number[]>([ 1920, 2160, 1440, 1280 ])
+    const [customPresetedWidth, setCustomPresetedWidth] = useState<number[]>([ 720 ])
+    const [textToConvert, setTextToConvert] = useState<string>('');
+    const [textConverted, setTextConverted] = useState<string>('');
+    const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false)
+    const [dontCalculateLessThan, setDontCalculateLessThan] = useState<boolean>(false)
+    const [dontCalculateValue, setDontCalculateValue] = useState<number>(5)
     
     
-    const handlePresetClick = (e) =>{
-        const selectedWidth = +e.target.innerText;
+    const handlePresetClick = (e: React.MouseEvent) =>{
+        const targetEl = e.target as HTMLElement;
+        const selectedWidth = +targetEl.innerText;
         if (selectedWidth > 1 && selectedWidth <= 2160){
             setSelectedWidth(selectedWidth)
         }
     }
 
-    const handlePresetDelete = (customWidthToDelete) => {
+    const handlePresetDelete = (customWidthToDelete: number) => {
         setCustomPresetedWidth((customPresetedWidth) => customPresetedWidth.filter((width) => width !== customWidthToDelete))
     }
 
-    const replaceFunction = (match, value) => {
+    const replaceFunction = (match: string, value: number): string => {
         if (dontCalculateLessThan && value <= dontCalculateValue){
             return match;
         }
@@ -85,7 +86,7 @@ export default function TextConverterPage() {
                                 style ={{width: '35px', marginRight: '5px'}}
                                 value={dontCalculateValue}
                                 size="small"
-                                onChange={(e)=>setDontCalculateValue(e.target.value)}
+                                onChange={(e)=>setDontCalculateValue(+e.target.value)}
                                 
                                 inputProps={{
                                     step: 1,
