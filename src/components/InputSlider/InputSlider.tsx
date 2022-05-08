@@ -6,18 +6,23 @@ import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
 
+interface propsTypes{
+  selectedWidth: number
+  setSelectedWidth: React.Dispatch<React.SetStateAction<number>>
+}
+
 const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-export default function InputSlider({selectedWidth, setSelectedWidth}) {
+export default function InputSlider({selectedWidth, setSelectedWidth}: propsTypes) {
 
-  const handleSliderChange = (event, newValue) => {
-    setSelectedWidth(newValue);
+  const handleSliderChange = (event: Event, newValue: number |number[]) => {
+    setSelectedWidth(newValue as number);
   };
 
-  const handleInputChange = (event) => {
-    setSelectedWidth(event.target.value === '' ? '' : Number(event.target.value));
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedWidth(event.target.value === '' ? 1920 : Number(event.target.value));
   };
 
   const handleBlur = () => {

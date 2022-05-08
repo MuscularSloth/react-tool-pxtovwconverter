@@ -6,7 +6,7 @@ import SingleValuePage from "./pages/SingleValuePage/SingleValuePage";
 import TextConverterPage from "./pages/TextConverterPage/TextConverterPage";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import { Box } from "@mui/system";
-import { Container } from "semantic-ui-react";
+import { Container } from "@mui/material";
 
 function App() {
 	/**
@@ -20,12 +20,6 @@ function App() {
 		<>
 			<Container
 				component="div"
-				justifyContent="center"
-				maxWidth={1200}
-				margin="auto"
-				container
-				direction="row"
-				spacing={2}
 			>
 				<NavigationBar />
 				<Box>
