@@ -17,6 +17,7 @@ import PreviousColorCalcTable from "../../components/PreviousColorCalcTable/Prev
 /**
  *
  * TODO 10 Ability to change BG color
+ * TODO 20 handle pressing enter
  * TODO 60 Window with choosen color
  * TODO 70 External links on specific color
  * TODO 80 Lighter Darker variants as buttons

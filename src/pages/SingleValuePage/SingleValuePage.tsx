@@ -29,8 +29,11 @@ export default function SingleValuePage() {
 
 	const [selectedWidth, setSelectedWidth] = useState<number>(() => {
 		const saved: string = localStorage.getItem("selectedWidth") ?? "";
-		const initialValue = JSON.parse(saved);
-		return parseFloat(initialValue) || initialSelectedWidthValue;
+		if (saved !== "") {
+			const initialValue = JSON.parse(saved);
+			return parseFloat(initialValue);
+		}
+		return initialSelectedWidthValue;
 	});
 
 	const [presetedWidth, setPresetedWidth] = useState<number[]>(
@@ -40,8 +43,11 @@ export default function SingleValuePage() {
 	const [customPresetedWidth, setCustomPresetedWidth] = useState<number[]>(
 		() => {
 			const saved: string = localStorage.getItem("customPresetedWidth") ?? "";
-			const initialValue: number[] = JSON.parse(saved);
-			return initialValue || initialCustomPresetedWidth;
+			if (saved !== "") {
+				const initialValue: number[] = JSON.parse(saved);
+				return initialValue;
+			}
+			return initialCustomPresetedWidth;
 		}
 	);
 
@@ -54,8 +60,11 @@ export default function SingleValuePage() {
 		previousCalcValuesType[] | []
 	>(() => {
 		const saved: string = localStorage.getItem("previousCalcValues") ?? "";
-		const initialValue: previousCalcValuesType[] | [] = JSON.parse(saved);
-		return initialValue || [];
+		if (saved !== "") {
+			const initialValue: previousCalcValuesType[] | [] = JSON.parse(saved);
+			return initialValue;
+		}
+		return [];
 	});
 
 	const [isCalculatedValueError, setIsCalculatedValueError] =
@@ -63,8 +72,11 @@ export default function SingleValuePage() {
 
 	const [isAutoCopyOn, setIsAutoCopyOn] = useState<boolean>(() => {
 		const saved: string = localStorage.getItem("isAutoCopyOn") ?? "";
-		const initialValue: string | null = JSON.parse(saved);
-		return initialValue === "true";
+		if (saved !== "") {
+			const initialValue: string | null = JSON.parse(saved);
+			return initialValue === "true";
+		}
+		return false;
 	});
 
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
