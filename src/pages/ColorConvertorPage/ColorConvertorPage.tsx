@@ -39,8 +39,16 @@ function ColorConvertorPage() {
 	};
 
 	const [calculatedColor, setCalculatedColor] = useState<colorObjectType>(
-		initialCalculatedColor
+		() => {
+			const saved: string = localStorage.getItem("calculatedColor") ?? "";
+			if (saved !== "") {
+				const initialValue = JSON.parse(saved);
+                return initialValue
+			}
+			return initialCalculatedColor;
+		}
 	);
+
 	const [calculatedHEX, setCalculatedHEX] = useState("");
 	const [calculatedRGB, setCalculatedRGB] = useState("");
 	const [calculatedRGBA, setCalculatedRGBA] = useState("");
@@ -117,6 +125,8 @@ function ColorConvertorPage() {
 		setCalculatedRGB(rgbText);
 		setCalculatedHEX(hexText);
 		setCalculatedHSL(hslText);
+
+		localStorage.setItem("calculatedColor", JSON.stringify(calculatedColor));
 	}, [calculatedColor]);
 
 	return (

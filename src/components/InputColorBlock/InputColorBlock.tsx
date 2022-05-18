@@ -19,15 +19,75 @@ interface propTypes {
 
 function InputColorBlock({ setCalculatedColor }: propTypes) {
 	const [colorType, setColorType] = useState<string>("HEX");
-	const [enteredHexValue, setEnteredHexValue] = useState<string>("");
-	const [enteredRedValue, setEnteredRedValue] = useState<number>(0);
-	const [enteredGreenValue, setEnteredGreenValue] = useState<number>(0);
-	const [enteredBlueValue, setEnteredBlueValue] = useState<number>(0);
-	const [enteredOpacityValue, setEnteredOpacityValue] = useState<number>(1);
-	const [enteredHueValue, setEnteredHueValue] = useState<number>(0);
-	const [enteredSaturationValue, setEnteredSaturationValue] =
-		useState<number>(0);
-	const [enteredLightnessValue, setEnteredLightnessValue] = useState<number>(0);
+	const [enteredHexValue, setEnteredHexValue] = useState<string>(() => {
+		const saved: string = localStorage.getItem("enteredHexValue") ?? "";
+		if (saved !== "") {
+			const initialValue = JSON.parse(saved);
+			return initialValue;
+		}
+		return "";
+	});
+	const [enteredRedValue, setEnteredRedValue] = useState<number>(() => {
+		const saved: string = localStorage.getItem("enteredRedValue") ?? "";
+		if (saved !== "") {
+			const initialValue = JSON.parse(saved);
+			return parseFloat(initialValue);
+		}
+		return 0;
+	});
+	const [enteredGreenValue, setEnteredGreenValue] = useState<number>(() => {
+		const saved: string = localStorage.getItem("enteredGreenValue") ?? "";
+		if (saved !== "") {
+			const initialValue = JSON.parse(saved);
+			return parseFloat(initialValue);
+		}
+		return 0;
+	});
+	const [enteredBlueValue, setEnteredBlueValue] = useState<number>(() => {
+		const saved: string = localStorage.getItem("enteredBlueValue") ?? "";
+		if (saved !== "") {
+			const initialValue = JSON.parse(saved);
+			return parseFloat(initialValue);
+		}
+		return 0;
+	});
+	const [enteredOpacityValue, setEnteredOpacityValue] = useState<number>(() => {
+		const saved: string = localStorage.getItem("enteredOpacityValue") ?? "";
+		if (saved !== "") {
+			const initialValue = JSON.parse(saved);
+			return parseFloat(initialValue);
+		}
+		return 1;
+	});
+	const [enteredHueValue, setEnteredHueValue] = useState<number>(() => {
+		const saved: string = localStorage.getItem("enteredHueValue") ?? "";
+		if (saved !== "") {
+			const initialValue = JSON.parse(saved);
+			return parseFloat(initialValue);
+		}
+		return 0;
+	});
+	const [enteredSaturationValue, setEnteredSaturationValue] = useState<number>(
+		() => {
+			const saved: string =
+				localStorage.getItem("enteredSaturationValue") ?? "";
+			if (saved !== "") {
+				const initialValue = JSON.parse(saved);
+				return parseFloat(initialValue);
+			}
+			return 0;
+		}
+	);
+	const [enteredLightnessValue, setEnteredLightnessValue] = useState<number>(
+		() => {
+			const saved: string = localStorage.getItem("enteredLightnessValue") ?? "";
+			if (saved !== "") {
+				const initialValue = JSON.parse(saved);
+				return parseFloat(initialValue);
+			}
+			return 0;
+		}
+	);
 
 	const handleChangeColorType = (event: SelectChangeEvent) => {
 		setColorType(event.target.value);
@@ -173,6 +233,48 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 			setEnteredOpacityValue(1);
 		}
 	}, [colorType]);
+
+	useEffect(() => {
+		localStorage.setItem("enteredHexValue", JSON.stringify(enteredHexValue));
+	}, [enteredHexValue]);
+
+	useEffect(() => {
+		localStorage.setItem("enteredRedValue", JSON.stringify(enteredRedValue));
+	}, [enteredRedValue]);
+
+	useEffect(() => {
+		localStorage.setItem(
+			"enteredGreenValue",
+			JSON.stringify(enteredGreenValue)
+		);
+	}, [enteredGreenValue]);
+
+	useEffect(() => {
+		localStorage.setItem("enteredBlueValue", JSON.stringify(enteredBlueValue));
+	}, [enteredBlueValue]);
+
+	useEffect(() => {
+		localStorage.setItem(
+			"enteredOpacityValue",
+			JSON.stringify(enteredOpacityValue)
+		);
+	}, [enteredOpacityValue]);
+
+	useEffect(() => {
+		localStorage.setItem("enteredHueValue", JSON.stringify(enteredHueValue));
+	}, [enteredHueValue]);
+	useEffect(() => {
+		localStorage.setItem(
+			"enteredSaturationValue",
+			JSON.stringify(enteredSaturationValue)
+		);
+	}, [enteredSaturationValue]);
+	useEffect(() => {
+		localStorage.setItem(
+			"enteredLightnessValue",
+			JSON.stringify(enteredLightnessValue)
+		);
+	}, [enteredLightnessValue]);
 
 	return (
 		<>
