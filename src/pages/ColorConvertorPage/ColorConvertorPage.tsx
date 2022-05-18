@@ -12,15 +12,16 @@ import InputColorBlock from "../../components/InputColorBlock/InputColorBlock";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { RGBToHEX, RGBToHSL } from "../../helpers/colorConverter";
+import PreviousColorCalcTable from "../../components/PreviousColorCalcTable/PreviousColorCalcTable";
 
 /**
  *
  * TODO 10 Ability to change BG color
- * TODO 20 Save prev value to localstore
- * TODO 30 Save prev calculations to localstore
  * TODO 60 Window with choosen color
- * TODO 70 Links on specific color
+ * TODO 70 External links on specific color
  * TODO 80 Lighter Darker variants as buttons
+ *
+ * FIX: render actual prev list data
  *
  */
 export interface colorObjectType {
@@ -28,6 +29,13 @@ export interface colorObjectType {
 	green: number;
 	blue: number;
 	opacity: number;
+}
+
+export interface prevCalculatedColorsType {
+	calculatedHEX: string;
+	calculatedRGB: string;
+	calculatedRGBA: string;
+	calculatedHSL: string;
 }
 
 function ColorConvertorPage() {
@@ -43,7 +51,7 @@ function ColorConvertorPage() {
 			const saved: string = localStorage.getItem("calculatedColor") ?? "";
 			if (saved !== "") {
 				const initialValue = JSON.parse(saved);
-                return initialValue
+				return initialValue;
 			}
 			return initialCalculatedColor;
 		}
@@ -53,6 +61,16 @@ function ColorConvertorPage() {
 	const [calculatedRGB, setCalculatedRGB] = useState("");
 	const [calculatedRGBA, setCalculatedRGBA] = useState("");
 	const [calculatedHSL, setCalculatedHSL] = useState("");
+	const [prevCalculatedColors, setPrevCalculatedColors] = useState<
+		prevCalculatedColorsType[] | []
+	>(() => {
+		const saved: string = localStorage.getItem("prevCalculatedColors") ?? "";
+		if (saved !== "") {
+			const initialValue: prevCalculatedColorsType[] | [] = JSON.parse(saved);
+			return initialValue;
+		}
+		return [];
+	});
 
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
@@ -127,7 +145,26 @@ function ColorConvertorPage() {
 		setCalculatedHSL(hslText);
 
 		localStorage.setItem("calculatedColor", JSON.stringify(calculatedColor));
+
+		if (
+			!prevCalculatedColors.some(
+				(valueObject) => valueObject.calculatedHEX === calculatedHEX
+			) &&
+			calculatedHEX
+		) {
+			setPrevCalculatedColors([
+				...prevCalculatedColors,
+				{ calculatedHEX, calculatedRGB, calculatedRGBA, calculatedHSL },
+			]);
+		}
 	}, [calculatedColor]);
+
+	useEffect(() => {
+		localStorage.setItem(
+			"prevCalculatedColors",
+			JSON.stringify(prevCalculatedColors)
+		);
+	}, [prevCalculatedColors]);
 
 	return (
 		<>
@@ -150,7 +187,7 @@ function ColorConvertorPage() {
 				<Grid container direction="row" justifyContent="center">
 					<Grid item xs={5}>
 						<Paper>
-							<Box p={2}>
+							<Box>
 								<Chip
 									label="RGBA"
 									sx={{ m: 1, backgroundColor: calculatedRGBA }}
@@ -164,7 +201,7 @@ function ColorConvertorPage() {
 									<ContentCopyIcon />
 								</IconButton>
 							</Box>
-							<Box p={2}>
+							<Box>
 								<Chip
 									label="RGB"
 									sx={{ m: 1, backgroundColor: calculatedRGB }}
@@ -178,7 +215,7 @@ function ColorConvertorPage() {
 									<ContentCopyIcon />
 								</IconButton>
 							</Box>
-							<Box p={2}>
+							<Box>
 								<Chip
 									label="HEX"
 									sx={{ m: 1, backgroundColor: calculatedHEX }}
@@ -192,7 +229,7 @@ function ColorConvertorPage() {
 									<ContentCopyIcon />
 								</IconButton>
 							</Box>
-							<Box p={2}>
+							<Box>
 								<Chip
 									label="HSL"
 									sx={{ m: 1, backgroundColor: calculatedHSL }}
@@ -210,12 +247,23 @@ function ColorConvertorPage() {
 					</Grid>
 					<Grid item xs={3}>
 						<Paper>
-							<Box p={2}>222</Box>
+							<Box p={2}>Color Name: [name] </Box>
 						</Paper>
 					</Grid>
 					<Grid item xs={4}>
 						<Paper>
-							<Box p={2}>333</Box>
+							<Box p={2}>Similiar Colors Block</Box>
+						</Paper>
+					</Grid>
+				</Grid>
+				<Grid container direction="row" justifyContent="center">
+					<Grid item xs={12}>
+						<Paper>
+							<PreviousColorCalcTable
+								prevCalculatedColors={prevCalculatedColors}
+								setPrevCalculatedColors={setPrevCalculatedColors}
+								setCalculatedColor={setCalculatedColor}
+							/>
 						</Paper>
 					</Grid>
 				</Grid>
