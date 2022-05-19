@@ -77,10 +77,10 @@ function PreviousColorCalcTable({
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ width: "30px" }} align="left"></TableCell>
-								<TableCell align="center">calculatedHEX</TableCell>
-								<TableCell align="center">calculatedRGB</TableCell>
-								<TableCell align="center">calculatedRGBA</TableCell>
-								<TableCell align="center">calculatedHSL</TableCell>
+								<TableCell align="center">HEX</TableCell>
+								<TableCell align="center">RGB</TableCell>
+								<TableCell align="center">RGBA</TableCell>
+								<TableCell align="center">HSL</TableCell>
 								<TableCell style={{ width: "30px" }} align="right"></TableCell>
 							</TableRow>
 						</TableHead>

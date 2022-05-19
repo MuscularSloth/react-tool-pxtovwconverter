@@ -77,6 +77,14 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 			case "HEX":
 				if (enteredHexValue && enteredHexValue.match(HEX_WEBCOLOR_PATTERN)) {
 					calculatedColor = HEXToRGBA(enteredHexValue);
+					if (enteredHexOpacityValue < 1) {
+						if (calculatedColor.opacity < 1) {
+							calculatedColor.opacity =
+								calculatedColor.opacity * enteredHexOpacityValue;
+						} else {
+							calculatedColor.opacity = enteredHexOpacityValue;
+						}
+					}
 					setCalculatedColor(calculatedColor);
 				}
 				break;
