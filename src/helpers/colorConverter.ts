@@ -35,6 +35,15 @@ export function RGBToHEX(r: number, g: number, b: number) {
 	return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
+export function RGBAToHEXA(r: number, g: number, b: number, a: number) {
+	const opacity = Math.round(Math.min(Math.max(a || 1, 0), 1) * 255).toString(
+		16
+	);
+	return (
+		"#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1) + opacity
+	);
+}
+
 export function RGBToHSL(r: number, g: number, b: number) {
 	r /= 255;
 	g /= 255;
@@ -67,6 +76,49 @@ export function RGBToHSL(r: number, g: number, b: number) {
 		hue: h,
 		saturation: s,
 		lightness: l,
+	};
+}
+
+interface HVSTypes {
+	computedH: number;
+	computedS: number;
+	computedV: number;
+}
+export function RGBToHSV(r: number, g: number, b: number): HVSTypes {
+	let computedH = 0;
+	let computedS = 0;
+	let computedV = 0;
+
+	r = parseInt(("" + r).replace(/\s/g, ""), 10);
+	g = parseInt(("" + g).replace(/\s/g, ""), 10);
+	b = parseInt(("" + b).replace(/\s/g, ""), 10);
+
+	if (r == null || g == null || b == null || isNaN(r) || isNaN(g) || isNaN(b)) {
+		return { computedH, computedS, computedV };
+	}
+	if (r < 0 || g < 0 || b < 0 || r > 255 || g > 255 || b > 255) {
+		return { computedH, computedS, computedV };
+	}
+	r = r / 255;
+	g = g / 255;
+	b = b / 255;
+	let minRGB = Math.min(r, Math.min(g, b));
+	let maxRGB = Math.max(r, Math.max(g, b));
+
+	if (minRGB == maxRGB) {
+		computedV = minRGB;
+		return { computedH: 0, computedS: 0, computedV };
+	}
+
+	let d = r == minRGB ? g - b : b == minRGB ? r - g : b - r;
+	let h = r == minRGB ? 3 : b == minRGB ? 1 : 5;
+	computedH = 60 * (h - d / (maxRGB - minRGB));
+	computedS = (maxRGB - minRGB) / maxRGB;
+	computedV = maxRGB;
+	return {
+		computedH: +computedH.toFixed(1),
+		computedS: +computedS.toFixed(4),
+		computedV: +computedV.toFixed(2),
 	};
 }
 

@@ -33,7 +33,7 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 		getValueFromLocalStorage("colorType", "HEX")
 	);
 	const [enteredHexValue, setEnteredHexValue] = useState<string>(
-		getValueFromLocalStorage("enteredHexOpacityValue", "")
+		getValueFromLocalStorage("enteredHexValue", "")
 	);
 	const [enteredHexOpacityValue, setEnteredHexOpacityValue] = useState<number>(
 		getValueFromLocalStorage("enteredHexOpacityValue", 1)

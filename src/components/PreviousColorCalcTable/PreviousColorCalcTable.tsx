@@ -77,10 +77,9 @@ function PreviousColorCalcTable({
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ width: "30px" }} align="left"></TableCell>
-								<TableCell align="center">HEX</TableCell>
-								<TableCell align="center">RGB</TableCell>
-								<TableCell align="center">RGBA</TableCell>
-								<TableCell align="center">HSL</TableCell>
+								<TableCell align="center">HEX / HEXA</TableCell>
+								<TableCell align="center">RGB / RGBA</TableCell>
+								<TableCell align="center">HSL / HSV</TableCell>
 								<TableCell style={{ width: "30px" }} align="right"></TableCell>
 							</TableRow>
 						</TableHead>
@@ -136,10 +135,14 @@ function PreviousColorCalcTable({
 																	<ResultColorCopyButton
 																		value={row.calculatedHEX}
 																	/>
+																	<br />
+																	<ResultColorCopyButton
+																		value={row.calculatedHEXA}
+																	/>
 																</TableCell>
 																<TableCell
 																	style={{
-																		width: "20%",
+																		width: "25%",
 																		backgroundColor: "white",
 																	}}
 																	align="center"
@@ -147,21 +150,14 @@ function PreviousColorCalcTable({
 																	<ResultColorCopyButton
 																		value={row.calculatedRGB}
 																	/>
-																</TableCell>
-																<TableCell
-																	style={{
-																		width: "20%",
-																		backgroundColor: "white",
-																	}}
-																	align="center"
-																>
+																	<br />
 																	<ResultColorCopyButton
 																		value={row.calculatedRGBA}
 																	/>
 																</TableCell>
 																<TableCell
 																	style={{
-																		width: "20%",
+																		width: "30%",
 																		backgroundColor: "white",
 																	}}
 																	align="center"
@@ -169,15 +165,10 @@ function PreviousColorCalcTable({
 																	<ResultColorCopyButton
 																		value={row.calculatedHSL}
 																	/>
-																</TableCell>
-																<TableCell
-																	style={{
-																		width: "auto",
-																		backgroundColor: "white",
-																	}}
-																	align="center"
-																>
-																	{/* <ResultCopyButton value={row.result} /> */}
+																	<br />
+																	<ResultColorCopyButton
+																		value={row.calculatedHSV}
+																	/>
 																</TableCell>
 																<TableCell
 																	style={{

@@ -10,14 +10,23 @@ import {
 import React, { useEffect, useState } from "react";
 import InputColorBlock from "../../components/InputColorBlock/InputColorBlock";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { RGBToHEX, RGBToHSL } from "../../helpers/colorConverter";
+import {
+	RGBAToHEXA,
+	RGBToHEX,
+	RGBToHSL,
+	RGBToHSV,
+} from "../../helpers/colorConverter";
 import PreviousColorCalcTable from "../../components/PreviousColorCalcTable/PreviousColorCalcTable";
+import { getValueFromLocalStorage } from "../../helpers/localStorage";
+import ColorStringBlock from "../../components/ColorStringBlock/ColorStringBlock";
 
 /**
  *
  * TODO 10 Ability to change BG color
  * TODO 20 handle pressing  enter
+ * TODO 30 Delete all prev data button
+ * TODO 40 Add HEXA to results
+ * TODO 50 Add HSV to results
  * TODO 60 Window with choosen color
  * TODO 70 External links on specific color
  * TODO 80 Lighter Darker variants as buttons
@@ -34,9 +43,11 @@ export interface colorObjectType {
 
 export interface prevCalculatedColorsType {
 	calculatedHEX: string;
+	calculatedHEXA: string;
 	calculatedRGB: string;
 	calculatedRGBA: string;
 	calculatedHSL: string;
+	calculatedHSV: string;
 }
 
 function ColorConvertorPage() {
@@ -48,30 +59,18 @@ function ColorConvertorPage() {
 	};
 
 	const [calculatedColor, setCalculatedColor] = useState<colorObjectType>(
-		() => {
-			const saved: string = localStorage.getItem("calculatedColor") ?? "";
-			if (saved !== "") {
-				const initialValue = JSON.parse(saved);
-				return initialValue;
-			}
-			return initialCalculatedColor;
-		}
+		getValueFromLocalStorage("calculatedColor", initialCalculatedColor)
 	);
 
 	const [calculatedHEX, setCalculatedHEX] = useState("");
+	const [calculatedHEXA, setCalculatedHEXA] = useState("");
 	const [calculatedRGB, setCalculatedRGB] = useState("");
 	const [calculatedRGBA, setCalculatedRGBA] = useState("");
 	const [calculatedHSL, setCalculatedHSL] = useState("");
+	const [calculatedHSV, setCalculatedHSV] = useState("");
 	const [prevCalculatedColors, setPrevCalculatedColors] = useState<
 		prevCalculatedColorsType[] | []
-	>(() => {
-		const saved: string = localStorage.getItem("prevCalculatedColors") ?? "";
-		if (saved !== "") {
-			const initialValue: prevCalculatedColorsType[] | [] = JSON.parse(saved);
-			return initialValue;
-		}
-		return [];
-	});
+	>(getValueFromLocalStorage("prevCalculatedColors", []));
 
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 	const [isWhiteText, setIsWhiteText] = useState(false);
@@ -86,6 +85,18 @@ function ColorConvertorPage() {
 	};
 	const handleCopyHEXValue = () => {
 		navigator.clipboard.writeText(calculatedHEX);
+		setIsNotificationOpen(true);
+	};
+	const handleCopyHEXAValue = () => {
+		navigator.clipboard.writeText(calculatedHEXA);
+		setIsNotificationOpen(true);
+	};
+	const handleCopyHSLValue = () => {
+		navigator.clipboard.writeText(calculatedHSL);
+		setIsNotificationOpen(true);
+	};
+	const handleCopyHSVValue = () => {
+		navigator.clipboard.writeText(calculatedHSV);
 		setIsNotificationOpen(true);
 	};
 
@@ -146,10 +157,27 @@ function ColorConvertorPage() {
 
 		const hexText = RGBToHEX(clearRed, clearGreen, clearBlue);
 
+		const hexaText = RGBAToHEXA(
+			calculatedColor.red,
+			calculatedColor.green,
+			calculatedColor.blue,
+			calculatedColor.opacity
+		);
+
+		const { computedH, computedS, computedV } = RGBToHSV(
+			clearRed,
+			clearGreen,
+			clearBlue
+		);
+		const hsvText =
+			"hsv(" + computedH + ", " + computedS + ", " + computedV + ")";
+
 		setCalculatedRGBA(rgbaText);
 		setCalculatedRGB(rgbText);
 		setCalculatedHEX(hexText);
+		setCalculatedHEXA(hexaText);
 		setCalculatedHSL(hslText);
+		setCalculatedHSV(hsvText);
 
 		if (saturation + lightness < 100 || (saturation < 80 && lightness < 60)) {
 			setIsWhiteText(true);
@@ -168,7 +196,14 @@ function ColorConvertorPage() {
 		) {
 			setPrevCalculatedColors([
 				...prevCalculatedColors,
-				{ calculatedHEX, calculatedRGB, calculatedRGBA, calculatedHSL },
+				{
+					calculatedHEX,
+					calculatedHEXA,
+					calculatedRGB,
+					calculatedRGBA,
+					calculatedHSL,
+					calculatedHSV,
+				},
 			]);
 		}
 	}, [calculatedColor]);
@@ -194,78 +229,57 @@ function ColorConvertorPage() {
 					</Grid>
 					<Grid item xs={4}>
 						<Paper>
-							<Box p={2} sx={{ backgroundColor: "" }}></Box>
+							<Box p={2} sx={{ backgroundColor: calculatedHEX }}>
+								<Box p={2}>Color Name: [name] </Box>
+							</Box>
 						</Paper>
 					</Grid>
 				</Grid>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={5}>
+					<Grid item xs={4}>
 						<Paper>
-							<Box>
-								<Chip
-									label="RGBA"
-									sx={{ m: 1, backgroundColor: calculatedRGBA, ...chipsStyle }}
-								/>
-								<Typography component="span">{calculatedRGBA}</Typography>
-								<IconButton
-									onClick={handleCopyRBGAValue}
-									aria-label="copy"
-									sx={{ m: 1 }}
-								>
-									<ContentCopyIcon />
-								</IconButton>
-							</Box>
-							<Box>
-								<Chip
-									label="RGB"
-									sx={{ m: 1, backgroundColor: calculatedRGB, ...chipsStyle }}
-								/>
-								<Typography component="span">{calculatedRGB}</Typography>
-								<IconButton
-									onClick={handleCopyRBGValue}
-									aria-label="copy"
-									sx={{ m: 1 }}
-								>
-									<ContentCopyIcon />
-								</IconButton>
-							</Box>
-							<Box>
-								<Chip
-									label="HEX"
-									sx={{
-										m: 1,
-										backgroundColor: calculatedHEX,
-										...chipsStyle,
-									}}
-								/>
-								<Typography component="span">{calculatedHEX}</Typography>
-								<IconButton
-									onClick={handleCopyHEXValue}
-									aria-label="copy"
-									sx={{ m: 1 }}
-								>
-									<ContentCopyIcon />
-								</IconButton>
-							</Box>
-							<Box>
-								<Chip
-									label="HSL"
-									sx={{ m: 1, backgroundColor: calculatedHSL, ...chipsStyle }}
-								/>
-								<Typography component="span">{calculatedHSL}</Typography>
-								<IconButton
-									onClick={handleCopyHEXValue}
-									aria-label="copy"
-									sx={{ m: 1 }}
-								>
-									<ContentCopyIcon />
-								</IconButton>
-							</Box>
+							<Typography sx={{ p: 1 }}>Colors with opacity:</Typography>
+							<ColorStringBlock
+								label="RGBA"
+								calculatedColor={calculatedRGBA}
+								chipsStyle={chipsStyle}
+								handleCopyFunction={handleCopyRBGAValue}
+							/>
+							<ColorStringBlock
+								label="HEXA"
+								calculatedColor={calculatedHEXA}
+								chipsStyle={chipsStyle}
+								handleCopyFunction={handleCopyHEXAValue}
+							/>
 						</Paper>
 					</Grid>
-					<Grid item xs={3}>
+					<Grid item xs={4}>
 						<Paper>
-							<Box p={2}>Color Name: [name] </Box>
+							<Typography sx={{ p: 1 }}>Clear Colors:</Typography>
+							<ColorStringBlock
+								label="RGB"
+								calculatedColor={calculatedRGB}
+								chipsStyle={chipsStyle}
+								handleCopyFunction={handleCopyRBGValue}
+							/>
+							<ColorStringBlock
+								label="HEX"
+								calculatedColor={calculatedHEX}
+								chipsStyle={chipsStyle}
+								handleCopyFunction={handleCopyHEXValue}
+							/>
+							<ColorStringBlock
+								label="HSL"
+								calculatedColor={calculatedHSL}
+								chipsStyle={chipsStyle}
+								handleCopyFunction={handleCopyHSLValue}
+							/>
+							<ColorStringBlock
+								label="HSV"
+								calculatedColor={calculatedHSV}
+								chipsStyle={chipsStyle}
+								handleCopyFunction={handleCopyHSVValue}
+							/>
 						</Paper>
 					</Grid>
 					<Grid item xs={4}>
