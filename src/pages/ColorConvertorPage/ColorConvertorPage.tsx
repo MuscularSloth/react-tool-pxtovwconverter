@@ -19,19 +19,17 @@ import {
 import PreviousColorCalcTable from "../../components/PreviousColorCalcTable/PreviousColorCalcTable";
 import { getValueFromLocalStorage } from "../../helpers/localStorage";
 import ColorStringBlock from "../../components/ColorStringBlock/ColorStringBlock";
+import ColorShadesBlock from "../../components/ColorShadesBlock/ColorShadesBlock";
 
 /**
  *
  * TODO 10 Ability to change BG color
- * TODO 20 handle pressing  enter
  * TODO 30 Delete all prev data button
- * TODO 40 Add HEXA to results
- * TODO 50 Add HSV to results
+ * TODO 40 Name this color
  * TODO 60 Window with choosen color
  * TODO 70 External links on specific color
  * TODO 80 Lighter Darker variants as buttons
- *
- * FIX: render actual prev list data
+ * TODO 90 Add CMYK
  *
  */
 export interface colorObjectType {
@@ -49,6 +47,11 @@ export interface prevCalculatedColorsType {
 	calculatedHSL: string;
 	calculatedHSV: string;
 }
+export interface shadesHSLDataType {
+	hue: number;
+	saturation: number;
+	lightness: number;
+}
 
 function ColorConvertorPage() {
 	const initialCalculatedColor: colorObjectType = {
@@ -56,6 +59,12 @@ function ColorConvertorPage() {
 		green: 0,
 		blue: 0,
 		opacity: 1,
+	};
+
+	const initialShadesHSLData: shadesHSLDataType = {
+		hue: 0,
+		saturation: 0,
+		lightness: 0,
 	};
 
 	const [calculatedColor, setCalculatedColor] = useState<colorObjectType>(
@@ -74,6 +83,9 @@ function ColorConvertorPage() {
 
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 	const [isWhiteText, setIsWhiteText] = useState(false);
+
+	const [shadesHSLData, setShadesHSLData] =
+		useState<shadesHSLDataType>(initialShadesHSLData);
 
 	const handleCopyRBGAValue = () => {
 		navigator.clipboard.writeText(calculatedRGBA);
@@ -179,15 +191,18 @@ function ColorConvertorPage() {
 		setCalculatedHSL(hslText);
 		setCalculatedHSV(hsvText);
 
-		if (saturation + lightness < 100 || (saturation < 80 && lightness < 60)) {
+		if (saturation + lightness < 100 || saturation < 80 || lightness < 60) {
 			setIsWhiteText(true);
 		} else {
 			setIsWhiteText(false);
 		}
-		// setIsWhiteText(saturation + lightness > 100);
+
+		setShadesHSLData({ hue, saturation, lightness });
 
 		localStorage.setItem("calculatedColor", JSON.stringify(calculatedColor));
+	}, [calculatedColor]);
 
+	useEffect(() => {
 		if (
 			!prevCalculatedColors.some(
 				(valueObject) => valueObject.calculatedHEX === calculatedHEX
@@ -206,7 +221,7 @@ function ColorConvertorPage() {
 				},
 			]);
 		}
-	}, [calculatedColor]);
+	}, [calculatedHEX]);
 
 	useEffect(() => {
 		localStorage.setItem(
@@ -284,7 +299,7 @@ function ColorConvertorPage() {
 					</Grid>
 					<Grid item xs={4}>
 						<Paper>
-							<Box p={2}>Similiar Colors Block</Box>
+							<ColorShadesBlock shadesHSLData={shadesHSLData} />
 						</Paper>
 					</Grid>
 				</Grid>

@@ -58,7 +58,7 @@ function HEXInputGroup({
 					size="small"
 					onKeyPress={handleKeyPressed}
 				/>
-				<FormHelperText>HEX Color Code</FormHelperText>
+				<FormHelperText>HEX Color Code (6 or 8 dig)</FormHelperText>
 			</FormControl>
 			<FormControl sx={{ m: 1, width: "15%" }} size="small">
 				<TextField
@@ -72,6 +72,7 @@ function HEXInputGroup({
 						inputProps: { min: 0, max: 1, step: 0.1 },
 					}}
 				/>
+				<FormHelperText>Alpha</FormHelperText>
 			</FormControl>
 		</>
 	);
