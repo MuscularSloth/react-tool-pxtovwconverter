@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
 	Box,
 	Chip,
@@ -7,19 +8,19 @@ import {
 	Snackbar,
 	Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import InputColorBlock from "../../components/InputColorBlock/InputColorBlock";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import {
 	RGBAToHEXA,
 	RGBToHEX,
 	RGBToHSL,
 	RGBToHSV,
 } from "../../helpers/colorConverter";
-import PreviousColorCalcTable from "../../components/PreviousColorCalcTable/PreviousColorCalcTable";
 import { getValueFromLocalStorage } from "../../helpers/localStorage";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import InputColorBlock from "../../components/InputColorBlock/InputColorBlock";
+import PreviousColorCalcTable from "../../components/PreviousColorCalcTable/PreviousColorCalcTable";
 import ColorStringBlock from "../../components/ColorStringBlock/ColorStringBlock";
 import ColorShadesBlock from "../../components/ColorShadesBlock/ColorShadesBlock";
+import ColorNameBlock from "../../components/ColorNameBlock/ColorNameBlock";
 
 /**
  *
@@ -27,6 +28,8 @@ import ColorShadesBlock from "../../components/ColorShadesBlock/ColorShadesBlock
  * TODO 40 Name this color
  * TODO 70 External links on specific color
  * TODO 90 Add CMYK
+ *
+ * TODO 1000 Refactor with chrome.js
  *
  */
 export interface colorObjectType {
@@ -241,9 +244,10 @@ function ColorConvertorPage() {
 					</Grid>
 					<Grid item xs={4}>
 						<Paper>
-							<Box p={2} sx={{ backgroundColor: calculatedHEX }}>
-								<Box p={2}>Color Name: [name] </Box>
-							</Box>
+							<ColorNameBlock
+								calculatedHEX={calculatedHEX}
+								isWhiteText={isWhiteText}
+							/>
 						</Paper>
 					</Grid>
 				</Grid>
