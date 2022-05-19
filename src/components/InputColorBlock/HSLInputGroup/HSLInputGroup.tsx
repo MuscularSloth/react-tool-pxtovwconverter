@@ -8,6 +8,7 @@ interface propTypes {
 	setEnteredSaturationValue: React.Dispatch<React.SetStateAction<number>>;
 	enteredLightnessValue: number;
 	setEnteredLightnessValue: React.Dispatch<React.SetStateAction<number>>;
+	handleKeyPressed: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 function HSLInputGroup({
@@ -17,6 +18,7 @@ function HSLInputGroup({
 	setEnteredSaturationValue,
 	enteredLightnessValue,
 	setEnteredLightnessValue,
+	handleKeyPressed,
 }: propTypes) {
 	const handleEnteredHueValue = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -72,6 +74,7 @@ function HSLInputGroup({
 					onChange={handleEnteredHueValue}
 					size="small"
 					type="number"
+					onKeyPress={handleKeyPressed}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">H</InputAdornment>,
 						inputProps: { min: 0, max: 360 },
@@ -84,6 +87,7 @@ function HSLInputGroup({
 					onChange={handleEnteredSaturationValue}
 					size="small"
 					type="number"
+					onKeyPress={handleKeyPressed}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">S</InputAdornment>,
 						inputProps: { min: 0, max: 100 },
@@ -96,6 +100,7 @@ function HSLInputGroup({
 					onChange={handleEnteredLightnessValue}
 					size="small"
 					type="number"
+					onKeyPress={handleKeyPressed}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">L</InputAdornment>,
 						inputProps: { min: 0, max: 100 },

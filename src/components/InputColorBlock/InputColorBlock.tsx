@@ -132,6 +132,12 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 		}
 	};
 
+	const handleKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === "Enter") {
+			handleConvertClick();
+		}
+	};
+
 	return (
 		<>
 			<div>
@@ -155,6 +161,7 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 						setEnteredHexValue={setEnteredHexValue}
 						enteredHexOpacityValue={enteredHexOpacityValue}
 						setEnteredHexOpacityValue={setEnteredHexOpacityValue}
+						handleKeyPressed={handleKeyPressed}
 					/>
 				)}
 				{(colorType === "RGB" || colorType === "RGBA") && (
@@ -168,6 +175,7 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 						enteredOpacityValue={enteredOpacityValue}
 						setEnteredOpacityValue={setEnteredOpacityValue}
 						colorType={colorType}
+						handleKeyPressed={handleKeyPressed}
 					/>
 				)}
 				{colorType === "HSL" && (
@@ -178,6 +186,7 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 						setEnteredSaturationValue={setEnteredSaturationValue}
 						enteredLightnessValue={enteredLightnessValue}
 						setEnteredLightnessValue={setEnteredLightnessValue}
+						handleKeyPressed={handleKeyPressed}
 					/>
 				)}
 				<FormControl sx={{ m: 1 }}>

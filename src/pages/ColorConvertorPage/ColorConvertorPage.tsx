@@ -90,7 +90,7 @@ function ColorConvertorPage() {
 	};
 
 	const chipsStyle = {
-		color: isWhiteText ? "black" : "white",
+		color: isWhiteText ? "white" : "black",
 	};
 
 	useEffect(() => {
@@ -151,7 +151,12 @@ function ColorConvertorPage() {
 		setCalculatedHEX(hexText);
 		setCalculatedHSL(hslText);
 
-		setIsWhiteText(saturation + lightness > 100);
+		if (saturation + lightness < 100 || (saturation < 80 && lightness < 60)) {
+			setIsWhiteText(true);
+		} else {
+			setIsWhiteText(false);
+		}
+		// setIsWhiteText(saturation + lightness > 100);
 
 		localStorage.setItem("calculatedColor", JSON.stringify(calculatedColor));
 

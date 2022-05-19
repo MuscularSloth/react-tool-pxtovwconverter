@@ -11,6 +11,7 @@ interface propTypes {
 	enteredOpacityValue: number;
 	setEnteredOpacityValue: React.Dispatch<React.SetStateAction<number>>;
 	colorType: string;
+	handleKeyPressed: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 function RGBAInputGroup({
@@ -23,6 +24,7 @@ function RGBAInputGroup({
 	enteredOpacityValue,
 	setEnteredOpacityValue,
 	colorType,
+	handleKeyPressed,
 }: propTypes) {
 	const handleEnteredRedValue = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -100,6 +102,7 @@ function RGBAInputGroup({
 					onChange={handleEnteredRedValue}
 					size="small"
 					// type="number"
+					onKeyPress={handleKeyPressed}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">R</InputAdornment>,
 						inputProps: { min: 0, max: 255 },
@@ -112,6 +115,7 @@ function RGBAInputGroup({
 					onChange={handleEnteredGreenValue}
 					size="small"
 					// type="number"
+					onKeyPress={handleKeyPressed}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">G</InputAdornment>,
 						inputProps: { min: 0, max: 255 },
@@ -124,6 +128,7 @@ function RGBAInputGroup({
 					onChange={handleEnteredBlueValue}
 					size="small"
 					// type="number"
+					onKeyPress={handleKeyPressed}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">B</InputAdornment>,
 						inputProps: { min: 0, max: 255 },
@@ -136,6 +141,7 @@ function RGBAInputGroup({
 					onChange={handleEnteredOpacityValue}
 					size="small"
 					type="number"
+					onKeyPress={handleKeyPressed}
 					disabled={colorType !== "RGBA"}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">A</InputAdornment>,

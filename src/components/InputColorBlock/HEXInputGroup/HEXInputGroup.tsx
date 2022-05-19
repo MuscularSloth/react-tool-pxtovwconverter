@@ -11,6 +11,7 @@ interface propTypes {
 	setEnteredHexValue: React.Dispatch<React.SetStateAction<string>>;
 	enteredHexOpacityValue: number;
 	setEnteredHexOpacityValue: React.Dispatch<React.SetStateAction<number>>;
+	handleKeyPressed: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 function HEXInputGroup({
@@ -18,6 +19,7 @@ function HEXInputGroup({
 	setEnteredHexValue,
 	enteredHexOpacityValue,
 	setEnteredHexOpacityValue,
+	handleKeyPressed,
 }: propTypes) {
 	const handleEnteredHexValue = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -54,6 +56,7 @@ function HEXInputGroup({
 					onChange={handleEnteredHexValue}
 					variant="outlined"
 					size="small"
+					onKeyPress={handleKeyPressed}
 				/>
 				<FormHelperText>HEX Color Code</FormHelperText>
 			</FormControl>
@@ -63,6 +66,7 @@ function HEXInputGroup({
 					onChange={handleEnteredHexOpacityValue}
 					size="small"
 					type="number"
+					onKeyPress={handleKeyPressed}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">A</InputAdornment>,
 						inputProps: { min: 0, max: 1, step: 0.1 },
