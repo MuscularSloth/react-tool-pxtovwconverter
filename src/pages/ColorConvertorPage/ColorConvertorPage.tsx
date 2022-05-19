@@ -25,7 +25,6 @@ import ColorNameBlock from "../../components/ColorNameBlock/ColorNameBlock";
 /**
  *
  * TODO 10 Ability to change BG color
- * TODO 40 Name this color
  * TODO 70 External links on specific color
  * TODO 90 Add CMYK
  *
@@ -191,7 +190,11 @@ function ColorConvertorPage() {
 		setCalculatedHSL(hslText);
 		setCalculatedHSV(hsvText);
 
-		if (saturation + lightness < 100 || saturation < 80 || lightness < 60) {
+		console.log("saturation >>> ", saturation);
+		console.log("lightness >>> ", lightness);
+		console.log("saturation + lightness >>> ", saturation + lightness);
+
+		if (saturation + lightness < 100 || (saturation < 80 && lightness < 60)) {
 			setIsWhiteText(true);
 		} else {
 			setIsWhiteText(false);
