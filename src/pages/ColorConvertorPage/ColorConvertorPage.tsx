@@ -17,7 +17,8 @@ import PreviousColorCalcTable from "../../components/PreviousColorCalcTable/Prev
 /**
  *
  * TODO 10 Ability to change BG color
- * TODO 20 handle pressing enter
+ * TODO 20 handle pressing  enter
+ * TODO 30 Add opacity calculate to HEX
  * TODO 60 Window with choosen color
  * TODO 70 External links on specific color
  * TODO 80 Lighter Darker variants as buttons
@@ -74,6 +75,7 @@ function ColorConvertorPage() {
 	});
 
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+	const [isWhiteText, setIsWhiteText] = useState(false);
 
 	const handleCopyRBGAValue = () => {
 		navigator.clipboard.writeText(calculatedRGBA);
@@ -86,6 +88,10 @@ function ColorConvertorPage() {
 	const handleCopyHEXValue = () => {
 		navigator.clipboard.writeText(calculatedHEX);
 		setIsNotificationOpen(true);
+	};
+
+	const chipsStyle = {
+		color: isWhiteText ? "black" : "white",
 	};
 
 	useEffect(() => {
@@ -136,6 +142,7 @@ function ColorConvertorPage() {
 			clearGreen,
 			clearBlue
 		);
+
 		const hslText = "hsl(" + hue + ", " + saturation + "%, " + lightness + "%)";
 
 		const hexText = RGBToHEX(clearRed, clearGreen, clearBlue);
@@ -144,6 +151,8 @@ function ColorConvertorPage() {
 		setCalculatedRGB(rgbText);
 		setCalculatedHEX(hexText);
 		setCalculatedHSL(hslText);
+
+		setIsWhiteText(saturation + lightness > 100);
 
 		localStorage.setItem("calculatedColor", JSON.stringify(calculatedColor));
 
@@ -191,7 +200,7 @@ function ColorConvertorPage() {
 							<Box>
 								<Chip
 									label="RGBA"
-									sx={{ m: 1, backgroundColor: calculatedRGBA }}
+									sx={{ m: 1, backgroundColor: calculatedRGBA, ...chipsStyle }}
 								/>
 								<Typography component="span">{calculatedRGBA}</Typography>
 								<IconButton
@@ -205,7 +214,7 @@ function ColorConvertorPage() {
 							<Box>
 								<Chip
 									label="RGB"
-									sx={{ m: 1, backgroundColor: calculatedRGB }}
+									sx={{ m: 1, backgroundColor: calculatedRGB, ...chipsStyle }}
 								/>
 								<Typography component="span">{calculatedRGB}</Typography>
 								<IconButton
@@ -219,7 +228,11 @@ function ColorConvertorPage() {
 							<Box>
 								<Chip
 									label="HEX"
-									sx={{ m: 1, backgroundColor: calculatedHEX }}
+									sx={{
+										m: 1,
+										backgroundColor: calculatedHEX,
+										...chipsStyle,
+									}}
 								/>
 								<Typography component="span">{calculatedHEX}</Typography>
 								<IconButton
@@ -233,7 +246,7 @@ function ColorConvertorPage() {
 							<Box>
 								<Chip
 									label="HSL"
-									sx={{ m: 1, backgroundColor: calculatedHSL }}
+									sx={{ m: 1, backgroundColor: calculatedHSL, ...chipsStyle }}
 								/>
 								<Typography component="span">{calculatedHSL}</Typography>
 								<IconButton

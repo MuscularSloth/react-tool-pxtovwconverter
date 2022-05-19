@@ -6,14 +6,10 @@ export function HEXToRGBA(hexValue: string): colorObjectType {
 		blue = 0,
 		opacity = 1;
 
-	console.log("hexValue >> ", hexValue);
-
 	if (hexValue[0] === "#") {
 		hexValue = hexValue.substring(1);
-		console.log("trimmedhexValue >> ", hexValue);
 	}
 
-	console.log("hexValue.length >> ", hexValue.length);
 	if (hexValue.length === 6) {
 		red = Number("0x" + hexValue[0] + hexValue[1]);
 		green = Number("0x" + hexValue[2] + hexValue[3]);
