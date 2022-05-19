@@ -1,5 +1,6 @@
 import {
 	Box,
+	Button,
 	IconButton,
 	Paper,
 	Table,
@@ -18,6 +19,7 @@ import {
 } from "../../pages/ColorConvertorPage/ColorConvertorPage";
 import { Ref } from "semantic-ui-react";
 import ClearIcon from "@mui/icons-material/Clear";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
 import ResultColorCopyButton from "../ResultColorCopyButton/ResultColorCopyButton";
 import CircleIcon from "@mui/icons-material/Circle";
 import { HEXToRGBA } from "../../helpers/colorConverter";
@@ -69,6 +71,10 @@ function PreviousColorCalcTable({
 		setCalculatedColor(HEXToRGBA(hexValue));
 	};
 
+	const handleClearAllResults = () => {
+		setPrevCalculatedColors([]);
+	};
+
 	return (
 		<>
 			{prevCalculatedColors.length > 0 ? (
@@ -80,7 +86,16 @@ function PreviousColorCalcTable({
 								<TableCell align="center">HEX / HEXA</TableCell>
 								<TableCell align="center">RGB / RGBA</TableCell>
 								<TableCell align="center">HSL / HSV</TableCell>
-								<TableCell style={{ width: "30px" }} align="right"></TableCell>
+								<TableCell style={{ width: "30px" }} align="right">
+									<Button
+										variant="outlined"
+										onClick={handleClearAllResults}
+										endIcon={<ClearAllIcon />}
+										size="small"
+									>
+										Clear
+									</Button>
+								</TableCell>
 							</TableRow>
 						</TableHead>
 						<DragDropContext onDragEnd={onDragEnd}>

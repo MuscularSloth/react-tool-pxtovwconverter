@@ -24,11 +24,8 @@ import ColorShadesBlock from "../../components/ColorShadesBlock/ColorShadesBlock
 /**
  *
  * TODO 10 Ability to change BG color
- * TODO 30 Delete all prev data button
  * TODO 40 Name this color
- * TODO 60 Window with choosen color
  * TODO 70 External links on specific color
- * TODO 80 Lighter Darker variants as buttons
  * TODO 90 Add CMYK
  *
  */

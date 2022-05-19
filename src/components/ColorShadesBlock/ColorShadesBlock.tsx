@@ -30,14 +30,14 @@ function ColorShadesBlock({ shadesHSLData }: propsType) {
 		<>
 			<Box>Darker shades</Box>
 			<Box>
-				{darkerShadesArray.map((shade) => (
-					<ColorShadeString shade={shade} textColor={textColor} />
+				{darkerShadesArray.map((shade, idx) => (
+					<ColorShadeString key={idx} shade={shade} textColor={textColor} />
 				))}
 			</Box>
 			<Box>Lighter shades</Box>
 			<Box>
-				{lighterShadesArray.map((shade) => (
-					<ColorShadeString shade={shade} textColor={textColor} />
+				{lighterShadesArray.map((shade, idx) => (
+					<ColorShadeString key={idx} shade={shade} textColor={textColor} />
 				))}
 			</Box>
 		</>

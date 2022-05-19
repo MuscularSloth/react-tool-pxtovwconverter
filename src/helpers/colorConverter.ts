@@ -251,8 +251,6 @@ export function getLighterShades(
 	let saturation = shadesHSLData.saturation;
 	let lightness = shadesHSLData.lightness;
 
-	console.log("START lightness >>> ", lightness);
-
 	for (let i = 0; i < 3; i++) {
 		lightness += step;
 		if (lightness + step <= 105) {
