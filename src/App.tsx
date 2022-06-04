@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import SingleValuePage from "./pages/SingleValuePage/SingleValuePage";
 import TextConverterPage from "./pages/TextConverterPage/TextConverterPage";
 import ColorConvertorPage from "./pages/ColorConvertorPage/ColorConvertorPage";
-import NavigationBar from "./components/NavigationBar/NavigationBar";
 import { Box } from "@mui/system";
 import { Container } from "@mui/material";
 import { PATH } from "./constants/path";
@@ -13,9 +12,11 @@ function App() {
 	/**
 	 *
 	 * TODO 10. Implement Typescript
+	 * TODO 11. Add min max option to limits vw convertation
 	 * TODO 20. Add color converter
 	 * TODO 30. Add CSS shadow generator
 	 * TODO 40. Add CSS gradient generator
+	 * TODO 50. Add LTR / RTL convertor
 	 * TODO 82. Exclude rows with specific rules (box-shadows, and other if needed)
 	 * TODO 999. Add wave/shape generator (need to research)
 	 */
