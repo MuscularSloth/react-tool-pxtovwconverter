@@ -7,16 +7,20 @@ import { Box } from "@mui/system";
 import { Container } from "@mui/material";
 import { PATH } from "./constants/path";
 import SideMenu from "./components/SideMenu/SideMenu";
+import ShadowGeneratorPage from "./pages/ShadowGeneratorPage/ShadowGeneratorPage";
 
 function App() {
 	/**
 	 *
+	 * TODO 01. Add a link to the git and the linkedin
+	 * TODO 02. Refactor TS Props in RCs whole project
 	 * TODO 10. Implement Typescript
-	 * TODO 11. Add min max option to limits vw convertation
-	 * TODO 20. Add color converter
-	 * TODO 30. Add CSS shadow generator
-	 * TODO 40. Add CSS gradient generator
-	 * TODO 50. Add LTR / RTL convertor
+	 * TODO 11. Add an min max option to limits vw convertation
+	 * TODO 20. Add a color converter
+	 * TODO 30. Add a CSS shadow generator
+	 * TODO 40. Add a CSS gradient generator
+	 * TODO 50. Add a LTR / RTL convertor
+	 * TODP 60. Refactor the visual
 	 * TODO 82. Exclude rows with specific rules (box-shadows, and other if needed)
 	 * TODO 999. Add wave/shape generator (need to research)
 	 */
@@ -36,6 +40,10 @@ function App() {
 							<Route
 								path={PATH.colorConverter}
 								element={<ColorConvertorPage />}
+							/>
+							<Route
+								path={PATH.shadowGenerator}
+								element={<ShadowGeneratorPage />}
 							/>
 							<Route path="*" element={<Navigate to={PATH.home} />} />
 						</Routes>

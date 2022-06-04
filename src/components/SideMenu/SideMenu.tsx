@@ -13,23 +13,47 @@ import {
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import ArticleIcon from "@mui/icons-material/Article";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
+import BlurOnIcon from "@mui/icons-material/BlurOn";
+import GradientIcon from "@mui/icons-material/Gradient";
+import FlipIcon from "@mui/icons-material/Flip";
 import { PATH } from "../../constants/path";
 
 const menuArray = [
 	{
-		name: "PX to VW Single Converter",
+		name: "Single PX to VW",
 		url: PATH.home,
 		icon: <AutorenewIcon />,
+		disabled: false,
 	},
 	{
-		name: "PX to VW Text Converter",
+		name: "Text PX to VW",
 		url: PATH.textConverter,
 		icon: <ArticleIcon />,
+		disabled: false,
 	},
 	{
 		name: "Color Converter",
 		url: PATH.colorConverter,
 		icon: <ColorLensIcon />,
+		disabled: false,
+	},
+	{
+		name: "Shadow Generator",
+		url: PATH.shadowGenerator,
+		icon: <BlurOnIcon />,
+		disabled: false,
+	},
+	{
+		name: "Gradient Generator",
+		url: PATH.gradientGenerator,
+		icon: <GradientIcon />,
+		disabled: true,
+	},
+	{
+		name: "LTR/RTL Convertor",
+		url: PATH.ltrRtlConvertor,
+		icon: <FlipIcon />,
+		disabled: true,
 	},
 ];
 
@@ -47,10 +71,14 @@ function SideMenu() {
 				</Typography>
 			</Toolbar>
 			<Divider />
-			<List>
+			<List sx={{ width: 250 }}>
 				{menuArray.map((menuItem, index) => (
 					<ListItem key={index} disablePadding>
-						<ListItemButton component={RouterLink} to={menuItem.url}>
+						<ListItemButton
+							component={RouterLink}
+							to={menuItem.url}
+							disabled={menuItem.disabled}
+						>
 							<ListItemIcon>{menuItem.icon}</ListItemIcon>
 							<ListItemText primary={menuItem.name} />
 						</ListItemButton>

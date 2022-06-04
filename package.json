@@ -19,9 +19,11 @@
     "nearest-colors": "^1.0.0",
     "react": "^18.1.0",
     "react-beautiful-dnd": "^13.1.0",
+    "react-colorful": "^5.5.1",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "sass": "^1.52.2",
     "semantic-ui-react": "^2.1.2",
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.4"
