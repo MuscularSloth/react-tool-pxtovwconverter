@@ -15,6 +15,8 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import SliderWithInput from "../../components/SliderWithInput/SliderWithInput";
 import ColorPickerWithInput from "../../components/ColorPickerWithInput/ColorPickerWithInput";
 import { HEXToRGBA } from "../../helpers/colorConverter";
+import ResultColorCopyButton from "../../components/ResultColorCopyButton/ResultColorCopyButton";
+import { getValueFromLocalStorage } from "../../helpers/localStorage";
 
 function ShadowGeneratorPage() {
 	const [bgBoxColor, setBgBoxColor] = useState<string>("#ffffff");
@@ -36,10 +38,10 @@ function ShadowGeneratorPage() {
 		alignItems: "center",
 		aspectRatio: "16/9",
 		margin: 100,
-		borderWidth: 1,
-		borderStyle: "solid",
+		// borderWidth: 1,
+		// borderStyle: "solid",
+		// borderColor: borderBoxColor,
 		borderRadius: 5,
-		borderColor: borderBoxColor,
 		backgroundColor: bgBoxColor,
 		boxShadow: calculatedShadow ? calculatedShadow : "none",
 	};
@@ -89,6 +91,10 @@ function ShadowGeneratorPage() {
 	}, [calculatedShadow]);
 
 	useEffect(() => {
+		setShadowBoxStyles({ ...shadowBoxStyles, backgroundColor: bgBoxColor });
+	}, [bgBoxColor]);
+
+	useEffect(() => {
 		calculateShadow();
 	}, []);
 
@@ -107,6 +113,7 @@ function ShadowGeneratorPage() {
 									minValue={-200}
 									maxValue={200}
 									step={1}
+									resetValue={0}
 								/>
 								<SliderWithInput
 									value={shadowYOffset}
@@ -115,6 +122,7 @@ function ShadowGeneratorPage() {
 									minValue={-200}
 									maxValue={200}
 									step={1}
+									resetValue={0}
 								/>
 								<SliderWithInput
 									value={shadowBlur}
@@ -123,6 +131,7 @@ function ShadowGeneratorPage() {
 									minValue={0}
 									maxValue={300}
 									step={1}
+									resetValue={0}
 								/>
 								<SliderWithInput
 									value={shadowSpread}
@@ -131,6 +140,7 @@ function ShadowGeneratorPage() {
 									minValue={-200}
 									maxValue={200}
 									step={1}
+									resetValue={0}
 								/>
 							</Box>
 							<Divider variant="middle" />
@@ -160,6 +170,7 @@ function ShadowGeneratorPage() {
 									minValue={0}
 									maxValue={1}
 									step={0.01}
+									resetValue={1}
 								/>
 							</Box>
 							<Divider variant="middle" />
@@ -178,8 +189,16 @@ function ShadowGeneratorPage() {
 					</Grid>
 					<Grid item xs={8}>
 						<Paper>
-							<Box p={2} style={{}}>
-								<div style={shadowBoxStyles}>Shadow Example Box</div>
+							<Box p={2} style={{ backgroundColor: bgWrapperColor }}>
+								<div style={shadowBoxStyles}>
+									{calculatedShadow ? (
+										<ResultColorCopyButton
+											value={"box-shadow: " + calculatedShadow + ";"}
+										/>
+									) : (
+										"Shadow Example Box"
+									)}
+								</div>
 							</Box>
 						</Paper>
 					</Grid>

@@ -17,10 +17,12 @@ function App() {
 	 * TODO 10. Implement Typescript
 	 * TODO 11. Add an min max option to limits vw convertation
 	 * TODO 20. Add a color converter
-	 * TODO 30. Add a CSS shadow generator
+	 * TODO 30. Add a CSS Box shadow generator
+	 * TODO 30. Add a CSS Text shadow generator
 	 * TODO 40. Add a CSS gradient generator
 	 * TODO 50. Add a LTR / RTL convertor
 	 * TODP 60. Refactor the visual
+	 * TODO 70. Add ratio/margin ratio generator
 	 * TODO 82. Exclude rows with specific rules (box-shadows, and other if needed)
 	 * TODO 999. Add wave/shape generator (need to research)
 	 */

@@ -5,4 +5,5 @@ export const PATH = {
 	shadowGenerator: "/shadow-generator",
 	gradientGenerator: "/gradient-generator",
 	ltrRtlConvertor: "/ltr-rtl-convertor",
+	ratioCalculator: "/ratio-calculator",
 };

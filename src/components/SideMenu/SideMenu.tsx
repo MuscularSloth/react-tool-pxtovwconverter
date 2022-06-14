@@ -16,6 +16,7 @@ import ColorLensIcon from "@mui/icons-material/ColorLens";
 import BlurOnIcon from "@mui/icons-material/BlurOn";
 import GradientIcon from "@mui/icons-material/Gradient";
 import FlipIcon from "@mui/icons-material/Flip";
+import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import { PATH } from "../../constants/path";
 
 const menuArray = [
@@ -53,6 +54,12 @@ const menuArray = [
 		name: "LTR/RTL Convertor",
 		url: PATH.ltrRtlConvertor,
 		icon: <FlipIcon />,
+		disabled: true,
+	},
+	{
+		name: "Ratio Calculator",
+		url: PATH.ratioCalculator,
+		icon: <AspectRatioIcon />,
 		disabled: true,
 	},
 ];

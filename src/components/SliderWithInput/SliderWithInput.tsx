@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
 import MuiInput from "@mui/material/Input";
+import { IconButton, Tooltip } from "@mui/material";
+import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
 
 const Input = styled(MuiInput)`
 	width: 42px;
@@ -17,6 +19,7 @@ interface propsTypes {
 	maxValue?: number;
 	minValue?: number;
 	step?: number;
+	resetValue?: number;
 }
 
 export default function SliderWithInput({
@@ -26,6 +29,7 @@ export default function SliderWithInput({
 	maxValue = 100,
 	minValue = 0,
 	step = 1,
+	resetValue = 0,
 }: propsTypes) {
 	const handleSliderChange = (event: Event, newValue: number | number[]) => {
 		const valueToSet = typeof newValue === "number" ? newValue : 0;
@@ -34,6 +38,10 @@ export default function SliderWithInput({
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(event.target.value === "" ? 0 : Number(event.target.value));
+	};
+
+	const resetInputHandler = () => {
+		setValue(resetValue);
 	};
 
 	const handleBlur = () => {
@@ -51,6 +59,16 @@ export default function SliderWithInput({
 			</Typography>
 			<Grid container spacing={2} alignItems="center">
 				<Grid item xs>
+					<Tooltip placement="top" title={"Reset to " + resetValue}>
+						<IconButton
+							size="small"
+							color="primary"
+							aria-label="add to shopping cart"
+							onClick={resetInputHandler}
+						>
+							<AutoFixNormalIcon />
+						</IconButton>
+					</Tooltip>
 					<Slider
 						value={typeof value === "number" ? value : 0}
 						onChange={handleSliderChange}
