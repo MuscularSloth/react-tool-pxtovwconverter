@@ -1,22 +1,33 @@
 import { FormControl, Input, InputLabel } from "@mui/material";
-import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import useClickOutside from "../../helpers/useClickOutside";
 import "./ColorPickerWithInput.scss";
 
 interface propsTypes {
 	title?: string;
-	color: string;
-	setColor: Dispatch<SetStateAction<string>>;
+	color?: string;
+	setColor: Function;
 }
 
 function ColorPickerWithInput({ title, color, setColor }: propsTypes) {
-	// const [color, setColor] = useState("#aabbcc");
+	const [newColor, setNewColor] = useState<string>(color ? color : "#aabbcc");
+
 	const popover = useRef<HTMLHeadingElement>(null);
 	const [isOpen, setIsOpen] = useState(false);
 
 	const close = useCallback((): void => setIsOpen(false), []);
 	useClickOutside(popover, close);
+
+	const handleChangeColor = (value: string) => {
+		setNewColor(value);
+	};
+
+	useEffect(() => {
+		if (setColor && newColor) {
+			setColor(newColor);
+		}
+	}, [newColor]);
 
 	return (
 		<>
@@ -24,9 +35,9 @@ function ColorPickerWithInput({ title, color, setColor }: propsTypes) {
 				<FormControl variant="standard">
 					<InputLabel htmlFor="input-with-icon-adornment">{title}</InputLabel>
 					<Input
-						value={color}
+						value={newColor}
 						size="small"
-						onChange={(e) => setColor(e.target.value)}
+						onChange={(e) => handleChangeColor(e.target.value)}
 						// onBlur={handleBlur}
 						id="input-with-icon-adornment"
 					/>
@@ -35,13 +46,13 @@ function ColorPickerWithInput({ title, color, setColor }: propsTypes) {
 				<div className="ColorPickerWithInput__picker">
 					<div
 						className="ColorPickerWithInput__swatch"
-						style={{ backgroundColor: color }}
+						style={{ backgroundColor: newColor }}
 						onClick={() => setIsOpen(true)}
 					/>
 
 					{isOpen && (
 						<div className="ColorPickerWithInput__popover" ref={popover}>
-							<HexColorPicker color={color} onChange={setColor} />
+							<HexColorPicker color={newColor} onChange={handleChangeColor} />
 						</div>
 					)}
 				</div>
