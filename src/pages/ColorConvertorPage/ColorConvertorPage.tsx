@@ -190,9 +190,9 @@ function ColorConvertorPage() {
 		setCalculatedHSL(hslText);
 		setCalculatedHSV(hsvText);
 
-		console.log("saturation >>> ", saturation);
-		console.log("lightness >>> ", lightness);
-		console.log("saturation + lightness >>> ", saturation + lightness);
+		// console.log("saturation >>> ", saturation);
+		// console.log("lightness >>> ", lightness);
+		// console.log("saturation + lightness >>> ", saturation + lightness);
 
 		if (saturation + lightness < 100 || (saturation < 80 && lightness < 60)) {
 			setIsWhiteText(true);

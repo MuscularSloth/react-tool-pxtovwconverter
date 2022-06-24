@@ -5,6 +5,7 @@ import {
 	TextField,
 } from "@mui/material";
 import React, { useEffect } from "react";
+import { ONLY_HEX_CHARACTERES } from "../../../constants/regex";
 
 interface propTypes {
 	enteredHexValue: string;
@@ -24,7 +25,12 @@ function HEXInputGroup({
 	const handleEnteredHexValue = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
-		setEnteredHexValue(event.target.value);
+		if (
+			event.target.value.match(ONLY_HEX_CHARACTERES) ||
+			event.target.value === ""
+		) {
+			setEnteredHexValue(event.target.value);
+		}
 	};
 
 	const handleEnteredHexOpacityValue = (
