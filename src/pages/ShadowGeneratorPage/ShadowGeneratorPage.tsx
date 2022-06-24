@@ -49,6 +49,18 @@ function ShadowGeneratorPage() {
 		initialShadowBoxStyles
 	);
 
+	const [calculatedTextShadow, setCalculatedTextShadow] = useState("");
+
+	const initialShadowTextStyles = {
+		width: "100%",
+		fontSize: 24,
+		textAlign: "center" as "center",
+		textShadow: calculatedTextShadow,
+	};
+	const [shadowTextStyles, setShadowTextStyles] = useState(
+		initialShadowTextStyles
+	);
+
 	const handleInsetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setShadowInset(event.target.checked);
 	};
@@ -74,8 +86,19 @@ function ShadowGeneratorPage() {
 		setCalculatedShadow(shadowString);
 	};
 
+	const calculateTextShadow = () => {
+		let shadowString =
+			shadowXOffset + "px " + shadowYOffset + "px " + shadowBlur + "px ";
+
+		let calculatedColor = HEXToRGBA(shadowColor);
+		shadowString += ` rgba(${calculatedColor.red}, ${calculatedColor.green}, ${calculatedColor.blue}, ${shadowOpacity})`;
+
+		setCalculatedTextShadow(shadowString);
+	};
+
 	useEffect(() => {
 		calculateShadow();
+		calculateTextShadow();
 	}, [
 		shadowXOffset,
 		shadowYOffset,
@@ -89,6 +112,13 @@ function ShadowGeneratorPage() {
 	useEffect(() => {
 		setShadowBoxStyles({ ...shadowBoxStyles, boxShadow: calculatedShadow });
 	}, [calculatedShadow]);
+
+	useEffect(() => {
+		setShadowTextStyles({
+			...shadowTextStyles,
+			textShadow: calculatedTextShadow,
+		});
+	}, [calculatedTextShadow]);
 
 	useEffect(() => {
 		setShadowBoxStyles({ ...shadowBoxStyles, backgroundColor: bgBoxColor });
@@ -192,12 +222,20 @@ function ShadowGeneratorPage() {
 							<Box p={2} style={{ backgroundColor: bgWrapperColor }}>
 								<div style={shadowBoxStyles}>
 									{calculatedShadow ? (
-										<ResultColorCopyButton
-											value={"box-shadow: " + calculatedShadow + ";"}
-										/>
+										<>
+											<ResultColorCopyButton
+												value={"box-shadow: " + calculatedShadow + ";"}
+											/>
+										</>
 									) : (
 										"Shadow Example Box"
 									)}
+								</div>
+								<div>
+									<p style={shadowTextStyles}>Example of text shadow</p>
+									<ResultColorCopyButton
+										value={"text-shadow: " + calculatedTextShadow + ";"}
+									/>
 								</div>
 							</Box>
 						</Paper>

@@ -16,8 +16,6 @@ function App() {
 	 * TODO 02. Refactor TS Props in RCs whole project
 	 * TODO 10. Implement Typescript
 	 * TODO 11. Add an min max option to limits vw convertation
-	 * TODO 20. Add a color converter
-	 * TODO 30. Add a CSS Box shadow generator
 	 * TODO 30. Add a CSS Text shadow generator
 	 * TODO 40. Add a CSS gradient generator
 	 * TODO 50. Add a LTR / RTL convertor
