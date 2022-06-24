@@ -46,13 +46,19 @@ function GradientGeneratorPage() {
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
-		height: 100,
+		height: 150,
 		background: calculatedGradient,
 	};
 
 	const [gradientStyle, setGradientStyle] = useState(initialGradientStyle);
 
 	const [gradientAngle, setGradientAngle] = useState(90);
+
+	const initialCirclePosition = {
+		x: 50,
+		y: 50,
+	};
+	const [circlePosition, setCirclePosition] = useState(initialCirclePosition);
 
 	const initialGradientType = {
 		key: "linearGradient",
@@ -96,10 +102,39 @@ function GradientGeneratorPage() {
 		setGradientColorsSet(newGradientColorSet);
 	};
 
+	const handleSetCirclePosition = (value: number, axios: string) => {
+		if (axios === "x") {
+			setCirclePosition({ ...circlePosition, x: value });
+		} else if (axios === "y") {
+			setCirclePosition({ ...circlePosition, y: value });
+		}
+	};
+
 	const calculateGradient = () => {
 		let gradientString = "";
 		gradientString += gradientType.value + "(";
-		gradientString += gradientAngle + "deg";
+
+		switch (gradientType.key) {
+			case "linearGradient":
+				gradientString += gradientAngle + "deg";
+				break;
+			case "radialGradient":
+				gradientString +=
+					"circle at " + circlePosition.x + "% " + circlePosition.y + "%";
+				break;
+			case "conicGradient":
+				gradientString +=
+					"from " +
+					gradientAngle +
+					"deg" +
+					" at " +
+					circlePosition.x +
+					"% " +
+					circlePosition.y +
+					"%";
+				break;
+		}
+
 		gradientColorsSet &&
 			gradientColorsSet.map(
 				(colorRow) =>
@@ -128,13 +163,12 @@ function GradientGeneratorPage() {
 				<Grid container direction="row" justifyContent="center">
 					<Grid item xs={12}>
 						<Paper>
-							<Box p={2} style={gradientStyle}>
-								<span style={{ background: "white" }}>
-									<ResultColorCopyButton
-										value={"background: " + calculatedGradient + ";"}
-									/>
-								</span>
-							</Box>
+							<Box p={2} style={gradientStyle}></Box>
+						</Paper>
+						<Paper>
+							<ResultColorCopyButton
+								value={"background: " + calculatedGradient + ";"}
+							/>
 						</Paper>
 					</Grid>
 				</Grid>
@@ -168,15 +202,47 @@ function GradientGeneratorPage() {
 					<Grid item xs={6} lg={8}>
 						<Paper>
 							<Box p={2}>
-								<SliderWithInput
-									value={gradientAngle}
-									setValue={setGradientAngle}
-									title="Gradient Angle"
-									minValue={0}
-									maxValue={360}
-									step={1}
-									resetValue={90}
-								/>
+								{gradientType &&
+									(gradientType.key === "linearGradient" ||
+										gradientType.key === "conicGradient") && (
+										<SliderWithInput
+											value={gradientAngle}
+											setValue={setGradientAngle}
+											title="Gradient Angle"
+											minValue={0}
+											maxValue={360}
+											step={1}
+											resetValue={90}
+										/>
+									)}
+								{gradientType &&
+									(gradientType.key === "radialGradient" ||
+										gradientType.key === "conicGradient") && (
+										<>
+											<SliderWithInput
+												value={circlePosition.x}
+												setValue={(val: number) =>
+													handleSetCirclePosition(val, "x")
+												}
+												title="Position X"
+												minValue={-20}
+												maxValue={120}
+												step={10}
+												resetValue={50}
+											/>
+											<SliderWithInput
+												value={circlePosition.y}
+												setValue={(val: number) =>
+													handleSetCirclePosition(val, "y")
+												}
+												title="Position Y"
+												minValue={-20}
+												maxValue={120}
+												step={10}
+												resetValue={50}
+											/>
+										</>
+									)}
 							</Box>
 						</Paper>
 					</Grid>

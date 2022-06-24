@@ -15,7 +15,7 @@ const Input = styled(MuiInput)`
 interface propsTypes {
 	title: string;
 	value: number;
-	setValue: React.Dispatch<React.SetStateAction<number>>;
+	setValue: Function;
 	maxValue?: number;
 	minValue?: number;
 	step?: number;

@@ -33,9 +33,7 @@ function ColorPickerWithInput({ title, color, setColor }: propsTypes) {
 		<>
 			<div className="ColorPickerWithInput__wrapper">
 				<FormControl variant="standard">
-					<InputLabel htmlFor="input-with-icon-adornment">
-						{color} {title}
-					</InputLabel>
+					<InputLabel htmlFor="input-with-icon-adornment">{title}</InputLabel>
 					<Input
 						value={color}
 						size="small"
