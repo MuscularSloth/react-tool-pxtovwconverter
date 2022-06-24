@@ -33,9 +33,11 @@ function ColorPickerWithInput({ title, color, setColor }: propsTypes) {
 		<>
 			<div className="ColorPickerWithInput__wrapper">
 				<FormControl variant="standard">
-					<InputLabel htmlFor="input-with-icon-adornment">{title}</InputLabel>
+					<InputLabel htmlFor="input-with-icon-adornment">
+						{color} {title}
+					</InputLabel>
 					<Input
-						value={newColor}
+						value={color}
 						size="small"
 						onChange={(e) => handleChangeColor(e.target.value)}
 						// onBlur={handleBlur}
@@ -46,13 +48,13 @@ function ColorPickerWithInput({ title, color, setColor }: propsTypes) {
 				<div className="ColorPickerWithInput__picker">
 					<div
 						className="ColorPickerWithInput__swatch"
-						style={{ backgroundColor: newColor }}
+						style={{ backgroundColor: color }}
 						onClick={() => setIsOpen(true)}
 					/>
 
 					{isOpen && (
 						<div className="ColorPickerWithInput__popover" ref={popover}>
-							<HexColorPicker color={newColor} onChange={handleChangeColor} />
+							<HexColorPicker color={color} onChange={handleChangeColor} />
 						</div>
 					)}
 				</div>

@@ -62,11 +62,23 @@ function GradientGeneratorPage() {
 
 	const initialGradientColorSet = [
 		{
-			color: "#000000",
+			color: "#409a4a",
 			stop: 0,
 		},
 		{
-			color: "#FFFFFF",
+			color: "#211c79",
+			stop: 25,
+		},
+		{
+			color: "#a01989",
+			stop: 50,
+		},
+		{
+			color: "#c7c72c",
+			stop: 75,
+		},
+		{
+			color: "#e01313",
 			stop: 100,
 		},
 	];
@@ -103,7 +115,6 @@ function GradientGeneratorPage() {
 
 	useEffect(() => {
 		setGradientStyle({ ...gradientStyle, background: calculatedGradient });
-		console.log("gradientColorsSet >>> ", gradientColorsSet);
 	}, [calculatedGradient]);
 
 	useEffect(() => {

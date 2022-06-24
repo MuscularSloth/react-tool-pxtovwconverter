@@ -48,18 +48,30 @@ function GradientColorsList({
 		const prevItemStopValue = prevItem.stop;
 		const destinationItemStopValue = destinationItem.stop;
 
-		console.log("prevItem >>> ", prevItem);
-		// console.log("destinationItem >>> ", destinationItem);
-
-		prevItem.stop = destinationItemStopValue;
-		destinationItem.stop = prevItemStopValue;
+		// prevItem.stop = destinationItemStopValue;
+		// destinationItem.stop = prevItemStopValue;
 
 		const newArray = [...gradientColorsSet];
 
-		newArray[destination.index].stop = prevItemStopValue;
+		// newArray[destination.index].stop = prevItemStopValue;
 
 		newArray.splice(source.index, 1);
 		newArray.splice(destination.index, 0, prevItem);
+
+		const newIdx = destination.index;
+		const lastIdx = source.index;
+
+		if (lastIdx > newIdx) {
+			for (let i = newIdx; i < lastIdx; i++) {
+				newArray[i].stop = newArray[i + 1].stop;
+			}
+			newArray[lastIdx].stop = prevItemStopValue;
+		} else {
+			for (let i = newIdx; i > lastIdx; i--) {
+				newArray[i].stop = newArray[i - 1].stop;
+			}
+			newArray[lastIdx].stop = prevItemStopValue;
+		}
 
 		setGradientColorsSet(newArray);
 	};
@@ -96,17 +108,6 @@ function GradientColorsList({
 														{...provided.draggableProps}
 														{...provided.dragHandleProps}
 													>
-														<Box
-															style={{
-																width: "40px",
-																backgroundColor: "white",
-																padding: "10px 0",
-															}}
-														>
-															<IconButton aria-label="delete" color="info">
-																<DragIndicatorIcon fontSize="small" />
-															</IconButton>
-														</Box>
 														<Box
 															style={{
 																width: "auto",
