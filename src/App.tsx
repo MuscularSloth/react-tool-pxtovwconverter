@@ -8,6 +8,7 @@ import { Container } from "@mui/material";
 import { PATH } from "./constants/path";
 import SideMenu from "./components/SideMenu/SideMenu";
 import ShadowGeneratorPage from "./pages/ShadowGeneratorPage/ShadowGeneratorPage";
+import GradientGeneratorPage from "./pages/GradientGeneratorPage/GradientGeneratorPage";
 
 function App() {
 	/**
@@ -16,7 +17,6 @@ function App() {
 	 * TODO 02. Refactor TS Props in RCs whole project
 	 * TODO 10. Implement Typescript
 	 * TODO 11. Add an min max option to limits vw convertation
-	 * TODO 30. Add a CSS Text shadow generator
 	 * TODO 40. Add a CSS gradient generator
 	 * TODO 50. Add a LTR / RTL convertor
 	 * TODP 60. Refactor the visual
@@ -44,6 +44,10 @@ function App() {
 							<Route
 								path={PATH.shadowGenerator}
 								element={<ShadowGeneratorPage />}
+							/>
+							<Route
+								path={PATH.gradientGenerator}
+								element={<GradientGeneratorPage />}
 							/>
 							<Route path="*" element={<Navigate to={PATH.home} />} />
 						</Routes>

@@ -48,7 +48,7 @@ const menuArray = [
 		name: "Gradient Generator",
 		url: PATH.gradientGenerator,
 		icon: <GradientIcon />,
-		disabled: true,
+		disabled: false,
 	},
 	{
 		name: "LTR/RTL Convertor",

@@ -222,11 +222,9 @@ function ShadowGeneratorPage() {
 							<Box p={2} style={{ backgroundColor: bgWrapperColor }}>
 								<div style={shadowBoxStyles}>
 									{calculatedShadow ? (
-										<>
-											<ResultColorCopyButton
-												value={"box-shadow: " + calculatedShadow + ";"}
-											/>
-										</>
+										<ResultColorCopyButton
+											value={"box-shadow: " + calculatedShadow + ";"}
+										/>
 									) : (
 										"Shadow Example Box"
 									)}
