@@ -20,6 +20,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DragDropTextArea from "../../components/DragDropTextArea/DragDropTextArea";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import "./TextConverterPage.css";
+import { REGEX_CSS_RULE } from "../../constants/regex";
 
 export default function TextConverterPage() {
 	const regexRule = /([0-9]+)px/g;
@@ -38,6 +39,8 @@ export default function TextConverterPage() {
 		useState<boolean>(false);
 	const [dontCalculateValue, setDontCalculateValue] = useState<number>(5);
 
+	const [removeRowsWithoutPx, setRemoveRowsWithoutPx] = useState<boolean>(true);
+
 	const handlePresetClick = (e: React.MouseEvent) => {
 		const targetEl = e.target as HTMLElement;
 		const selectedWidth = +targetEl.innerText;
@@ -53,14 +56,37 @@ export default function TextConverterPage() {
 	};
 
 	const replaceFunction = (match: string, value: number): string => {
+		console.log("replaceFunction", { match, value });
+
 		if (dontCalculateLessThan && value <= dontCalculateValue) {
 			return match;
 		}
 		return ((value / selectedWidth) * 100).toFixed(3) + "vw";
 	};
 
+	const clearNonConvertedRows = (match: string): string => {
+		console.log("match >>>", match);
+
+		if (match.includes("vw")) {
+			return match;
+		}
+
+		return "";
+	};
+
 	const hanldeConvertClick = () => {
 		let convertedText = textToConvert.replace(regexRule, replaceFunction);
+
+		if (removeRowsWithoutPx) {
+			console.log("removeRowsWithoutPx true ");
+			convertedText = convertedText.replace(
+				REGEX_CSS_RULE,
+				clearNonConvertedRows
+			);
+			const rowsSplitted = convertedText.split(/\r?\n/);
+			const emptyRowsCleared = rowsSplitted.filter((row) => row !== "");
+			convertedText = emptyRowsCleared.join("\n");
+		}
 		setTextConverted(convertedText);
 	};
 
@@ -115,6 +141,19 @@ export default function TextConverterPage() {
 										}}
 									/>
 									px
+								</Box>
+								<Box>
+									<FormControlLabel
+										value="end"
+										control={
+											<Checkbox size="small" checked={removeRowsWithoutPx} />
+										}
+										label="Remove rows without px"
+										labelPlacement="end"
+										onChange={() =>
+											setRemoveRowsWithoutPx(!removeRowsWithoutPx)
+										}
+									/>
 								</Box>
 							</Box>
 						</Paper>

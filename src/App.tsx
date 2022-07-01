@@ -21,6 +21,7 @@ function App() {
 	 * TODO 50. Add a LTR / RTL convertor
 	 * TODP 60. App: Refactor the visual, add adaptive
 	 * TODO 70. Add ratio/margin calculator
+	 * TODO 80. Add Regex drag&drop generator
 	 * TODO 82. PX to VW Text: Exclude rows with specific rules (box-shadows, and other if needed)
 	 * TODO 999. Add wave/shape generator (need to research)
 	 */

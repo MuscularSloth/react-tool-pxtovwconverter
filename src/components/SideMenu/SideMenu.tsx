@@ -17,6 +17,7 @@ import BlurOnIcon from "@mui/icons-material/BlurOn";
 import GradientIcon from "@mui/icons-material/Gradient";
 import FlipIcon from "@mui/icons-material/Flip";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import { PATH } from "../../constants/path";
 
 const menuArray = [
@@ -60,6 +61,12 @@ const menuArray = [
 		name: "Ratio Calculator",
 		url: PATH.ratioCalculator,
 		icon: <AspectRatioIcon />,
+		disabled: true,
+	},
+	{
+		name: "Regex Builder",
+		url: PATH.regexBuilder,
+		icon: <AutoFixHighIcon />,
 		disabled: true,
 	},
 ];

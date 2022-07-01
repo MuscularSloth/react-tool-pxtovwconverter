@@ -6,4 +6,5 @@ export const PATH = {
 	gradientGenerator: "/gradient-generator",
 	ltrRtlConvertor: "/ltr-rtl-convertor",
 	ratioCalculator: "/ratio-calculator",
+	regexBuilder: "/regex-builder",
 };
