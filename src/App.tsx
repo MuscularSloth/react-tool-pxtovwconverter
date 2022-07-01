@@ -13,14 +13,13 @@ import GradientGeneratorPage from "./pages/GradientGeneratorPage/GradientGenerat
 function App() {
 	/**
 	 *
-	 * TODO 01. Add a link to the git and the linkedin
 	 * TODO 02. Refactor TS Props in RCs whole project
-	 * TODO 10. Implement Typescript
+	 * TODO 10. Implement Error Boundry
 	 * TODO 11. Add an min max option to limits vw convertation
-	 * TODO 40. Add a CSS gradient generator
+	 * TODO 40. Add a CSS repeat gradient fix
 	 * TODO 50. Add a LTR / RTL convertor
 	 * TODP 60. Refactor the visual
-	 * TODO 70. Add ratio/margin ratio generator
+	 * TODO 70. Add ratio/margin calculator
 	 * TODO 82. Exclude rows with specific rules (box-shadows, and other if needed)
 	 * TODO 999. Add wave/shape generator (need to research)
 	 */
