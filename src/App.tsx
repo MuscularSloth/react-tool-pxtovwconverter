@@ -13,14 +13,15 @@ import GradientGeneratorPage from "./pages/GradientGeneratorPage/GradientGenerat
 function App() {
 	/**
 	 *
-	 * TODO 02. Refactor TS Props in RCs whole project
-	 * TODO 10. Implement Error Boundry
-	 * TODO 11. Add an min max option to limits vw convertation
-	 * TODO 40. Add a CSS repeat gradient fix
+	 * TODO 01. Renew App Title+, README file+ and images
+	 * TODO 02. App: Refactor TS Props in RCs whole project
+	 * TODO 10. App: Implement Error Boundry
+	 * TODO 11. PX to VW Text: Add an min max option to limits vw convertation
+	 * TODO 12. PX to VW Text: Add option exclude from result rows without convertation
 	 * TODO 50. Add a LTR / RTL convertor
-	 * TODP 60. Refactor the visual
+	 * TODP 60. App: Refactor the visual, add adaptive
 	 * TODO 70. Add ratio/margin calculator
-	 * TODO 82. Exclude rows with specific rules (box-shadows, and other if needed)
+	 * TODO 82. PX to VW Text: Exclude rows with specific rules (box-shadows, and other if needed)
 	 * TODO 999. Add wave/shape generator (need to research)
 	 */
 

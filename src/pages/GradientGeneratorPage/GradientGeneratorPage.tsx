@@ -116,9 +116,11 @@ function GradientGeneratorPage() {
 
 		switch (gradientType.key) {
 			case "linearGradient":
+			case "repeatinglinearGradient":
 				gradientString += gradientAngle + "deg";
 				break;
 			case "radialGradient":
+			case "repeatingRadialGradient":
 				gradientString +=
 					"circle at " + circlePosition.x + "% " + circlePosition.y + "%";
 				break;
