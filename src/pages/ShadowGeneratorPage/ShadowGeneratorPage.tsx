@@ -37,7 +37,7 @@ function ShadowGeneratorPage() {
 		justifyContent: "center",
 		alignItems: "center",
 		aspectRatio: "16/9",
-		margin: 100,
+		margin: 20,
 		// borderWidth: 1,
 		// borderStyle: "solid",
 		// borderColor: borderBoxColor,
@@ -133,7 +133,7 @@ function ShadowGeneratorPage() {
 			<NavigationBar title="Shadow Generator" />
 			<div>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={4}>
+					<Grid item xs={12} md={4}>
 						<Paper>
 							<Box p={2}>
 								<SliderWithInput
@@ -217,7 +217,7 @@ function ShadowGeneratorPage() {
 							</Box>
 						</Paper>
 					</Grid>
-					<Grid item xs={8}>
+					<Grid item xs={12} md={8}>
 						<Paper>
 							<Box p={2} style={{ backgroundColor: bgWrapperColor }}>
 								<div style={shadowBoxStyles}>

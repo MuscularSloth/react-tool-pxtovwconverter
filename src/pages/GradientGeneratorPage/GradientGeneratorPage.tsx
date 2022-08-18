@@ -175,7 +175,7 @@ function GradientGeneratorPage() {
 					</Grid>
 				</Grid>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={6} lg={4}>
+					<Grid item xs={12} md={6} lg={4}>
 						<Paper>
 							<Box p={2}>
 								<DropDownSmallSelect
@@ -201,7 +201,7 @@ function GradientGeneratorPage() {
 							</Box>
 						</Paper>
 					</Grid>
-					<Grid item xs={6} lg={8}>
+					<Grid item xs={12} md={6} lg={8}>
 						<Paper>
 							<Box p={2}>
 								{gradientType &&
