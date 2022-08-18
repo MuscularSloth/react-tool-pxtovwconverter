@@ -1,3 +1,5 @@
+![Version](https://img.shields.io/badge/version-beta--0.7-green) ![Issues](https://img.shields.io/github/issues/MuscularSloth/react-tool-pxtovwconverter) ![Closed PR](https://img.shields.io/github/issues-pr-closed/MuscularSloth/react-tool-pxtovwconverter)
+
 ## App that helps
 
 Link: [http://webtools.mktech.icu/](http://webtools.mktech.icu/)
