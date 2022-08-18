@@ -238,14 +238,14 @@ function ColorConvertorPage() {
 			<NavigationBar title="Color Converter" />
 			<div>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={8}>
+					<Grid item xs={12} md={8}>
 						<Paper>
 							<Box p={2}>
 								<InputColorBlock setCalculatedColor={setCalculatedColor} />
 							</Box>
 						</Paper>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item xs={12} md={4} >
 						<Paper>
 							<ColorNameBlock
 								calculatedHEX={calculatedHEX}
@@ -255,7 +255,7 @@ function ColorConvertorPage() {
 					</Grid>
 				</Grid>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={4}>
+					<Grid item xs={12} md={4}>
 						<Paper>
 							<Typography sx={{ p: 1 }}>Colors with opacity:</Typography>
 							<ColorStringBlock
@@ -272,7 +272,7 @@ function ColorConvertorPage() {
 							/>
 						</Paper>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item xs={12} md={4}>
 						<Paper>
 							<Typography sx={{ p: 1 }}>Clear Colors:</Typography>
 							<ColorStringBlock
@@ -301,14 +301,14 @@ function ColorConvertorPage() {
 							/>
 						</Paper>
 					</Grid>
-					<Grid item xs={4}>
+					<Grid item xs={12} md={4}>
 						<Paper>
 							<ColorShadesBlock shadesHSLData={shadesHSLData} />
 						</Paper>
 					</Grid>
 				</Grid>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={12}>
+					<Grid item xs={12} sx={{display:{xs: 'none', md: 'block'}}}>
 						<Paper>
 							<PreviousColorCalcTable
 								prevCalculatedColors={prevCalculatedColors}

@@ -50,11 +50,11 @@ export default function PreviousCalcTable({ previousCalcValues, setPreviousCalcV
                     <Table aria-label="simple table">
                         <TableHead>
                         <TableRow>
-                            <TableCell style={{width: '30px'}} align="left"></TableCell>
+                            <TableCell sx={{width: '30px', display: {xs: 'none', lg: 'block'}}} align="left"></TableCell>
                             <TableCell align="center">Viewport Width</TableCell>
                             <TableCell align="center">Calculated Value</TableCell>
                             <TableCell align="center">Result</TableCell>
-                            <TableCell style={{width: '30px'}} align="right"></TableCell>
+                            <TableCell sx={{width: '30px', display: {xs: 'none', sm: 'block'}}} align="right"></TableCell>
                         </TableRow>
                         </TableHead>
                         <DragDropContext onDragEnd={onDragEnd}>
@@ -77,17 +77,17 @@ export default function PreviousCalcTable({ previousCalcValues, setPreviousCalcV
                                                                 {...provided.draggableProps}
                                                                 {...provided.dragHandleProps}
                                                             >
-                                                                <TableCell style={{width: '30px', backgroundColor: 'white'}} align="center">
+                                                                <TableCell sx={{width: '30px', display: {xs: 'none', md: 'block'}, backgroundColor: 'white'}} align="center">
                                                                     <IconButton aria-label="delete" color="info">
                                                                         <DragIndicatorIcon fontSize='small'/>
                                                                     </IconButton>
                                                                 </TableCell>
-                                                                <TableCell style={{width: '50%', backgroundColor: 'white'}} align="center">{row.selectedWidth}</TableCell>
-                                                                <TableCell style={{width: '30%', backgroundColor: 'white'}} align="center">{row.calculatedValue}</TableCell>
+                                                                <TableCell style={{width: '25%', backgroundColor: 'white'}} align="center">{row.selectedWidth}</TableCell>
+                                                                <TableCell style={{width: '25%', backgroundColor: 'white'}} align="center">{row.calculatedValue}</TableCell>
                                                                 <TableCell style={{width: 'auto', backgroundColor: 'white'}} align="center">
                                                                     <ResultCopyButton value={row.result} />
                                                                 </TableCell>
-                                                                <TableCell style={{width: '30px', backgroundColor: 'white'}} align="center">
+                                                                <TableCell sx={{width: '30px', display: {xs: 'none', sm: 'block'}, backgroundColor: 'white'}} align="center">
                                                                     <Tooltip style={{cursor: 'pointer' }} title="Click To Remove" onClick={()=>handleRemoveResultClick(row)}>
                                                                         <IconButton aria-label="delete" color="error">
                                                                             <ClearIcon fontSize='small'/>

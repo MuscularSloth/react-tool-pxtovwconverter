@@ -105,7 +105,7 @@ export default function TextConverterPage() {
 			<NavigationBar title="PX to VW Convert Text" />
 			<div>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={7}>
+					<Grid item xs={12} md={7}>
 						<Paper>
 							<Box p={2}>
 								<InputSlider
@@ -158,7 +158,7 @@ export default function TextConverterPage() {
 							</Box>
 						</Paper>
 					</Grid>
-					<Grid item xs={5}>
+					<Grid item xs={12} md={5}>
 						<Paper>
 							<Box p={2}>
 								<WidthPresetsBlock
@@ -190,7 +190,7 @@ export default function TextConverterPage() {
 					alignItems="stretch"
 					mt={2}
 				>
-					<Grid item xs={5}>
+					<Grid item xs={12} md={5}>
 						<Paper>
 							<DragDropTextArea
 								text={textToConvert}
@@ -202,7 +202,8 @@ export default function TextConverterPage() {
 					<Grid
 						container
 						item
-						xs={2}
+						xs={12}
+						md={2}
 						direction="column"
 						justifyContent="center"
 					>
@@ -233,7 +234,7 @@ export default function TextConverterPage() {
 							</Button>
 						</Paper>
 					</Grid>
-					<Grid item xs={5}>
+					<Grid item xs={12} md={5}>
 						<Paper>
 							<Box p={1} className="TextConverterPage__result-container">
 								<TextField

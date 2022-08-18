@@ -9,6 +9,8 @@ import { PATH } from "./constants/path";
 import SideMenu from "./components/SideMenu/SideMenu";
 import ShadowGeneratorPage from "./pages/ShadowGeneratorPage/ShadowGeneratorPage";
 import GradientGeneratorPage from "./pages/GradientGeneratorPage/GradientGeneratorPage";
+import SideSwipeableMenu from "./components/SideSwipeableMenu/SideSwipeableMenu";
+import SideSwipeableMenuProvider from "./context/SideSwipeableMenuProvider";
 
 function App() {
 	/**
@@ -28,33 +30,36 @@ function App() {
 
 	return (
 		<>
-			<Box sx={{ display: "flex" }}>
-				<SideMenu />
-				<Container component="div" maxWidth={false}>
-					<Box>
-						<Routes>
-							<Route path={PATH.home} element={<SingleValuePage />} />
-							<Route
-								path={PATH.textConverter}
-								element={<TextConverterPage />}
-							/>
-							<Route
-								path={PATH.colorConverter}
-								element={<ColorConvertorPage />}
-							/>
-							<Route
-								path={PATH.shadowGenerator}
-								element={<ShadowGeneratorPage />}
-							/>
-							<Route
-								path={PATH.gradientGenerator}
-								element={<GradientGeneratorPage />}
-							/>
-							<Route path="*" element={<Navigate to={PATH.home} />} />
-						</Routes>
-					</Box>
-				</Container>
-			</Box>
+			<SideSwipeableMenuProvider>
+				<Box sx={{ display: "flex" }}>
+					<SideSwipeableMenu />
+					<SideMenu />
+					<Container component="div" maxWidth={false} sx={{padding: {xs: 0, md: "0 16px"}}}>
+						<Box>
+							<Routes>
+								<Route path={PATH.home} element={<SingleValuePage />} />
+								<Route
+									path={PATH.textConverter}
+									element={<TextConverterPage />}
+								/>
+								<Route
+									path={PATH.colorConverter}
+									element={<ColorConvertorPage />}
+								/>
+								<Route
+									path={PATH.shadowGenerator}
+									element={<ShadowGeneratorPage />}
+								/>
+								<Route
+									path={PATH.gradientGenerator}
+									element={<GradientGeneratorPage />}
+								/>
+								<Route path="*" element={<Navigate to={PATH.home} />} />
+							</Routes>
+						</Box>
+					</Container>
+				</Box>
+			</SideSwipeableMenuProvider>
 		</>
 	);
 }

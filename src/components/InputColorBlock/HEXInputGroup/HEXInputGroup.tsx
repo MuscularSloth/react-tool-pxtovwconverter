@@ -66,7 +66,7 @@ function HEXInputGroup({
 				/>
 				<FormHelperText>HEX Color Code (6 or 8 dig)</FormHelperText>
 			</FormControl>
-			<FormControl sx={{ m: 1, width: "15%" }} size="small">
+			<FormControl sx={{ m: 1, width: {xs: "30%", md: '15%' }}} size="small">
 				<TextField
 					value={enteredHexOpacityValue}
 					onChange={handleEnteredHexOpacityValue}
