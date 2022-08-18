@@ -34,7 +34,7 @@ function App() {
 				<Box sx={{ display: "flex" }}>
 					<SideSwipeableMenu />
 					<SideMenu />
-					<Container component="div" maxWidth={false}>
+					<Container component="div" maxWidth={false} sx={{padding: {xs: 0, md: "0 16px"}}}>
 						<Box>
 							<Routes>
 								<Route path={PATH.home} element={<SingleValuePage />} />

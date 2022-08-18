@@ -59,6 +59,7 @@ export default function NavigationBar({ title }: propsTypes) {
 								// component="div"
 								// style={{ display: "flex" }}
 								pr={2}
+								sx={{display: {xs: 'none', md: 'block'}}}
 							>
 								{title}
 							</Typography>

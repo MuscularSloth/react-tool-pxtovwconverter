@@ -10,17 +10,22 @@ const defaultState = {
     setIsSideSwipeableMenuOpen: () => {}
 }
 
-
 export const sideSwipeableMenuContext = createContext<ISideSwipeableMenuContext>(defaultState);
 
-const SideSwipeableMenuProvider = (props: any) => {
+
+
+type Props = {
+    children?: React.ReactNode
+};
+
+const SideSwipeableMenuProvider: React.FC<Props> = ({children}) => {
     const [isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen] = useState<boolean>(false);
 
     return (
         <sideSwipeableMenuContext.Provider 
             value= {{ isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen }} 
         >
-            { props.children }
+            { children }
         </sideSwipeableMenuContext.Provider>
     
     );

@@ -207,7 +207,7 @@ export default function SingleValuePage() {
 			<NavigationBar title="PX to VW Convert Single Value" />
 			<div>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={7}>
+					<Grid item xs={12} md={7}>
 						<Paper>
 							<Box p={2}>
 								<InputSlider
@@ -215,9 +215,18 @@ export default function SingleValuePage() {
 									setSelectedWidth={setSelectedWidth}
 								/>
 							</Box>
-							<Box p={2} sx={{ display: "flex", alignItems: "center" }}>
+							<Box p={2} sx={{ 
+								display: "flex", 
+								alignItems: "center",
+								flexWrap: {xs: 'wrap', md: 'nowrap'}
+							}}>
 								<TextField
-									style={{ marginRight: 15, width: 150 }}
+									sx={{ 
+										marginRight: {xs: 0, md: 15}, 
+										width: 150,
+										flex: {xs: '0 0 50%', md: '1 1 auto'} 
+
+									}}
 									id="outlined-number"
 									label="Calculated Value"
 									type="number"
@@ -232,13 +241,22 @@ export default function SingleValuePage() {
 								/>
 								<Button
 									variant="outlined"
-									style={{ marginRight: 15 }}
+									sx={{ 
+										marginRight: {xs: 0, md: 15}, 
+										flex: {xs: '0 0 50%', md: '1 1 auto'} 
+									}}
 									onClick={handleCalculateClick}
+									
 								>
 									Calculate
 								</Button>
 								{currentResult && (
-									<Box ml={"auto"}>
+									<Box sx={{
+										marginTop: {xs: '15px', md: 0},
+										marginLeft: {xs: 0, md: 'auto'},
+										flex: {xs: '0 0 100%', md: '1 1 auto'},
+										textAlign: {xs: 'center', md: 'left'}
+									}}>
 										<ResultCopyButton value={currentResult} />
 									</Box>
 								)}
@@ -262,7 +280,7 @@ export default function SingleValuePage() {
 							</Box>
 						</Paper>
 					</Grid>
-					<Grid item xs={5}>
+					<Grid item xs={12} md={5}>
 						<Paper>
 							<Box p={2}>
 								<WidthPresetsBlock
