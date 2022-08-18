@@ -68,7 +68,7 @@ function HSLInputGroup({
 
 	return (
 		<>
-			<FormControl sx={{ m: 1, width: "20%" }} size="small">
+			<FormControl sx={{ m: 1, width:{xs: "30%", md: "20%"} }} size="small">
 				<TextField
 					value={enteredHueValue}
 					onChange={handleEnteredHueValue}
@@ -81,7 +81,7 @@ function HSLInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width: "20%" }} size="small">
+			<FormControl sx={{ m: 1, width:{xs: "30%", md: "20%"} }} size="small">
 				<TextField
 					value={enteredSaturationValue}
 					onChange={handleEnteredSaturationValue}
@@ -94,7 +94,7 @@ function HSLInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width: "20%" }} size="small">
+			<FormControl sx={{ m: 1, width:{xs: "30%", md: "20%"} }} size="small">
 				<TextField
 					value={enteredLightnessValue}
 					onChange={handleEnteredLightnessValue}

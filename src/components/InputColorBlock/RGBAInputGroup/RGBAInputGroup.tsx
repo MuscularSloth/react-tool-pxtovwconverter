@@ -96,7 +96,7 @@ function RGBAInputGroup({
 
 	return (
 		<>
-			<FormControl sx={{ m: 1, width: "15%" }} size="small">
+			<FormControl sx={{ m: 1, width:{xs: "30%", md: "15%"}  }} size="small">
 				<TextField
 					value={enteredRedValue}
 					onChange={handleEnteredRedValue}
@@ -109,7 +109,7 @@ function RGBAInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width: "15%" }} size="small">
+			<FormControl sx={{ m: 1, width:{xs: "30%", md: "15%"}}} size="small">
 				<TextField
 					value={enteredGreenValue}
 					onChange={handleEnteredGreenValue}
@@ -122,7 +122,7 @@ function RGBAInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width: "15%" }} size="small">
+			<FormControl sx={{ m: 1, width:{xs: "30%", md: "15%"} }} size="small">
 				<TextField
 					value={enteredBlueValue}
 					onChange={handleEnteredBlueValue}
@@ -135,7 +135,7 @@ function RGBAInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width: "15%" }} size="small">
+			<FormControl sx={{ m: 1, width:{xs: "30%", md: "15%"} }} size="small">
 				<TextField
 					value={enteredOpacityValue}
 					onChange={handleEnteredOpacityValue}
