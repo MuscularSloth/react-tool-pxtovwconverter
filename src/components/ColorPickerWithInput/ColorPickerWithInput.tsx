@@ -1,6 +1,7 @@
-import { FormControl, Input, InputLabel } from '@mui/material';
+import { FormControl, Input, InputLabel, debounce } from '@mui/material';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { HexAlphaColorPicker } from 'react-colorful';
+
 import useClickOutside from '../../helpers/useClickOutside';
 import './ColorPickerWithInput.scss';
 
@@ -25,9 +26,12 @@ const ColorPickerWithInput = ({
 	const close = useCallback((): void => setIsOpen(false), []);
 	useClickOutside(popover, close);
 
-	const handleChangeColor = (value: string) => {
-		setNewColor(value);
-	};
+	const handleChangeColor = useCallback(
+		debounce((value: string) => {
+			setNewColor(value);
+		}, 300),
+		[],
+	);
 
 	useEffect(() => {
 		if (setColor && newColor) {
