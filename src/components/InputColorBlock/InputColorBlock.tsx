@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
 	Button,
 	FormControl,
@@ -119,6 +119,7 @@ const InputColorBlock = ({ setCalculatedColor }: propTypes) => {
 					setCalculatedColor(calculatedColor);
 				}
 				break;
+			default:
 		}
 	};
 

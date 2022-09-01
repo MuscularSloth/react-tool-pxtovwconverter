@@ -19,7 +19,7 @@
 			{ "extensions": [".js", ".jsx", ".ts", ".tsx"] }
 		],
 		"import/extensions": "off",
-		"indent": ["error", "tab"],
+		"indent": "off",
 		"no-tabs": ["error", { "allowIndentationTabs": true }],
 		"import/no-unresolved": "off",
 		"implicit-arrow-linebreak": "off",

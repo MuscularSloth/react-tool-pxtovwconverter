@@ -45,12 +45,11 @@ const ColorPickerWithInput = ({ title, color, setColor }: propsTypes) => {
 			<div className="ColorPickerWithInput__picker">
 				<button
 					type="button"
+					aria-label="Open Color Picker"
 					className="ColorPickerWithInput__swatch"
 					style={{ backgroundColor: color }}
 					onClick={() => setIsOpen(true)}
-				>
-					open
-				</button>
+				/>
 
 				{isOpen && (
 					<div className="ColorPickerWithInput__popover" ref={popover}>

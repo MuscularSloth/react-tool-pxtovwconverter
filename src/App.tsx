@@ -1,15 +1,15 @@
-import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Box, Container } from '@mui/material';
 import SingleValuePage from './pages/SingleValuePage/SingleValuePage';
 import TextConverterPage from './pages/TextConverterPage/TextConverterPage';
 import ColorConvertorPage from './pages/ColorConvertorPage/ColorConvertorPage';
-import PATH from './constants/path';
 import SideMenu from './components/SideMenu/SideMenu';
 import ShadowGeneratorPage from './pages/ShadowGeneratorPage/ShadowGeneratorPage';
 import GradientGeneratorPage from './pages/GradientGeneratorPage/GradientGeneratorPage';
 import SideSwipeableMenu from './components/SideSwipeableMenu/SideSwipeableMenu';
 import SideSwipeableMenuProvider from './context/SideSwipeableMenuProvider';
+import PATH from './constants/path';
+import './App.css';
 
 const App = () => (
 	/**

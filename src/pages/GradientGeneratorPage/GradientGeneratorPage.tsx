@@ -123,12 +123,15 @@ const GradientGeneratorPage = () => {
 					`from ${gradientAngle}deg` +
 					` at ${circlePosition.x}% ${circlePosition.y}%`;
 				break;
+			default:
 		}
 
-		gradientColorsSet &&
-			gradientColorsSet.map(
-				(colorRow) => (gradientString += `, ${colorRow.color} ${colorRow.stop}%`),
-			);
+		gradientString = gradientColorsSet.reduce(
+			(colorString, colorRow) =>
+				`${colorString}, ${colorRow.color} ${colorRow.stop}%`,
+			gradientString,
+		);
+
 		gradientString += ')';
 		setCalculatedGradient(gradientString);
 	};
@@ -147,7 +150,7 @@ const GradientGeneratorPage = () => {
 
 	return (
 		<>
-			<NavigationBar title="Color Converter" />
+			<NavigationBar title="Gradient Generator" />
 			<div>
 				<Grid container direction="row" justifyContent="center">
 					<Grid item xs={12}>
