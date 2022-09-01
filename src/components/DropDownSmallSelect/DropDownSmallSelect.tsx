@@ -1,8 +1,8 @@
-import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import * as React from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface propsTypes {
 	value: { key: string; value: string };
@@ -12,18 +12,17 @@ interface propsTypes {
 	placeholder?: string;
 }
 
-export default function DropDownSmallSelect({
+const DropDownSmallSelect = ({
 	value,
 	setValue,
 	valuesList,
 	title,
 	placeholder,
-}: propsTypes) {
+}: propsTypes) => {
 	const handleChange = (event: SelectChangeEvent) => {
 		const newValue = {
 			key: event.target.value,
-			value: valuesList.filter((item) => item.key === event.target.value)[0]
-				.value,
+			value: valuesList.filter((item) => item.key === event.target.value)[0].value,
 		};
 		setValue(newValue);
 	};
@@ -53,4 +52,6 @@ export default function DropDownSmallSelect({
 			</Select>
 		</FormControl>
 	);
-}
+};
+
+export default DropDownSmallSelect;

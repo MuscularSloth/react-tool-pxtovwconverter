@@ -1,12 +1,12 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Slider from "@mui/material/Slider";
-import MuiInput from "@mui/material/Input";
-import { IconButton, Tooltip } from "@mui/material";
-import AutoFixNormalIcon from "@mui/icons-material/AutoFixNormal";
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Slider from '@mui/material/Slider';
+import MuiInput from '@mui/material/Input';
+import { IconButton, Tooltip } from '@mui/material';
+import AutoFixNormalIcon from '@mui/icons-material/AutoFixNormal';
 
 const Input = styled(MuiInput)`
 	width: 42px;
@@ -22,7 +22,7 @@ interface propsTypes {
 	resetValue?: number;
 }
 
-export default function SliderWithInput({
+const SliderWithInput = ({
 	title,
 	value,
 	setValue,
@@ -30,14 +30,14 @@ export default function SliderWithInput({
 	minValue = 0,
 	step = 1,
 	resetValue = 0,
-}: propsTypes) {
+}: propsTypes) => {
 	const handleSliderChange = (event: Event, newValue: number | number[]) => {
-		const valueToSet = typeof newValue === "number" ? newValue : 0;
+		const valueToSet = typeof newValue === 'number' ? newValue : 0;
 		setValue(valueToSet);
 	};
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setValue(event.target.value === "" ? 0 : Number(event.target.value));
+		setValue(event.target.value === '' ? 0 : Number(event.target.value));
 	};
 
 	const resetInputHandler = () => {
@@ -59,7 +59,7 @@ export default function SliderWithInput({
 			</Typography>
 			<Grid container spacing={2} alignItems="center">
 				<Grid item xs>
-					<Tooltip placement="top" title={"Reset to " + resetValue}>
+					<Tooltip placement="top" title={`Reset to ${resetValue}`}>
 						<IconButton
 							size="small"
 							color="primary"
@@ -70,7 +70,7 @@ export default function SliderWithInput({
 						</IconButton>
 					</Tooltip>
 					<Slider
-						value={typeof value === "number" ? value : 0}
+						value={typeof value === 'number' ? value : 0}
 						onChange={handleSliderChange}
 						aria-labelledby="input-slider"
 						step={step}
@@ -86,15 +86,17 @@ export default function SliderWithInput({
 						onChange={handleInputChange}
 						onBlur={handleBlur}
 						inputProps={{
-							step: step,
+							step,
 							min: minValue,
 							max: maxValue,
-							type: "number",
-							"aria-labelledby": "input-slider",
+							type: 'number',
+							'aria-labelledby': 'input-slider',
 						}}
 					/>
 				</Grid>
 			</Grid>
 		</Box>
 	);
-}
+};
+
+export default SliderWithInput;

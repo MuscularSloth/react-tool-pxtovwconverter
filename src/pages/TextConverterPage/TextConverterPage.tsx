@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
 	Button,
 	Checkbox,
+	Box,
 	FormControlLabel,
 	Grid,
 	Input,
@@ -10,30 +11,27 @@ import {
 	TextField,
 	Tooltip,
 	Typography,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import InputSlider from "../../components/InputSlider/InputSlider";
-import WidthPresetsBlock from "../../components/WidthPresets/WidthPresetsBlock";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import ClearIcon from "@mui/icons-material/Clear";
-import DragDropTextArea from "../../components/DragDropTextArea/DragDropTextArea";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
-import "./TextConverterPage.css";
-import { REGEX_CSS_RULE } from "../../constants/regex";
+} from '@mui/material';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ClearIcon from '@mui/icons-material/Clear';
+import WidthPresetsBlock from '../../components/WidthPresets/WidthPresetsBlock';
+import InputSlider from '../../components/InputSlider/InputSlider';
+import DragDropTextArea from '../../components/DragDropTextArea/DragDropTextArea';
+import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import './TextConverterPage.css';
+import { REGEX_CSS_RULE } from '../../constants/regex';
 
-export default function TextConverterPage() {
+const TextConverterPage = () => {
 	const regexRule = /([0-9]+)px/g;
 
+	const presetedWidth = [1920, 2160, 1440, 1280];
 	const [selectedWidth, setSelectedWidth] = useState<number>(1920);
-	const [presetedWidth, setPresetedWidth] = useState<number[]>([
-		1920, 2160, 1440, 1280,
-	]);
 	const [customPresetedWidth, setCustomPresetedWidth] = useState<number[]>([
 		720,
 	]);
-	const [textToConvert, setTextToConvert] = useState<string>("");
-	const [textConverted, setTextConverted] = useState<string>("");
+	const [textToConvert, setTextToConvert] = useState<string>('');
+	const [textConverted, setTextConverted] = useState<string>('');
 	const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
 	const [dontCalculateLessThan, setDontCalculateLessThan] =
 		useState<boolean>(false);
@@ -43,49 +41,46 @@ export default function TextConverterPage() {
 
 	const handlePresetClick = (e: React.MouseEvent) => {
 		const targetEl = e.target as HTMLElement;
-		const selectedWidth = +targetEl.innerText;
-		if (selectedWidth > 1 && selectedWidth <= 2160) {
-			setSelectedWidth(selectedWidth);
+		const newSelectedWidth = +targetEl.innerText;
+		if (newSelectedWidth > 1 && newSelectedWidth <= 2160) {
+			setSelectedWidth(newSelectedWidth);
 		}
 	};
 
 	const handlePresetDelete = (customWidthToDelete: number) => {
-		setCustomPresetedWidth((customPresetedWidth) =>
-			customPresetedWidth.filter((width) => width !== customWidthToDelete)
+		setCustomPresetedWidth((prevCustomPresetedWidth) =>
+			prevCustomPresetedWidth.filter((width) => width !== customWidthToDelete),
 		);
 	};
 
 	const replaceFunction = (match: string, value: number): string => {
-		console.log("replaceFunction", { match, value });
+		console.log('replaceFunction', { match, value });
 
 		if (dontCalculateLessThan && value <= dontCalculateValue) {
 			return match;
 		}
-		return ((value / selectedWidth) * 100).toFixed(3) + "vw";
+		return `${((value / selectedWidth) * 100).toFixed(3)}vw`;
 	};
 
 	const clearNonConvertedRows = (match: string): string => {
-		console.log("match >>>", match);
+		console.log('match >>>', match);
 
-		if (match.includes("vw")) {
+		if (match.includes('vw')) {
 			return match;
 		}
 
-		return "";
+		return '';
 	};
 
 	const hanldeConvertClick = () => {
 		let convertedText = textToConvert.replace(regexRule, replaceFunction);
 
 		if (removeRowsWithoutPx) {
-			console.log("removeRowsWithoutPx true ");
-			convertedText = convertedText.replace(
-				REGEX_CSS_RULE,
-				clearNonConvertedRows
-			);
+			console.log('removeRowsWithoutPx true ');
+			convertedText = convertedText.replace(REGEX_CSS_RULE, clearNonConvertedRows);
 			const rowsSplitted = convertedText.split(/\r?\n/);
-			const emptyRowsCleared = rowsSplitted.filter((row) => row !== "");
-			convertedText = emptyRowsCleared.join("\n");
+			const emptyRowsCleared = rowsSplitted.filter((row) => row !== '');
+			convertedText = emptyRowsCleared.join('\n');
 		}
 		setTextConverted(convertedText);
 	};
@@ -96,8 +91,8 @@ export default function TextConverterPage() {
 	};
 
 	const hanldeClearAllClick = () => {
-		setTextToConvert("");
-		setTextConverted("");
+		setTextToConvert('');
+		setTextConverted('');
 	};
 
 	return (
@@ -118,17 +113,13 @@ export default function TextConverterPage() {
 								<Box>
 									<FormControlLabel
 										value="end"
-										control={
-											<Checkbox size="small" checked={dontCalculateLessThan} />
-										}
+										control={<Checkbox size="small" checked={dontCalculateLessThan} />}
 										label="Don't convert values less (or equal) than"
 										labelPlacement="end"
-										onChange={() =>
-											setDontCalculateLessThan(!dontCalculateLessThan)
-										}
+										onChange={() => setDontCalculateLessThan(!dontCalculateLessThan)}
 									/>
 									<Input
-										style={{ width: "35px", marginRight: "5px" }}
+										style={{ width: '35px', marginRight: '5px' }}
 										value={dontCalculateValue}
 										size="small"
 										onChange={(e) => setDontCalculateValue(+e.target.value)}
@@ -136,8 +127,8 @@ export default function TextConverterPage() {
 											step: 1,
 											min: 1,
 											max: 2160,
-											type: "number",
-											"aria-labelledby": "input-slider",
+											type: 'number',
+											'aria-labelledby': 'input-slider',
 										}}
 									/>
 									px
@@ -145,14 +136,10 @@ export default function TextConverterPage() {
 								<Box>
 									<FormControlLabel
 										value="end"
-										control={
-											<Checkbox size="small" checked={removeRowsWithoutPx} />
-										}
+										control={<Checkbox size="small" checked={removeRowsWithoutPx} />}
 										label="Remove rows without px"
 										labelPlacement="end"
-										onChange={() =>
-											setRemoveRowsWithoutPx(!removeRowsWithoutPx)
-										}
+										onChange={() => setRemoveRowsWithoutPx(!removeRowsWithoutPx)}
 									/>
 								</Box>
 							</Box>
@@ -174,7 +161,7 @@ export default function TextConverterPage() {
 									title="Custom Viewport Width Presets:"
 									hintText="The new value of viewport width will be added automatically on a new calculation if it has not been used previously."
 									widthList={customPresetedWidth}
-									canDelete={true}
+									canDelete
 									handlePresetClick={handlePresetClick}
 									handlePresetDelete={handlePresetDelete}
 								/>
@@ -209,11 +196,11 @@ export default function TextConverterPage() {
 					>
 						<Paper
 							style={{
-								height: "100%",
-								display: "flex",
-								flexDirection: "column",
-								justifyContent: "center",
-								alignItems: "center",
+								height: '100%',
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+								alignItems: 'center',
 							}}
 						>
 							<Button
@@ -239,7 +226,7 @@ export default function TextConverterPage() {
 							<Box p={1} className="TextConverterPage__result-container">
 								<TextField
 									InputProps={{
-										style: { fontSize: "12px" },
+										style: { fontSize: '12px' },
 										readOnly: true,
 									}}
 									multiline
@@ -250,7 +237,7 @@ export default function TextConverterPage() {
 								{textConverted && (
 									<>
 										<Tooltip
-											style={{ cursor: "pointer" }}
+											style={{ cursor: 'pointer' }}
 											title="Click To Copy"
 											onClick={handleCopyResultClick}
 										>
@@ -260,10 +247,10 @@ export default function TextConverterPage() {
 										</Tooltip>
 										<Snackbar
 											autoHideDuration={2000}
-											anchorOrigin={{ vertical: "top", horizontal: "center" }}
+											anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 											open={isNotificationOpen}
 											onClose={() => setIsNotificationOpen(false)}
-											message={`Result has been copied!`}
+											message="Result has been copied!"
 											key="textCopiedNotification"
 										/>
 									</>
@@ -275,4 +262,6 @@ export default function TextConverterPage() {
 			</div>
 		</>
 	);
-}
+};
+
+export default TextConverterPage;

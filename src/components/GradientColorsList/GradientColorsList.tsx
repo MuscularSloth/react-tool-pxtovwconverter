@@ -5,23 +5,22 @@ import {
 	Tooltip,
 	Grid,
 	Typography,
-} from "@mui/material";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { Ref } from "semantic-ui-react";
-import ColorPickerWithInput from "../../components/ColorPickerWithInput/ColorPickerWithInput";
-import { gradientColorsListTypes } from "../../pages/GradientGeneratorPage/GradientGeneratorPage";
-import ClearIcon from "@mui/icons-material/Clear";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+} from '@mui/material';
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
+import { Ref } from 'semantic-ui-react';
+import ClearIcon from '@mui/icons-material/Clear';
+import ColorPickerWithInput from '../../components/ColorPickerWithInput/ColorPickerWithInput';
+import { gradientColorsListTypes } from '../../pages/GradientGeneratorPage/GradientGeneratorPage';
 
 interface propsTypes {
 	gradientColorsSet: gradientColorsListTypes[];
 	setGradientColorsSet: Function;
 }
 
-function GradientColorsList({
+const GradientColorsList = ({
 	gradientColorsSet,
 	setGradientColorsSet,
-}: propsTypes) {
+}: propsTypes) => {
 	const handleChangeColor = (newColor: string, idx: number) => {
 		const newArrayValue = { ...gradientColorsSet[idx], color: newColor };
 		const newArray = [...gradientColorsSet];
@@ -37,7 +36,7 @@ function GradientColorsList({
 	};
 
 	const onDragEnd = (result: any) => {
-		const { destination, source, draggableId } = result;
+		const { destination, source } = result;
 
 		if (!destination) {
 			return;
@@ -51,9 +50,7 @@ function GradientColorsList({
 		}
 
 		const prevItem = gradientColorsSet[source.index];
-		const destinationItem = gradientColorsSet[destination.index];
 		const prevItemStopValue = prevItem.stop;
-		const destinationItemStopValue = destinationItem.stop;
 
 		// prevItem.stop = destinationItemStopValue;
 		// destinationItem.stop = prevItemStopValue;
@@ -69,12 +66,12 @@ function GradientColorsList({
 		const lastIdx = source.index;
 
 		if (lastIdx > newIdx) {
-			for (let i = newIdx; i < lastIdx; i++) {
+			for (let i = newIdx; i < lastIdx; i += 1) {
 				newArray[i].stop = newArray[i + 1].stop;
 			}
 			newArray[lastIdx].stop = prevItemStopValue;
 		} else {
-			for (let i = newIdx; i > lastIdx; i--) {
+			for (let i = newIdx; i > lastIdx; i -= 1) {
 				newArray[i].stop = newArray[i - 1].stop;
 			}
 			newArray[lastIdx].stop = prevItemStopValue;
@@ -102,37 +99,32 @@ function GradientColorsList({
 								<Ref innerRef={provided.innerRef}>
 									<Grid {...provided.droppableProps}>
 										{gradientColorsSet.map((item, idx) => (
-											<Draggable
-												draggableId={"idDraggable-" + idx}
-												index={idx}
-												key={idx}
-											>
-												{(provided) => (
-													<Ref innerRef={provided.innerRef}>
+											// eslint-disable-next-line react/no-array-index-key
+											<Draggable draggableId={`idDraggable-${idx}`} index={idx} key={idx}>
+												{(childProvided) => (
+													<Ref innerRef={childProvided.innerRef}>
 														<Grid
 															sx={{
-																display: "flex",
-																"&:last-child td, &:last-child th": {
+																display: 'flex',
+																'&:last-child td, &:last-child th': {
 																	border: 0,
 																},
 															}}
-															{...provided.draggableProps}
-															{...provided.dragHandleProps}
+															{...childProvided.draggableProps}
+															{...childProvided.dragHandleProps}
 														>
 															<Box
 																style={{
-																	width: "auto",
-																	backgroundColor: "white",
-																	padding: "10px 0",
+																	width: 'auto',
+																	backgroundColor: 'white',
+																	padding: '10px 0',
 																}}
 															>
 																<div className="GradientGeneratorPage__color-block">
 																	<ColorPickerWithInput
 																		color={item.color}
-																		setColor={(val: string) =>
-																			handleChangeColor(val, idx)
-																		}
-																		title={idx + " color"}
+																		setColor={(val: string) => handleChangeColor(val, idx)}
+																		title={`${idx} color`}
 																	/>
 																	<TextField
 																		className="GradientGeneratorPage__stop-input"
@@ -143,33 +135,23 @@ function GradientColorsList({
 																			step: 1,
 																			min: 0,
 																			max: 100,
-																			type: "number",
+																			type: 'number',
 																		}}
-																		onChange={(e) =>
-																			handleChangeStopPoint(
-																				idx,
-																				+e.target.value
-																			)
-																		}
-																		onBlur={(e) =>
-																			handleChangeStopPoint(
-																				idx,
-																				+e.target.value
-																			)
-																		}
+																		onChange={(e) => handleChangeStopPoint(idx, +e.target.value)}
+																		onBlur={(e) => handleChangeStopPoint(idx, +e.target.value)}
 																	/>
 																</div>
 															</Box>
 
 															<Box
 																style={{
-																	width: "40px",
-																	backgroundColor: "white",
-																	padding: "10px 0",
+																	width: '40px',
+																	backgroundColor: 'white',
+																	padding: '10px 0',
 																}}
 															>
 																<Tooltip
-																	style={{ cursor: "pointer" }}
+																	style={{ cursor: 'pointer' }}
 																	title="Click To Remove"
 																	onClick={() => handleRemoveColorClick(idx)}
 																>
@@ -193,6 +175,6 @@ function GradientColorsList({
 			)}
 		</div>
 	);
-}
+};
 
 export default GradientColorsList;

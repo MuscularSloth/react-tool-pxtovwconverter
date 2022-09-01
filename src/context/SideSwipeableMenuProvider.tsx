@@ -1,34 +1,36 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 
 export interface ISideSwipeableMenuContext {
-    isSideSwipeableMenuOpen: boolean;
-    setIsSideSwipeableMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+	isSideSwipeableMenuOpen: boolean;
+	setIsSideSwipeableMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const defaultState = {
-    isSideSwipeableMenuOpen: false,
-    setIsSideSwipeableMenuOpen: () => {}
-}
-
-export const sideSwipeableMenuContext = createContext<ISideSwipeableMenuContext>(defaultState);
-
-
-
-type Props = {
-    children?: React.ReactNode
+	isSideSwipeableMenuOpen: false,
+	setIsSideSwipeableMenuOpen: () => {},
 };
 
-const SideSwipeableMenuProvider: React.FC<Props> = ({children}) => {
-    const [isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen] = useState<boolean>(false);
+export const sideSwipeableMenuContext =
+	createContext<ISideSwipeableMenuContext>(defaultState);
 
-    return (
-        <sideSwipeableMenuContext.Provider 
-            value= {{ isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen }} 
-        >
-            { children }
-        </sideSwipeableMenuContext.Provider>
-    
-    );
+type Props = {
+	children?: React.ReactNode;
+};
+
+const SideSwipeableMenuProvider: React.FC<Props> = ({ children }) => {
+	const [isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen] =
+		useState<boolean>(false);
+
+	const sideMenuMemo = useMemo(
+		() => ({ isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen }),
+		[],
+	);
+
+	return (
+		<sideSwipeableMenuContext.Provider value={sideMenuMemo}>
+			{children}
+		</sideSwipeableMenuContext.Provider>
+	);
 };
 
 export default SideSwipeableMenuProvider;

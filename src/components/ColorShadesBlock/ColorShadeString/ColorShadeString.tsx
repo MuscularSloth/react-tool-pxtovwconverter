@@ -1,16 +1,16 @@
-import { Chip, Snackbar, Tooltip } from "@mui/material";
-import React, { useState } from "react";
+import { Chip, Snackbar, Tooltip } from '@mui/material';
+import React, { useState } from 'react';
 
 interface propsType {
 	shade: string;
 	textColor: string;
 }
 
-function ColorShadeString({ shade, textColor }: propsType) {
+const ColorShadeString = ({ shade, textColor }: propsType) => {
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
 	const handleCopyResultClick = () => {
-		navigator.clipboard.writeText("" + shade);
+		navigator.clipboard.writeText(`${shade}`);
 		setIsNotificationOpen(true);
 	};
 
@@ -18,14 +18,14 @@ function ColorShadeString({ shade, textColor }: propsType) {
 		<>
 			<Snackbar
 				autoHideDuration={2000}
-				anchorOrigin={{ vertical: "top", horizontal: "center" }}
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 				open={isNotificationOpen}
 				onClose={() => setIsNotificationOpen(false)}
-				message={`Result has been copied!`}
+				message="Result has been copied!"
 				key={shade}
 			/>
 			<Tooltip
-				style={{ cursor: "pointer" }}
+				style={{ cursor: 'pointer' }}
 				title="Click To Copy"
 				onClick={handleCopyResultClick}
 			>
@@ -36,6 +36,6 @@ function ColorShadeString({ shade, textColor }: propsType) {
 			</Tooltip>
 		</>
 	);
-}
+};
 
 export default ColorShadeString;

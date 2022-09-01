@@ -1,68 +1,59 @@
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
 	Button,
 	FormControl,
 	FormHelperText,
-	InputAdornment,
 	MenuItem,
 	Select,
 	SelectChangeEvent,
-	TextField,
-} from "@mui/material";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { HEX_WEBCOLOR_PATTERN } from "../../constants/regex";
-import { HEXToRGBA, HSLToRGB } from "../../helpers/colorConverter";
-import { getValueFromLocalStorage } from "../../helpers/localStorage";
-import { colorObjectType } from "../../pages/ColorConvertorPage/ColorConvertorPage";
-import HEXInputGroup from "./HEXInputGroup/HEXInputGroup";
-import HSLInputGroup from "./HSLInputGroup/HSLInputGroup";
-import RGBAInputGroup from "./RGBAInputGroup/RGBAInputGroup";
+} from '@mui/material';
+import { HEX_WEBCOLOR_PATTERN } from '../../constants/regex';
+import { HEXToRGBA, HSLToRGB } from '../../helpers/colorConverter';
+import { getValueFromLocalStorage } from '../../helpers/localStorage';
+import { colorObjectType } from '../../pages/ColorConvertorPage/ColorConvertorPage';
+import HEXInputGroup from './HEXInputGroup/HEXInputGroup';
+import HSLInputGroup from './HSLInputGroup/HSLInputGroup';
+import RGBAInputGroup from './RGBAInputGroup/RGBAInputGroup';
 
 interface propTypes {
 	setCalculatedColor: Dispatch<SetStateAction<colorObjectType>>;
 }
 
-enum colorTypesEnum {
-	"HEX",
-	"RGB",
-	"RGBA",
-	"HSL",
-}
-
-function InputColorBlock({ setCalculatedColor }: propTypes) {
+const InputColorBlock = ({ setCalculatedColor }: propTypes) => {
 	const [colorType, setColorType] = useState<string>(
-		getValueFromLocalStorage("colorType", "HEX")
+		getValueFromLocalStorage('colorType', 'HEX'),
 	);
 	const [enteredHexValue, setEnteredHexValue] = useState<string>(
-		getValueFromLocalStorage("enteredHexValue", "")
+		getValueFromLocalStorage('enteredHexValue', ''),
 	);
 	const [enteredHexOpacityValue, setEnteredHexOpacityValue] = useState<number>(
-		getValueFromLocalStorage("enteredHexOpacityValue", 1)
+		getValueFromLocalStorage('enteredHexOpacityValue', 1),
 	);
 	const [enteredRedValue, setEnteredRedValue] = useState<number>(
-		getValueFromLocalStorage("enteredRedValue", 0)
+		getValueFromLocalStorage('enteredRedValue', 0),
 	);
 	const [enteredGreenValue, setEnteredGreenValue] = useState<number>(
-		getValueFromLocalStorage("enteredGreenValue", 0)
+		getValueFromLocalStorage('enteredGreenValue', 0),
 	);
 	const [enteredBlueValue, setEnteredBlueValue] = useState<number>(
-		getValueFromLocalStorage("enteredBlueValue", 0)
+		getValueFromLocalStorage('enteredBlueValue', 0),
 	);
 	const [enteredOpacityValue, setEnteredOpacityValue] = useState<number>(
-		getValueFromLocalStorage("enteredOpacityValue", 1)
+		getValueFromLocalStorage('enteredOpacityValue', 1),
 	);
 	const [enteredHueValue, setEnteredHueValue] = useState<number>(
-		getValueFromLocalStorage("enteredHueValue", 0)
+		getValueFromLocalStorage('enteredHueValue', 0),
 	);
 	const [enteredSaturationValue, setEnteredSaturationValue] = useState<number>(
-		getValueFromLocalStorage("enteredSaturationValue", 0)
+		getValueFromLocalStorage('enteredSaturationValue', 0),
 	);
 	const [enteredLightnessValue, setEnteredLightnessValue] = useState<number>(
-		getValueFromLocalStorage("enteredLightnessValue", 0)
+		getValueFromLocalStorage('enteredLightnessValue', 0),
 	);
 
 	const handleChangeColorType = (event: SelectChangeEvent) => {
 		setColorType(event.target.value);
-		localStorage.setItem("colorType", JSON.stringify(event.target.value));
+		localStorage.setItem('colorType', JSON.stringify(event.target.value));
 	};
 
 	const handleConvertClick = () => {
@@ -74,13 +65,12 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 		};
 
 		switch (colorType) {
-			case "HEX":
+			case 'HEX':
 				if (enteredHexValue && enteredHexValue.match(HEX_WEBCOLOR_PATTERN)) {
 					calculatedColor = HEXToRGBA(enteredHexValue);
 					if (enteredHexOpacityValue < 1) {
 						if (calculatedColor.opacity < 1) {
-							calculatedColor.opacity =
-								calculatedColor.opacity * enteredHexOpacityValue;
+							calculatedColor.opacity *= enteredHexOpacityValue;
 						} else {
 							calculatedColor.opacity = enteredHexOpacityValue;
 						}
@@ -88,8 +78,8 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 					setCalculatedColor(calculatedColor);
 				}
 				break;
-			case "RGB":
-			case "RGBA":
+			case 'RGB':
+			case 'RGBA':
 				if (
 					enteredRedValue >= 0 &&
 					enteredRedValue <= 255 &&
@@ -109,7 +99,7 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 					setCalculatedColor(calculatedColor);
 				}
 				break;
-			case "HSL":
+			case 'HSL':
 				if (
 					enteredHueValue >= 0 &&
 					enteredHueValue <= 360 &&
@@ -122,7 +112,7 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 						...HSLToRGB(
 							enteredHueValue,
 							enteredSaturationValue,
-							enteredLightnessValue
+							enteredLightnessValue,
 						),
 						opacity: 1,
 					};
@@ -133,70 +123,68 @@ function InputColorBlock({ setCalculatedColor }: propTypes) {
 	};
 
 	const handleKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === "Enter") {
+		if (event.key === 'Enter') {
 			handleConvertClick();
 		}
 	};
 
 	return (
-		<>
-			<div>
-				<FormControl sx={{ m: 1, minWidth: 90 }} size="small">
-					<Select
-						value={colorType}
-						onChange={handleChangeColorType}
-						defaultValue="HEX"
-						inputProps={{ "aria-label": "Color type" }}
-					>
-						<MenuItem value="HEX">HEX</MenuItem>
-						<MenuItem value="RGB">RGB</MenuItem>
-						<MenuItem value="RGBA">RGBA</MenuItem>
-						<MenuItem value="HSL">HSL</MenuItem>
-					</Select>
-					<FormHelperText>Color type</FormHelperText>
-				</FormControl>
-				{colorType === "HEX" && (
-					<HEXInputGroup
-						enteredHexValue={enteredHexValue}
-						setEnteredHexValue={setEnteredHexValue}
-						enteredHexOpacityValue={enteredHexOpacityValue}
-						setEnteredHexOpacityValue={setEnteredHexOpacityValue}
-						handleKeyPressed={handleKeyPressed}
-					/>
-				)}
-				{(colorType === "RGB" || colorType === "RGBA") && (
-					<RGBAInputGroup
-						enteredRedValue={enteredRedValue}
-						setEnteredRedValue={setEnteredRedValue}
-						enteredGreenValue={enteredGreenValue}
-						setEnteredGreenValue={setEnteredGreenValue}
-						enteredBlueValue={enteredBlueValue}
-						setEnteredBlueValue={setEnteredBlueValue}
-						enteredOpacityValue={enteredOpacityValue}
-						setEnteredOpacityValue={setEnteredOpacityValue}
-						colorType={colorType}
-						handleKeyPressed={handleKeyPressed}
-					/>
-				)}
-				{colorType === "HSL" && (
-					<HSLInputGroup
-						enteredHueValue={enteredHueValue}
-						setEnteredHueValue={setEnteredHueValue}
-						enteredSaturationValue={enteredSaturationValue}
-						setEnteredSaturationValue={setEnteredSaturationValue}
-						enteredLightnessValue={enteredLightnessValue}
-						setEnteredLightnessValue={setEnteredLightnessValue}
-						handleKeyPressed={handleKeyPressed}
-					/>
-				)}
-				<FormControl sx={{ m: 1 }}>
-					<Button variant="outlined" onClick={handleConvertClick}>
-						Convert
-					</Button>
-				</FormControl>
-			</div>
-		</>
+		<div>
+			<FormControl sx={{ m: 1, minWidth: 90 }} size="small">
+				<Select
+					value={colorType}
+					onChange={handleChangeColorType}
+					defaultValue="HEX"
+					inputProps={{ 'aria-label': 'Color type' }}
+				>
+					<MenuItem value="HEX">HEX</MenuItem>
+					<MenuItem value="RGB">RGB</MenuItem>
+					<MenuItem value="RGBA">RGBA</MenuItem>
+					<MenuItem value="HSL">HSL</MenuItem>
+				</Select>
+				<FormHelperText>Color type</FormHelperText>
+			</FormControl>
+			{colorType === 'HEX' && (
+				<HEXInputGroup
+					enteredHexValue={enteredHexValue}
+					setEnteredHexValue={setEnteredHexValue}
+					enteredHexOpacityValue={enteredHexOpacityValue}
+					setEnteredHexOpacityValue={setEnteredHexOpacityValue}
+					handleKeyPressed={handleKeyPressed}
+				/>
+			)}
+			{(colorType === 'RGB' || colorType === 'RGBA') && (
+				<RGBAInputGroup
+					enteredRedValue={enteredRedValue}
+					setEnteredRedValue={setEnteredRedValue}
+					enteredGreenValue={enteredGreenValue}
+					setEnteredGreenValue={setEnteredGreenValue}
+					enteredBlueValue={enteredBlueValue}
+					setEnteredBlueValue={setEnteredBlueValue}
+					enteredOpacityValue={enteredOpacityValue}
+					setEnteredOpacityValue={setEnteredOpacityValue}
+					colorType={colorType}
+					handleKeyPressed={handleKeyPressed}
+				/>
+			)}
+			{colorType === 'HSL' && (
+				<HSLInputGroup
+					enteredHueValue={enteredHueValue}
+					setEnteredHueValue={setEnteredHueValue}
+					enteredSaturationValue={enteredSaturationValue}
+					setEnteredSaturationValue={setEnteredSaturationValue}
+					enteredLightnessValue={enteredLightnessValue}
+					setEnteredLightnessValue={setEnteredLightnessValue}
+					handleKeyPressed={handleKeyPressed}
+				/>
+			)}
+			<FormControl sx={{ m: 1 }}>
+				<Button variant="outlined" onClick={handleConvertClick}>
+					Convert
+				</Button>
+			</FormControl>
+		</div>
 	);
-}
+};
 
 export default InputColorBlock;

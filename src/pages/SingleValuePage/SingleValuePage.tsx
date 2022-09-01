@@ -1,6 +1,11 @@
-import React, { ChangeEvent, HTMLInputTypeAttribute, useEffect } from "react";
-import { useState } from "react";
-import Grid from "@mui/material/Grid";
+import React, {
+	ChangeEvent,
+	HTMLInputTypeAttribute,
+	useEffect,
+	useState,
+} from 'react';
+
+import Grid from '@mui/material/Grid';
 import {
 	Button,
 	Checkbox,
@@ -8,13 +13,13 @@ import {
 	Paper,
 	Snackbar,
 	TextField,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import InputSlider from "../../components/InputSlider/InputSlider";
-import ResultCopyButton from "../../components/ResultCopyButton/ResultCopyButton";
-import WidthPresetsBlock from "../../components/WidthPresets/WidthPresetsBlock";
-import PreviousCalcTable from "../../components/PreviousCalcTable/PreviousCalcTable";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
+	Box,
+} from '@mui/material';
+import InputSlider from '../../components/InputSlider/InputSlider';
+import ResultCopyButton from '../../components/ResultCopyButton/ResultCopyButton';
+import WidthPresetsBlock from '../../components/WidthPresets/WidthPresetsBlock';
+import PreviousCalcTable from '../../components/PreviousCalcTable/PreviousCalcTable';
+import NavigationBar from '../../components/NavigationBar/NavigationBar';
 
 export interface previousCalcValuesType {
 	selectedWidth: number;
@@ -22,14 +27,14 @@ export interface previousCalcValuesType {
 	result: number;
 }
 
-export default function SingleValuePage() {
+const SingleValuePage = () => {
 	const initialPresetedWidthValue: number[] = [1920, 2160, 1440, 1280];
 	const initialCustomPresetedWidth: number[] = [720];
 	const initialSelectedWidthValue: number = 1920;
 
 	const [selectedWidth, setSelectedWidth] = useState<number>(() => {
-		const saved: string = localStorage.getItem("selectedWidth") ?? "";
-		if (saved !== "") {
+		const saved: string = localStorage.getItem('selectedWidth') ?? '';
+		if (saved !== '') {
 			const initialValue = JSON.parse(saved);
 			return parseFloat(initialValue);
 		}
@@ -37,30 +42,30 @@ export default function SingleValuePage() {
 	});
 
 	const [presetedWidth, setPresetedWidth] = useState<number[]>(
-		initialPresetedWidthValue
+		initialPresetedWidthValue,
 	);
 
 	const [customPresetedWidth, setCustomPresetedWidth] = useState<number[]>(
 		() => {
-			const saved: string = localStorage.getItem("customPresetedWidth") ?? "";
-			if (saved !== "") {
+			const saved: string = localStorage.getItem('customPresetedWidth') ?? '';
+			if (saved !== '') {
 				const initialValue: number[] = JSON.parse(saved);
 				return initialValue;
 			}
 			return initialCustomPresetedWidth;
-		}
+		},
 	);
 
 	const [calculatedValue, setCalculatedValue] =
-		useState<HTMLInputTypeAttribute>("");
+		useState<HTMLInputTypeAttribute>('');
 
 	const [currentResult, setCurrentResult] = useState<number | null>();
 
 	const [previousCalcValues, setPreviousCalcValues] = useState<
 		previousCalcValuesType[] | []
 	>(() => {
-		const saved: string = localStorage.getItem("previousCalcValues") ?? "";
-		if (saved !== "") {
+		const saved: string = localStorage.getItem('previousCalcValues') ?? '';
+		if (saved !== '') {
 			const initialValue: previousCalcValuesType[] | [] = JSON.parse(saved);
 			return initialValue;
 		}
@@ -71,10 +76,10 @@ export default function SingleValuePage() {
 		useState<boolean>(false);
 
 	const [isAutoCopyOn, setIsAutoCopyOn] = useState<boolean>(() => {
-		const saved: string = localStorage.getItem("isAutoCopyOn") ?? "";
-		if (saved !== "") {
+		const saved: string = localStorage.getItem('isAutoCopyOn') ?? '';
+		if (saved !== '') {
 			const initialValue: string | null = JSON.parse(saved);
-			return initialValue === "true";
+			return initialValue === 'true';
 		}
 		return false;
 	});
@@ -82,38 +87,38 @@ export default function SingleValuePage() {
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
 	useEffect(() => {
-		localStorage.setItem("selectedWidth", JSON.stringify(selectedWidth));
+		localStorage.setItem('selectedWidth', JSON.stringify(selectedWidth));
 	}, [selectedWidth]);
 
 	useEffect(() => {
 		localStorage.setItem(
-			"customPresetedWidth",
-			JSON.stringify(customPresetedWidth)
+			'customPresetedWidth',
+			JSON.stringify(customPresetedWidth),
 		);
 	}, [customPresetedWidth]);
 
 	useEffect(() => {
 		localStorage.setItem(
-			"previousCalcValues",
-			JSON.stringify(previousCalcValues)
+			'previousCalcValues',
+			JSON.stringify(previousCalcValues),
 		);
 	}, [previousCalcValues]);
 
 	useEffect(() => {
-		localStorage.setItem("isAutoCopyOn", JSON.stringify(isAutoCopyOn));
+		localStorage.setItem('isAutoCopyOn', JSON.stringify(isAutoCopyOn));
 	}, [isAutoCopyOn]);
 
 	const handlePresetClick = (e: React.MouseEvent) => {
 		const targetEl = e.target as HTMLElement;
-		const selectedWidth: number = parseFloat(targetEl.innerText);
-		if (selectedWidth > 1 && selectedWidth <= 2160) {
-			setSelectedWidth(selectedWidth);
+		const newSelectedWidth: number = parseFloat(targetEl.innerText);
+		if (newSelectedWidth > 1 && newSelectedWidth <= 2160) {
+			setSelectedWidth(newSelectedWidth);
 		}
 	};
 
 	const handlePresetDelete = (customWidthToDelete: number) => {
-		setCustomPresetedWidth((customPresetedWidth: number[]) =>
-			customPresetedWidth.filter((width) => width !== customWidthToDelete)
+		setCustomPresetedWidth((prevCustomPresetedWidth: number[]) =>
+			prevCustomPresetedWidth.filter((width) => width !== customWidthToDelete),
 		);
 	};
 
@@ -123,30 +128,13 @@ export default function SingleValuePage() {
 		if (valueForCheck && valueForCheck >= 0 && valueForCheck <= 2160) {
 			setCalculatedValue(e.target.value);
 		} else if (valueForCheck < 0) {
-			setCalculatedValue("0");
+			setCalculatedValue('0');
 		} else if (valueForCheck > 2160) {
-			setCalculatedValue("2160");
+			setCalculatedValue('2160');
 		}
 
 		if (isCalculatedValueError) {
 			setIsCalculatedValueError(false);
-		}
-	};
-
-	const handleCalculatedValueKeyPress = (
-		e: React.KeyboardEvent<HTMLInputElement>
-	) => {
-		if (e.key === "Enter") {
-			handleCalculateClick();
-		}
-
-		/**
-		 * Listen for Backspace and clear input if it has only one char
-		 */
-		if (e.keyCode === 8) {
-			if (calculatedValue.length === 1) {
-				setCalculatedValue("");
-			}
 		}
 	};
 
@@ -170,14 +158,14 @@ export default function SingleValuePage() {
 		/**
 		 * Calculating VW and set up result
 		 */
-		let result: number = +(
+		const result: number = +(
 			(parseFloat(calculatedValue) / selectedWidth) *
 			100
 		).toFixed(3);
 		setCurrentResult(result);
 
 		if (isAutoCopyOn) {
-			navigator.clipboard.writeText(result + "vw");
+			navigator.clipboard.writeText(`${result}vw`);
 			setIsNotificationOpen(true);
 		}
 
@@ -185,13 +173,30 @@ export default function SingleValuePage() {
 			!previousCalcValues.some(
 				(valueObject) =>
 					valueObject.selectedWidth === selectedWidth &&
-					valueObject.calculatedValue === calculatedValue
+					valueObject.calculatedValue === calculatedValue,
 			)
 		) {
 			setPreviousCalcValues([
 				...previousCalcValues,
 				{ selectedWidth, calculatedValue, result },
 			]);
+		}
+	};
+
+	const handleCalculatedValueKeyPress = (
+		e: React.KeyboardEvent<HTMLInputElement>,
+	) => {
+		if (e.key === 'Enter') {
+			handleCalculateClick();
+		}
+
+		/**
+		 * Listen for Backspace and clear input if it has only one char
+		 */
+		if (e.keyCode === 8) {
+			if (calculatedValue.length === 1) {
+				setCalculatedValue('');
+			}
 		}
 	};
 
@@ -215,17 +220,19 @@ export default function SingleValuePage() {
 									setSelectedWidth={setSelectedWidth}
 								/>
 							</Box>
-							<Box p={2} sx={{ 
-								display: "flex", 
-								alignItems: "center",
-								flexWrap: {xs: 'wrap', md: 'nowrap'}
-							}}>
+							<Box
+								p={2}
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									flexWrap: { xs: 'wrap', md: 'nowrap' },
+								}}
+							>
 								<TextField
-									sx={{ 
-										marginRight: {xs: 0, md: 15}, 
+									sx={{
+										marginRight: { xs: 0, md: 15 },
 										width: 150,
-										flex: {xs: '0 0 50%', md: '1 1 auto'} 
-
+										flex: { xs: '0 0 50%', md: '1 1 auto' },
 									}}
 									id="outlined-number"
 									label="Calculated Value"
@@ -241,22 +248,23 @@ export default function SingleValuePage() {
 								/>
 								<Button
 									variant="outlined"
-									sx={{ 
-										marginRight: {xs: 0, md: 15}, 
-										flex: {xs: '0 0 50%', md: '1 1 auto'} 
+									sx={{
+										marginRight: { xs: 0, md: 15 },
+										flex: { xs: '0 0 50%', md: '1 1 auto' },
 									}}
 									onClick={handleCalculateClick}
-									
 								>
 									Calculate
 								</Button>
 								{currentResult && (
-									<Box sx={{
-										marginTop: {xs: '15px', md: 0},
-										marginLeft: {xs: 0, md: 'auto'},
-										flex: {xs: '0 0 100%', md: '1 1 auto'},
-										textAlign: {xs: 'center', md: 'left'}
-									}}>
+									<Box
+										sx={{
+											marginTop: { xs: '15px', md: 0 },
+											marginLeft: { xs: 0, md: 'auto' },
+											flex: { xs: '0 0 100%', md: '1 1 auto' },
+											textAlign: { xs: 'center', md: 'left' },
+										}}
+									>
 										<ResultCopyButton value={currentResult} />
 									</Box>
 								)}
@@ -271,7 +279,7 @@ export default function SingleValuePage() {
 								/>
 								<Snackbar
 									autoHideDuration={2000}
-									anchorOrigin={{ vertical: "top", horizontal: "center" }}
+									anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 									open={isNotificationOpen}
 									onClose={() => setIsNotificationOpen(false)}
 									message={`Result has been copied! - ${currentResult}vw`}
@@ -296,7 +304,7 @@ export default function SingleValuePage() {
 									title="Custom Viewport Width Presets:"
 									hintText="The new value of viewport width will be added automatically on a new calculation if it has not been used previously."
 									widthList={customPresetedWidth}
-									canDelete={true}
+									canDelete
 									handlePresetClick={handlePresetClick}
 									handlePresetDelete={handlePresetDelete}
 								/>
@@ -334,4 +342,6 @@ export default function SingleValuePage() {
 			</div>
 		</>
 	);
-}
+};
+
+export default SingleValuePage;

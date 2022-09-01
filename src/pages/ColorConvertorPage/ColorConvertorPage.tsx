@@ -1,26 +1,18 @@
-import React, { useEffect, useState } from "react";
-import {
-	Box,
-	Chip,
-	Grid,
-	IconButton,
-	Paper,
-	Snackbar,
-	Typography,
-} from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { Box, Grid, Paper, Snackbar, Typography } from '@mui/material';
 import {
 	RGBAToHEXA,
 	RGBToHEX,
 	RGBToHSL,
 	RGBToHSV,
-} from "../../helpers/colorConverter";
-import { getValueFromLocalStorage } from "../../helpers/localStorage";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
-import InputColorBlock from "../../components/InputColorBlock/InputColorBlock";
-import PreviousColorCalcTable from "../../components/PreviousColorCalcTable/PreviousColorCalcTable";
-import ColorStringBlock from "../../components/ColorStringBlock/ColorStringBlock";
-import ColorShadesBlock from "../../components/ColorShadesBlock/ColorShadesBlock";
-import ColorNameBlock from "../../components/ColorNameBlock/ColorNameBlock";
+} from '../../helpers/colorConverter';
+import { getValueFromLocalStorage } from '../../helpers/localStorage';
+import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import InputColorBlock from '../../components/InputColorBlock/InputColorBlock';
+import PreviousColorCalcTable from '../../components/PreviousColorCalcTable/PreviousColorCalcTable';
+import ColorStringBlock from '../../components/ColorStringBlock/ColorStringBlock';
+import ColorShadesBlock from '../../components/ColorShadesBlock/ColorShadesBlock';
+import ColorNameBlock from '../../components/ColorNameBlock/ColorNameBlock';
 
 /**
  *
@@ -52,7 +44,7 @@ export interface shadesHSLDataType {
 	lightness: number;
 }
 
-function ColorConvertorPage() {
+const ColorConvertorPage = () => {
 	const initialCalculatedColor: colorObjectType = {
 		red: 0,
 		green: 0,
@@ -67,18 +59,18 @@ function ColorConvertorPage() {
 	};
 
 	const [calculatedColor, setCalculatedColor] = useState<colorObjectType>(
-		getValueFromLocalStorage("calculatedColor", initialCalculatedColor)
+		getValueFromLocalStorage('calculatedColor', initialCalculatedColor),
 	);
 
-	const [calculatedHEX, setCalculatedHEX] = useState("");
-	const [calculatedHEXA, setCalculatedHEXA] = useState("");
-	const [calculatedRGB, setCalculatedRGB] = useState("");
-	const [calculatedRGBA, setCalculatedRGBA] = useState("");
-	const [calculatedHSL, setCalculatedHSL] = useState("");
-	const [calculatedHSV, setCalculatedHSV] = useState("");
+	const [calculatedHEX, setCalculatedHEX] = useState('');
+	const [calculatedHEXA, setCalculatedHEXA] = useState('');
+	const [calculatedRGB, setCalculatedRGB] = useState('');
+	const [calculatedRGBA, setCalculatedRGBA] = useState('');
+	const [calculatedHSL, setCalculatedHSL] = useState('');
+	const [calculatedHSV, setCalculatedHSV] = useState('');
 	const [prevCalculatedColors, setPrevCalculatedColors] = useState<
 		prevCalculatedColorsType[] | []
-	>(getValueFromLocalStorage("prevCalculatedColors", []));
+	>(getValueFromLocalStorage('prevCalculatedColors', []));
 
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 	const [isWhiteText, setIsWhiteText] = useState(false);
@@ -112,7 +104,7 @@ function ColorConvertorPage() {
 	};
 
 	const chipsStyle = {
-		color: isWhiteText ? "white" : "black",
+		color: isWhiteText ? 'white' : 'black',
 	};
 
 	useEffect(() => {
@@ -130,41 +122,31 @@ function ColorConvertorPage() {
 			clearRed = Math.round(
 				(calculatedColor.opacity * (calculatedColor.red / 255) +
 					alpha * (bg.red / 255)) *
-					255
+					255,
 			);
 			clearGreen = Math.round(
 				(calculatedColor.opacity * (calculatedColor.green / 255) +
 					alpha * (bg.green / 255)) *
-					255
+					255,
 			);
 			clearBlue = Math.round(
 				(calculatedColor.opacity * (calculatedColor.blue / 255) +
 					alpha * (bg.blue / 255)) *
-					255
+					255,
 			);
 		}
 
-		const rgbText =
-			"rgb( " + clearRed + ", " + clearGreen + ", " + clearBlue + ")";
+		const rgbText = `rgb( ${clearRed}, ${clearGreen}, ${clearBlue})`;
 
-		const rgbaText =
-			"rgba( " +
-			calculatedColor.red +
-			", " +
-			calculatedColor.green +
-			", " +
-			calculatedColor.blue +
-			", " +
-			calculatedColor.opacity +
-			")";
+		const rgbaText = `rgba( ${calculatedColor.red}, ${calculatedColor.green}, ${calculatedColor.blue}, ${calculatedColor.opacity})`;
 
 		const { hue, saturation, lightness } = RGBToHSL(
 			clearRed,
 			clearGreen,
-			clearBlue
+			clearBlue,
 		);
 
-		const hslText = "hsl(" + hue + ", " + saturation + "%, " + lightness + "%)";
+		const hslText = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 
 		const hexText = RGBToHEX(clearRed, clearGreen, clearBlue);
 
@@ -172,16 +154,15 @@ function ColorConvertorPage() {
 			calculatedColor.red,
 			calculatedColor.green,
 			calculatedColor.blue,
-			calculatedColor.opacity
+			calculatedColor.opacity,
 		);
 
 		const { computedH, computedS, computedV } = RGBToHSV(
 			clearRed,
 			clearGreen,
-			clearBlue
+			clearBlue,
 		);
-		const hsvText =
-			"hsv(" + computedH + ", " + computedS + ", " + computedV + ")";
+		const hsvText = `hsv(${computedH}, ${computedS}, ${computedV})`;
 
 		setCalculatedRGBA(rgbaText);
 		setCalculatedRGB(rgbText);
@@ -202,13 +183,13 @@ function ColorConvertorPage() {
 
 		setShadesHSLData({ hue, saturation, lightness });
 
-		localStorage.setItem("calculatedColor", JSON.stringify(calculatedColor));
+		localStorage.setItem('calculatedColor', JSON.stringify(calculatedColor));
 	}, [calculatedColor]);
 
 	useEffect(() => {
 		if (
 			!prevCalculatedColors.some(
-				(valueObject) => valueObject.calculatedHEX === calculatedHEX
+				(valueObject) => valueObject.calculatedHEX === calculatedHEX,
 			) &&
 			calculatedHEX
 		) {
@@ -228,8 +209,8 @@ function ColorConvertorPage() {
 
 	useEffect(() => {
 		localStorage.setItem(
-			"prevCalculatedColors",
-			JSON.stringify(prevCalculatedColors)
+			'prevCalculatedColors',
+			JSON.stringify(prevCalculatedColors),
 		);
 	}, [prevCalculatedColors]);
 
@@ -245,7 +226,7 @@ function ColorConvertorPage() {
 							</Box>
 						</Paper>
 					</Grid>
-					<Grid item xs={12} md={4} >
+					<Grid item xs={12} md={4}>
 						<Paper>
 							<ColorNameBlock
 								calculatedHEX={calculatedHEX}
@@ -308,7 +289,7 @@ function ColorConvertorPage() {
 					</Grid>
 				</Grid>
 				<Grid container direction="row" justifyContent="center">
-					<Grid item xs={12} sx={{display:{xs: 'none', md: 'block'}}}>
+					<Grid item xs={12} sx={{ display: { xs: 'none', md: 'block' } }}>
 						<Paper>
 							<PreviousColorCalcTable
 								prevCalculatedColors={prevCalculatedColors}
@@ -321,14 +302,14 @@ function ColorConvertorPage() {
 			</div>
 			<Snackbar
 				autoHideDuration={2000}
-				anchorOrigin={{ vertical: "top", horizontal: "center" }}
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 				open={isNotificationOpen}
 				onClose={() => setIsNotificationOpen(false)}
-				message={`Result has been copied!`}
+				message="Result has been copied!"
 				key="color-copy-notification"
 			/>
 		</>
 	);
-}
+};
 
 export default ColorConvertorPage;

@@ -1,5 +1,5 @@
-import { FormControl, InputAdornment, TextField } from "@mui/material";
-import React, { useEffect } from "react";
+import { FormControl, InputAdornment, TextField } from '@mui/material';
+import React, { useEffect } from 'react';
 
 interface propTypes {
 	enteredHueValue: number;
@@ -11,7 +11,7 @@ interface propTypes {
 	handleKeyPressed: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-function HSLInputGroup({
+const HSLInputGroup = ({
 	enteredHueValue,
 	setEnteredHueValue,
 	enteredSaturationValue,
@@ -19,56 +19,54 @@ function HSLInputGroup({
 	enteredLightnessValue,
 	setEnteredLightnessValue,
 	handleKeyPressed,
-}: propTypes) {
-	const handleEnteredHueValue = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
+}: propTypes) => {
+	const handleEnteredHueValue = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value: number | typeof NaN = +event.target.value;
 
-		if (!isNaN(value) && value >= 0 && value <= 360) {
+		if (!Number.isNaN(value) && value >= 0 && value <= 360) {
 			setEnteredHueValue(+event.target.value);
 		}
 	};
 
 	const handleEnteredSaturationValue = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		const value: number | typeof NaN = +event.target.value;
 
-		if (!isNaN(value) && value >= 0 && value <= 100) {
+		if (!Number.isNaN(value) && value >= 0 && value <= 100) {
 			setEnteredSaturationValue(+event.target.value);
 		}
 	};
 
 	const handleEnteredLightnessValue = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		const value: number | typeof NaN = +event.target.value;
 
-		if (!isNaN(value) && value >= 0 && value <= 100) {
+		if (!Number.isNaN(value) && value >= 0 && value <= 100) {
 			setEnteredLightnessValue(+event.target.value);
 		}
 	};
 
 	useEffect(() => {
-		localStorage.setItem("enteredHueValue", JSON.stringify(enteredHueValue));
+		localStorage.setItem('enteredHueValue', JSON.stringify(enteredHueValue));
 	}, [enteredHueValue]);
 	useEffect(() => {
 		localStorage.setItem(
-			"enteredSaturationValue",
-			JSON.stringify(enteredSaturationValue)
+			'enteredSaturationValue',
+			JSON.stringify(enteredSaturationValue),
 		);
 	}, [enteredSaturationValue]);
 	useEffect(() => {
 		localStorage.setItem(
-			"enteredLightnessValue",
-			JSON.stringify(enteredLightnessValue)
+			'enteredLightnessValue',
+			JSON.stringify(enteredLightnessValue),
 		);
 	}, [enteredLightnessValue]);
 
 	return (
 		<>
-			<FormControl sx={{ m: 1, width:{xs: "30%", md: "20%"} }} size="small">
+			<FormControl sx={{ m: 1, width: { xs: '30%', md: '20%' } }} size="small">
 				<TextField
 					value={enteredHueValue}
 					onChange={handleEnteredHueValue}
@@ -81,7 +79,7 @@ function HSLInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width:{xs: "30%", md: "20%"} }} size="small">
+			<FormControl sx={{ m: 1, width: { xs: '30%', md: '20%' } }} size="small">
 				<TextField
 					value={enteredSaturationValue}
 					onChange={handleEnteredSaturationValue}
@@ -94,7 +92,7 @@ function HSLInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width:{xs: "30%", md: "20%"} }} size="small">
+			<FormControl sx={{ m: 1, width: { xs: '30%', md: '20%' } }} size="small">
 				<TextField
 					value={enteredLightnessValue}
 					onChange={handleEnteredLightnessValue}
@@ -109,6 +107,6 @@ function HSLInputGroup({
 			</FormControl>
 		</>
 	);
-}
+};
 
 export default HSLInputGroup;

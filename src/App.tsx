@@ -1,18 +1,17 @@
-import "./App.css";
-import { Navigate, Route, Routes } from "react-router-dom";
-import SingleValuePage from "./pages/SingleValuePage/SingleValuePage";
-import TextConverterPage from "./pages/TextConverterPage/TextConverterPage";
-import ColorConvertorPage from "./pages/ColorConvertorPage/ColorConvertorPage";
-import { Box } from "@mui/system";
-import { Container } from "@mui/material";
-import { PATH } from "./constants/path";
-import SideMenu from "./components/SideMenu/SideMenu";
-import ShadowGeneratorPage from "./pages/ShadowGeneratorPage/ShadowGeneratorPage";
-import GradientGeneratorPage from "./pages/GradientGeneratorPage/GradientGeneratorPage";
-import SideSwipeableMenu from "./components/SideSwipeableMenu/SideSwipeableMenu";
-import SideSwipeableMenuProvider from "./context/SideSwipeableMenuProvider";
+import './App.css';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { Box, Container } from '@mui/material';
+import SingleValuePage from './pages/SingleValuePage/SingleValuePage';
+import TextConverterPage from './pages/TextConverterPage/TextConverterPage';
+import ColorConvertorPage from './pages/ColorConvertorPage/ColorConvertorPage';
+import PATH from './constants/path';
+import SideMenu from './components/SideMenu/SideMenu';
+import ShadowGeneratorPage from './pages/ShadowGeneratorPage/ShadowGeneratorPage';
+import GradientGeneratorPage from './pages/GradientGeneratorPage/GradientGeneratorPage';
+import SideSwipeableMenu from './components/SideSwipeableMenu/SideSwipeableMenu';
+import SideSwipeableMenuProvider from './context/SideSwipeableMenuProvider';
 
-function App() {
+const App = () => (
 	/**
 	 *
 	 * TODO 01. Renew App Title+, README file+ and images
@@ -28,40 +27,31 @@ function App() {
 	 * TODO 999. Add wave/shape generator (need to research)
 	 */
 
-	return (
-		<>
-			<SideSwipeableMenuProvider>
-				<Box sx={{ display: "flex" }}>
-					<SideSwipeableMenu />
-					<SideMenu />
-					<Container component="div" maxWidth={false} sx={{padding: {xs: 0, md: "0 16px"}}}>
-						<Box>
-							<Routes>
-								<Route path={PATH.home} element={<SingleValuePage />} />
-								<Route
-									path={PATH.textConverter}
-									element={<TextConverterPage />}
-								/>
-								<Route
-									path={PATH.colorConverter}
-									element={<ColorConvertorPage />}
-								/>
-								<Route
-									path={PATH.shadowGenerator}
-									element={<ShadowGeneratorPage />}
-								/>
-								<Route
-									path={PATH.gradientGenerator}
-									element={<GradientGeneratorPage />}
-								/>
-								<Route path="*" element={<Navigate to={PATH.home} />} />
-							</Routes>
-						</Box>
-					</Container>
+	<SideSwipeableMenuProvider>
+		<Box sx={{ display: 'flex' }}>
+			<SideSwipeableMenu />
+			<SideMenu />
+			<Container
+				component="div"
+				maxWidth={false}
+				sx={{ padding: { xs: 0, md: '0 16px' } }}
+			>
+				<Box>
+					<Routes>
+						<Route path={PATH.home} element={<SingleValuePage />} />
+						<Route path={PATH.textConverter} element={<TextConverterPage />} />
+						<Route path={PATH.colorConverter} element={<ColorConvertorPage />} />
+						<Route path={PATH.shadowGenerator} element={<ShadowGeneratorPage />} />
+						<Route
+							path={PATH.gradientGenerator}
+							element={<GradientGeneratorPage />}
+						/>
+						<Route path="*" element={<Navigate to={PATH.home} />} />
+					</Routes>
 				</Box>
-			</SideSwipeableMenuProvider>
-		</>
-	);
-}
+			</Container>
+		</Box>
+	</SideSwipeableMenuProvider>
+);
 
 export default App;
