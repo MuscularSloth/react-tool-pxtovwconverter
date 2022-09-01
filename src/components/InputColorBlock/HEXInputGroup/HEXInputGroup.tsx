@@ -3,9 +3,9 @@ import {
 	FormHelperText,
 	InputAdornment,
 	TextField,
-} from "@mui/material";
-import React, { useEffect } from "react";
-import { ONLY_HEX_CHARACTERES } from "../../../constants/regex";
+} from '@mui/material';
+import React, { useEffect } from 'react';
+import { ONLY_HEX_CHARACTERES } from '../../../constants/regex';
 
 interface propTypes {
 	enteredHexValue: string;
@@ -15,42 +15,36 @@ interface propTypes {
 	handleKeyPressed: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-function HEXInputGroup({
+const HEXInputGroup = ({
 	enteredHexValue,
 	setEnteredHexValue,
 	enteredHexOpacityValue,
 	setEnteredHexOpacityValue,
 	handleKeyPressed,
-}: propTypes) {
-	const handleEnteredHexValue = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
+}: propTypes) => {
+	const handleEnteredHexValue = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (
 			event.target.value.match(ONLY_HEX_CHARACTERES) ||
-			event.target.value === ""
+			event.target.value === ''
 		) {
 			setEnteredHexValue(event.target.value);
 		}
 	};
 
 	const handleEnteredHexOpacityValue = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
-		const value: number | typeof NaN = +event.target.value;
-
-		// if (!isNaN(value) && value >= 0 && value <= 1) {
 		setEnteredHexOpacityValue(+event.target.value);
-		// }
 	};
 
 	useEffect(() => {
-		localStorage.setItem("enteredHexValue", JSON.stringify(enteredHexValue));
+		localStorage.setItem('enteredHexValue', JSON.stringify(enteredHexValue));
 	}, [enteredHexValue]);
 
 	useEffect(() => {
 		localStorage.setItem(
-			"enteredHexOpacityValue",
-			JSON.stringify(enteredHexOpacityValue)
+			'enteredHexOpacityValue',
+			JSON.stringify(enteredHexOpacityValue),
 		);
 	}, [enteredHexOpacityValue]);
 
@@ -66,7 +60,7 @@ function HEXInputGroup({
 				/>
 				<FormHelperText>HEX Color Code (6 or 8 dig)</FormHelperText>
 			</FormControl>
-			<FormControl sx={{ m: 1, width: {xs: "30%", md: '15%' }}} size="small">
+			<FormControl sx={{ m: 1, width: { xs: '30%', md: '15%' } }} size="small">
 				<TextField
 					value={enteredHexOpacityValue}
 					onChange={handleEnteredHexOpacityValue}
@@ -82,6 +76,6 @@ function HEXInputGroup({
 			</FormControl>
 		</>
 	);
-}
+};
 
 export default HEXInputGroup;

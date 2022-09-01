@@ -1,7 +1,7 @@
-.GradientGeneratorPage__color-block{
-    display: flex;
+.GradientGeneratorPage__color-block {
+	display: flex;
 }
 
-.GradientGeneratorPage__stop-input{
-    width: 35%;
+.GradientGeneratorPage__stop-input {
+	width: 35%;
 }

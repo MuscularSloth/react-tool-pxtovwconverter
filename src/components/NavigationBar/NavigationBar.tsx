@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 import {
 	AppBar,
 	Box,
@@ -8,38 +8,38 @@ import {
 	Link,
 	Toolbar,
 	Typography,
-} from "@mui/material";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+} from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import MenuIcon from '@mui/icons-material/Menu';
-import "./NavigationBar.css";
-import { sideSwipeableMenuContext } from "../../context/SideSwipeableMenuProvider";
+import './NavigationBar.css';
+import { sideSwipeableMenuContext } from '../../context/SideSwipeableMenuProvider';
 
 interface propsTypes {
 	title: string;
 }
 
-export default function NavigationBar({ title }: propsTypes) {
-
-	const {isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen} = useContext(sideSwipeableMenuContext);
+const NavigationBar = ({ title }: propsTypes) => {
+	const { isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen } = useContext(
+		sideSwipeableMenuContext,
+	);
 
 	const handleSwipeableMenuClick = () => {
-		if(typeof setIsSideSwipeableMenuOpen === 'function'){
-			setIsSideSwipeableMenuOpen(!isSideSwipeableMenuOpen)
+		if (typeof setIsSideSwipeableMenuOpen === 'function') {
+			setIsSideSwipeableMenuOpen(!isSideSwipeableMenuOpen);
 		}
-	}
+	};
 
 	return (
 		<AppBar position="static">
 			<Container maxWidth="xl">
-
 				<Toolbar disableGutters>
 					<Grid
 						style={{
-							display: "flex",
-							height: "100%",
-							width: "100%",
-							justifyContent: "space-between",
+							display: 'flex',
+							height: '100%',
+							width: '100%',
+							justifyContent: 'space-between',
 						}}
 					>
 						<IconButton
@@ -47,7 +47,7 @@ export default function NavigationBar({ title }: propsTypes) {
 							aria-label="open drawer"
 							onClick={handleSwipeableMenuClick}
 							edge="start"
-							sx={{ mr: 2, display:{xs: 'block', lg: 'none'}}}
+							sx={{ mr: 2, display: { xs: 'block', lg: 'none' } }}
 						>
 							<MenuIcon />
 						</IconButton>
@@ -59,12 +59,12 @@ export default function NavigationBar({ title }: propsTypes) {
 								// component="div"
 								// style={{ display: "flex" }}
 								pr={2}
-								sx={{display: {xs: 'none', md: 'block'}}}
+								sx={{ display: { xs: 'none', md: 'block' } }}
 							>
 								{title}
 							</Typography>
 						</Box>
-						<Box style={{ textAlign: "right" }}>
+						<Box style={{ textAlign: 'right' }}>
 							<Link
 								className="NavigationBar__link"
 								href="https://github.com/MuscularSloth/react-tool-pxtovwconverter"
@@ -85,4 +85,6 @@ export default function NavigationBar({ title }: propsTypes) {
 			</Container>
 		</AppBar>
 	);
-}
+};
+
+export default NavigationBar;

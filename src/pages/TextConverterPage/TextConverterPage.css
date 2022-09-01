@@ -1,9 +1,9 @@
-.TextConverterPage__result-container{
-    position: relative !important;
+.TextConverterPage__result-container {
+	position: relative !important;
 }
 
-.TextConverterPage__copy-result-button{
-    position: absolute !important;
-    right: 45px;
-    top: 15px;
+.TextConverterPage__copy-result-button {
+	position: absolute !important;
+	right: 45px;
+	top: 15px;
 }

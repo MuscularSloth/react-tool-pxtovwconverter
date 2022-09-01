@@ -1,5 +1,5 @@
-import { FormControl, InputAdornment, TextField } from "@mui/material";
-import React, { useEffect } from "react";
+import { FormControl, InputAdornment, TextField } from '@mui/material';
+import React, { useEffect } from 'react';
 
 interface propTypes {
 	enteredRedValue: number;
@@ -14,7 +14,7 @@ interface propTypes {
 	handleKeyPressed: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-function RGBAInputGroup({
+const RGBAInputGroup = ({
 	enteredRedValue,
 	setEnteredRedValue,
 	enteredGreenValue,
@@ -25,78 +25,69 @@ function RGBAInputGroup({
 	setEnteredOpacityValue,
 	colorType,
 	handleKeyPressed,
-}: propTypes) {
-	const handleEnteredRedValue = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
+}: propTypes) => {
+	const handleEnteredRedValue = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value: number | typeof NaN = +event.target.value;
 
-		if (!isNaN(value) && value >= 0 && value <= 255) {
+		if (!Number.isNaN(value) && value >= 0 && value <= 255) {
 			setEnteredRedValue(+event.target.value);
 		}
 	};
 
 	const handleEnteredGreenValue = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		const value: number | typeof NaN = +event.target.value;
 
-		if (!isNaN(value) && value >= 0 && value <= 255) {
+		if (!Number.isNaN(value) && value >= 0 && value <= 255) {
 			setEnteredGreenValue(+event.target.value);
 		}
 	};
 
 	const handleEnteredBlueValue = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		const value: number | typeof NaN = +event.target.value;
 
-		if (!isNaN(value) && value >= 0 && value <= 255) {
+		if (!Number.isNaN(value) && value >= 0 && value <= 255) {
 			setEnteredBlueValue(+event.target.value);
 		}
 	};
 
 	const handleEnteredOpacityValue = (
-		event: React.ChangeEvent<HTMLInputElement>
+		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
-		const value: number | typeof NaN = +event.target.value;
-
-		// if (!isNaN(value) && value >= 0 && value <= 1) {
 		setEnteredOpacityValue(+event.target.value);
-		// }
 	};
 
 	useEffect(() => {
-		localStorage.setItem("enteredRedValue", JSON.stringify(enteredRedValue));
+		localStorage.setItem('enteredRedValue', JSON.stringify(enteredRedValue));
 	}, [enteredRedValue]);
 
 	useEffect(() => {
-		localStorage.setItem(
-			"enteredGreenValue",
-			JSON.stringify(enteredGreenValue)
-		);
+		localStorage.setItem('enteredGreenValue', JSON.stringify(enteredGreenValue));
 	}, [enteredGreenValue]);
 
 	useEffect(() => {
-		localStorage.setItem("enteredBlueValue", JSON.stringify(enteredBlueValue));
+		localStorage.setItem('enteredBlueValue', JSON.stringify(enteredBlueValue));
 	}, [enteredBlueValue]);
 
 	useEffect(() => {
 		localStorage.setItem(
-			"enteredOpacityValue",
-			JSON.stringify(enteredOpacityValue)
+			'enteredOpacityValue',
+			JSON.stringify(enteredOpacityValue),
 		);
 	}, [enteredOpacityValue]);
 
 	useEffect(() => {
-		if (colorType === "RGB") {
+		if (colorType === 'RGB') {
 			setEnteredOpacityValue(1);
 		}
 	}, [colorType]);
 
 	return (
 		<>
-			<FormControl sx={{ m: 1, width:{xs: "30%", md: "15%"}  }} size="small">
+			<FormControl sx={{ m: 1, width: { xs: '30%', md: '15%' } }} size="small">
 				<TextField
 					value={enteredRedValue}
 					onChange={handleEnteredRedValue}
@@ -109,7 +100,7 @@ function RGBAInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width:{xs: "30%", md: "15%"}}} size="small">
+			<FormControl sx={{ m: 1, width: { xs: '30%', md: '15%' } }} size="small">
 				<TextField
 					value={enteredGreenValue}
 					onChange={handleEnteredGreenValue}
@@ -122,7 +113,7 @@ function RGBAInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width:{xs: "30%", md: "15%"} }} size="small">
+			<FormControl sx={{ m: 1, width: { xs: '30%', md: '15%' } }} size="small">
 				<TextField
 					value={enteredBlueValue}
 					onChange={handleEnteredBlueValue}
@@ -135,14 +126,14 @@ function RGBAInputGroup({
 					}}
 				/>
 			</FormControl>
-			<FormControl sx={{ m: 1, width:{xs: "30%", md: "15%"} }} size="small">
+			<FormControl sx={{ m: 1, width: { xs: '30%', md: '15%' } }} size="small">
 				<TextField
 					value={enteredOpacityValue}
 					onChange={handleEnteredOpacityValue}
 					size="small"
 					type="number"
 					onKeyPress={handleKeyPressed}
-					disabled={colorType !== "RGBA"}
+					disabled={colorType !== 'RGBA'}
 					InputProps={{
 						startAdornment: <InputAdornment position="start">A</InputAdornment>,
 						inputProps: { min: 0, max: 1, step: 0.1 },
@@ -151,6 +142,6 @@ function RGBAInputGroup({
 			</FormControl>
 		</>
 	);
-}
+};
 
 export default RGBAInputGroup;

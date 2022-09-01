@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Button, Snackbar, Tooltip, Typography } from "@mui/material";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import React, { useState } from 'react';
+import { Button, Snackbar, Tooltip, Typography } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 interface propTypes {
 	value: string | null;
 }
 
-function ResultColorCopyButton({ value }: propTypes) {
+const ResultColorCopyButton = ({ value }: propTypes) => {
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
 	const handleCopyResultClick = () => {
-		navigator.clipboard.writeText("" + value);
+		navigator.clipboard.writeText(`${value}`);
 		setIsNotificationOpen(true);
 	};
 
@@ -18,19 +18,19 @@ function ResultColorCopyButton({ value }: propTypes) {
 		<>
 			<Snackbar
 				autoHideDuration={2000}
-				anchorOrigin={{ vertical: "top", horizontal: "center" }}
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 				open={isNotificationOpen}
 				onClose={() => setIsNotificationOpen(false)}
-				message={`Result has been copied!`}
+				message="Result has been copied!"
 				key={value}
 			/>
 			<Tooltip
-				style={{ cursor: "pointer" }}
+				style={{ cursor: 'pointer' }}
 				title="Click To Copy"
 				onClick={handleCopyResultClick}
 			>
 				<Button
-					style={{ textTransform: "none" }}
+					style={{ textTransform: 'none' }}
 					size="small"
 					endIcon={<ContentCopyIcon />}
 				>
@@ -39,6 +39,6 @@ function ResultColorCopyButton({ value }: propTypes) {
 			</Tooltip>
 		</>
 	);
-}
+};
 
 export default ResultColorCopyButton;

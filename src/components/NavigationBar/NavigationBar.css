@@ -1,18 +1,18 @@
-.NavigationBar__current-path{
-    text-decoration: underline !important;
+.NavigationBar__current-path {
+	text-decoration: underline !important;
 }
 
-.NavigationBar__link{
-    display: inline-flex;
-    height: 100%;
-    align-items: center;
-    margin: 0 0 0 10px !important;
-    color: white !important;
-    font-size: 10px !important;
-    font-weight: 400 !important;   
+.NavigationBar__link {
+	display: inline-flex;
+	height: 100%;
+	align-items: center;
+	margin: 0 0 0 10px !important;
+	color: white !important;
+	font-size: 10px !important;
+	font-weight: 400 !important;
 }
 
-.NavigationBar__link svg{
-    font-size: 12px;
-    margin: 0 5px 0 0;
+.NavigationBar__link svg {
+	font-size: 12px;
+	margin: 0 5px 0 0;
 }
