@@ -21,8 +21,16 @@ const GradientColorsList = ({
 	gradientColorsSet,
 	setGradientColorsSet,
 }: propsTypes) => {
-	const handleChangeColor = (newColor: string, idx: number) => {
-		const newArrayValue = { ...gradientColorsSet[idx], color: newColor };
+	const handleChangeColor = (
+		newColor: string,
+		idx: number,
+		colorPickerState: boolean,
+	) => {
+		const newArrayValue = {
+			...gradientColorsSet[idx],
+			color: newColor,
+			isColorPickerOpened: colorPickerState,
+		};
 		const newArray = [...gradientColorsSet];
 		newArray[idx] = newArrayValue;
 		setGradientColorsSet(newArray);
@@ -99,8 +107,13 @@ const GradientColorsList = ({
 								<Ref innerRef={provided.innerRef}>
 									<Grid {...provided.droppableProps}>
 										{gradientColorsSet.map((item, idx) => (
-											// eslint-disable-next-line react/no-array-index-key
-											<Draggable draggableId={`idDraggable-${idx}`} index={idx} key={idx}>
+											<Draggable
+												draggableId={`idDraggable-${idx}`}
+												index={idx}
+												// eslint-disable-next-line react/no-array-index-key
+												key={idx}
+												isDragDisabled={item.isColorPickerOpened}
+											>
 												{(childProvided) => (
 													<Ref innerRef={childProvided.innerRef}>
 														<Grid
@@ -123,7 +136,10 @@ const GradientColorsList = ({
 																<div className="GradientGeneratorPage__color-block">
 																	<ColorPickerWithInput
 																		color={item.color}
-																		setColor={(val: string) => handleChangeColor(val, idx)}
+																		isColorPickerOpened={item.isColorPickerOpened}
+																		setColor={(val: string, colorPickerState: boolean) =>
+																			handleChangeColor(val, idx, colorPickerState)
+																		}
 																		title={`${idx} color`}
 																	/>
 																	<TextField

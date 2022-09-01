@@ -11,6 +11,7 @@ import DropDownSmallSelect from '../../components/DropDownSmallSelect/DropDownSm
 export interface gradientColorsListTypes {
 	color: string;
 	stop: number;
+	isColorPickerOpened?: boolean;
 }
 
 const GradientGeneratorPage = () => {
@@ -65,22 +66,27 @@ const GradientGeneratorPage = () => {
 		{
 			color: '#409a4a',
 			stop: 0,
+			isColorPickerOpened: false,
 		},
 		{
 			color: '#211c79',
 			stop: 25,
+			isColorPickerOpened: false,
 		},
 		{
 			color: '#a01989',
 			stop: 50,
+			isColorPickerOpened: false,
 		},
 		{
 			color: '#c7c72c',
 			stop: 75,
+			isColorPickerOpened: false,
 		},
 		{
 			color: '#e01313',
 			stop: 100,
+			isColorPickerOpened: false,
 		},
 	];
 	const [gradientColorsSet, setGradientColorsSet] = useState<
@@ -92,6 +98,7 @@ const GradientGeneratorPage = () => {
 		newGradientColorSet.push({
 			color: '#FFFFFF',
 			stop: 50,
+			isColorPickerOpened: false,
 		});
 
 		setGradientColorsSet(newGradientColorSet);

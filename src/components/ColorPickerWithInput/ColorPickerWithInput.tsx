@@ -1,6 +1,6 @@
 import { FormControl, Input, InputLabel } from '@mui/material';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { HexColorPicker } from 'react-colorful';
+import { HexAlphaColorPicker } from 'react-colorful';
 import useClickOutside from '../../helpers/useClickOutside';
 import './ColorPickerWithInput.scss';
 
@@ -8,13 +8,19 @@ interface propsTypes {
 	title?: string;
 	color?: string;
 	setColor: Function;
+	isColorPickerOpened?: boolean;
 }
 
-const ColorPickerWithInput = ({ title, color, setColor }: propsTypes) => {
+const ColorPickerWithInput = ({
+	title,
+	color,
+	setColor,
+	isColorPickerOpened = false,
+}: propsTypes) => {
 	const [newColor, setNewColor] = useState<string>(color || '#aabbcc');
 
 	const popover = useRef<HTMLHeadingElement>(null);
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(isColorPickerOpened);
 
 	const close = useCallback((): void => setIsOpen(false), []);
 	useClickOutside(popover, close);
@@ -25,9 +31,9 @@ const ColorPickerWithInput = ({ title, color, setColor }: propsTypes) => {
 
 	useEffect(() => {
 		if (setColor && newColor) {
-			setColor(newColor);
+			setColor(newColor, isOpen);
 		}
-	}, [newColor]);
+	}, [newColor, isOpen]);
 
 	return (
 		<div className="ColorPickerWithInput__wrapper">
@@ -53,7 +59,7 @@ const ColorPickerWithInput = ({ title, color, setColor }: propsTypes) => {
 
 				{isOpen && (
 					<div className="ColorPickerWithInput__popover" ref={popover}>
-						<HexColorPicker color={color} onChange={handleChangeColor} />
+						<HexAlphaColorPicker color={color} onChange={handleChangeColor} />
 					</div>
 				)}
 			</div>
