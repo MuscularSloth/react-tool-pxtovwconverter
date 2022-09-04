@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import {
 	Button,
-	Checkbox,
 	Box,
-	FormControlLabel,
 	Grid,
 	Input,
 	Paper,
@@ -20,11 +18,18 @@ import InputSlider from '../../components/InputSlider/InputSlider';
 import DragDropTextArea from '../../components/DragDropTextArea/DragDropTextArea';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import './TextConverterPage.css';
-import { REGEX_CSS_RULE } from '../../constants/regex';
+import {
+	REGEX_IS_CSS_RULE,
+	REGEX_IS_EMPTY_SELECTOR,
+	REGEX_IS_PX_VALUE,
+	REGEX_IS_EXACTLY_RULE_FN,
+} from '../../constants/regex';
+import { clearCSSRulesWithoutVW } from '../../helpers/cssHelpersFunctions';
+import { IConvertationOptions } from './IConvertationOptions';
+import CheckBoxOption from '../../components/CheckBoxOption/CheckBoxOption';
+import DropdownItemsTextListWithControls from '../../components/DropdownItemsTextListWithControls/DropdownItemsTextListWithControls';
 
 const TextConverterPage = () => {
-	const regexRule = /([0-9]+)px/g;
-
 	const presetedWidth = [1920, 2160, 1440, 1280];
 	const [selectedWidth, setSelectedWidth] = useState<number>(1920);
 	const [customPresetedWidth, setCustomPresetedWidth] = useState<number[]>([
@@ -33,11 +38,17 @@ const TextConverterPage = () => {
 	const [textToConvert, setTextToConvert] = useState<string>('');
 	const [textConverted, setTextConverted] = useState<string>('');
 	const [isNotificationOpen, setIsNotificationOpen] = useState<boolean>(false);
-	const [dontCalculateLessThan, setDontCalculateLessThan] =
-		useState<boolean>(false);
-	const [dontCalculateValue, setDontCalculateValue] = useState<number>(5);
 
-	const [removeRowsWithoutPx, setRemoveRowsWithoutPx] = useState<boolean>(true);
+	const initialConvertationOptions: IConvertationOptions = {
+		removeRowsWithoutVw: true,
+		removeEmptySelectors: true,
+		dontCalculateLessThanState: false,
+		dontCalculateLessThanValue: 5,
+		excludeRulesEnabled: true,
+		excludeRulesArray: ['border', 'box-shadow', 'outline'],
+	};
+	const [convertationOptions, setConvertationOptions] =
+		useState<IConvertationOptions>(initialConvertationOptions);
 
 	const handlePresetClick = (e: React.MouseEvent) => {
 		const targetEl = e.target as HTMLElement;
@@ -53,35 +64,52 @@ const TextConverterPage = () => {
 		);
 	};
 
-	const replaceFunction = (match: string, value: number): string => {
-		console.log('replaceFunction', { match, value });
-
-		if (dontCalculateLessThan && value <= dontCalculateValue) {
+	const replacePXToVW = (match: string, value: number): string => {
+		if (
+			convertationOptions.dontCalculateLessThanState &&
+			value <= convertationOptions.dontCalculateLessThanValue
+		) {
 			return match;
 		}
 		return `${((value / selectedWidth) * 100).toFixed(3)}vw`;
 	};
 
-	const clearNonConvertedRows = (match: string): string => {
-		console.log('match >>>', match);
+	const handleConvertClick = () => {
+		let convertedText = textToConvert;
 
-		if (match.includes('vw')) {
-			return match;
+		if (
+			convertationOptions.excludeRulesEnabled &&
+			convertationOptions.excludeRulesArray.length > 0
+		) {
+			convertationOptions.excludeRulesArray.forEach((excludedRule) => {
+				convertedText = convertedText.replace(
+					REGEX_IS_EXACTLY_RULE_FN(excludedRule),
+					'',
+				);
+			});
 		}
 
-		return '';
-	};
+		convertedText = convertedText.replace(REGEX_IS_PX_VALUE, replacePXToVW);
 
-	const hanldeConvertClick = () => {
-		let convertedText = textToConvert.replace(regexRule, replaceFunction);
-
-		if (removeRowsWithoutPx) {
-			console.log('removeRowsWithoutPx true ');
-			convertedText = convertedText.replace(REGEX_CSS_RULE, clearNonConvertedRows);
-			const rowsSplitted = convertedText.split(/\r?\n/);
-			const emptyRowsCleared = rowsSplitted.filter((row) => row !== '');
-			convertedText = emptyRowsCleared.join('\n');
+		if (convertationOptions.removeRowsWithoutVw) {
+			convertedText = convertedText.replace(
+				REGEX_IS_CSS_RULE,
+				clearCSSRulesWithoutVW,
+			);
 		}
+
+		if (convertationOptions.removeEmptySelectors) {
+			do {
+				convertedText = convertedText.replace(
+					REGEX_IS_EMPTY_SELECTOR,
+					clearCSSRulesWithoutVW,
+				);
+			} while (REGEX_IS_EMPTY_SELECTOR.test(convertedText));
+		}
+
+		const rowsSplitted = convertedText.split(/\r?\n/);
+		const emptyRowsCleared = rowsSplitted.filter((row) => row !== '');
+		convertedText = emptyRowsCleared.join('\n');
 		setTextConverted(convertedText);
 	};
 
@@ -90,7 +118,7 @@ const TextConverterPage = () => {
 		setIsNotificationOpen(true);
 	};
 
-	const hanldeClearAllClick = () => {
+	const handleClearAllClick = () => {
 		setTextToConvert('');
 		setTextConverted('');
 	};
@@ -110,19 +138,27 @@ const TextConverterPage = () => {
 							</Box>
 							<Box p={2}>
 								<Typography gutterBottom>Options</Typography>
-								<Box>
-									<FormControlLabel
-										value="end"
-										control={<Checkbox size="small" checked={dontCalculateLessThan} />}
-										label="Don't convert values less (or equal) than"
-										labelPlacement="end"
-										onChange={() => setDontCalculateLessThan(!dontCalculateLessThan)}
-									/>
+								<CheckBoxOption
+									label="Don't convert values less (or equal) than"
+									state={convertationOptions.dontCalculateLessThanState}
+									setStateFn={() =>
+										setConvertationOptions({
+											...convertationOptions,
+											dontCalculateLessThanState:
+												!convertationOptions.dontCalculateLessThanState,
+										})
+									}
+								>
 									<Input
 										style={{ width: '35px', marginRight: '5px' }}
-										value={dontCalculateValue}
+										value={convertationOptions.dontCalculateLessThanValue}
 										size="small"
-										onChange={(e) => setDontCalculateValue(+e.target.value)}
+										onChange={(e) =>
+											setConvertationOptions({
+												...convertationOptions,
+												dontCalculateLessThanValue: +e.target.value,
+											})
+										}
 										inputProps={{
 											step: 1,
 											min: 1,
@@ -132,16 +168,47 @@ const TextConverterPage = () => {
 										}}
 									/>
 									px
-								</Box>
-								<Box>
-									<FormControlLabel
-										value="end"
-										control={<Checkbox size="small" checked={removeRowsWithoutPx} />}
-										label="Remove rows without px"
-										labelPlacement="end"
-										onChange={() => setRemoveRowsWithoutPx(!removeRowsWithoutPx)}
+								</CheckBoxOption>
+								<CheckBoxOption
+									label="Remove rows without px"
+									state={convertationOptions.removeRowsWithoutVw}
+									setStateFn={() =>
+										setConvertationOptions({
+											...convertationOptions,
+											removeRowsWithoutVw: !convertationOptions.removeRowsWithoutVw,
+										})
+									}
+								/>
+								<CheckBoxOption
+									label="Remove Empty Selectors"
+									state={convertationOptions.removeEmptySelectors}
+									setStateFn={() =>
+										setConvertationOptions({
+											...convertationOptions,
+											removeEmptySelectors: !convertationOptions.removeEmptySelectors,
+										})
+									}
+								/>
+								<CheckBoxOption
+									label="Remove Rules From The List:"
+									state={convertationOptions.excludeRulesEnabled}
+									setStateFn={() =>
+										setConvertationOptions({
+											...convertationOptions,
+											excludeRulesEnabled: !convertationOptions.excludeRulesEnabled,
+										})
+									}
+								>
+									<DropdownItemsTextListWithControls
+										itemsArray={convertationOptions.excludeRulesArray}
+										saveDataFn={(newExcludedRulesArray) => {
+											setConvertationOptions({
+												...convertationOptions,
+												excludeRulesArray: [...newExcludedRulesArray],
+											});
+										}}
 									/>
-								</Box>
+								</CheckBoxOption>
 							</Box>
 						</Paper>
 					</Grid>
@@ -204,7 +271,7 @@ const TextConverterPage = () => {
 							}}
 						>
 							<Button
-								onClick={hanldeConvertClick}
+								onClick={handleConvertClick}
 								startIcon={<AutorenewIcon />}
 								disabled={!textToConvert}
 							>
@@ -212,7 +279,7 @@ const TextConverterPage = () => {
 							</Button>
 
 							<Button
-								onClick={hanldeClearAllClick}
+								onClick={handleClearAllClick}
 								startIcon={<ClearIcon />}
 								color="warning"
 								disabled={!textToConvert}
