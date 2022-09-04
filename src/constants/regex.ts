@@ -10,7 +10,8 @@ export const REGEX_IS_EXACTLY_RULE =
 export const REGEX_IS_EXACTLY_RULE_FN = (rule: string) =>
 	// eslint-disable-next-line no-useless-escape
 	new RegExp(
-		`(${rule})[\\w\\s#'"(),.$:%/!-]*:\\s*[\\w\\s#'"(),.$:%/!-]+\\t*\\n*\\r*;$`,
+		// `(${rule})[\\w\\s#'"(),.$:%/!-]*:\\s*[\\w\\s#'"(),.$:%/!-]+\\t*\\n*\\r*;$`,
+		`^\\s*(${rule}){1}\\s*:\\s*[\\w\\s#'"(),.$:%/!-]+\\t*\\n*\\r*;$`,
 		'gm',
 	);
 

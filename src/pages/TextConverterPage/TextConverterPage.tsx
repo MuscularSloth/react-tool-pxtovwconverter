@@ -27,6 +27,7 @@ import {
 import { clearCSSRulesWithoutVW } from '../../helpers/cssHelpersFunctions';
 import { IConvertationOptions } from './IConvertationOptions';
 import CheckBoxOption from '../../components/CheckBoxOption/CheckBoxOption';
+import DropdownItemsTextListWithControls from '../../components/DropdownItemsTextListWithControls/DropdownItemsTextListWithControls';
 
 const TextConverterPage = () => {
 	const presetedWidth = [1920, 2160, 1440, 1280];
@@ -96,11 +97,14 @@ const TextConverterPage = () => {
 				clearCSSRulesWithoutVW,
 			);
 		}
+
 		if (convertationOptions.removeEmptySelectors) {
-			convertedText = convertedText.replace(
-				REGEX_IS_EMPTY_SELECTOR,
-				clearCSSRulesWithoutVW,
-			);
+			do {
+				convertedText = convertedText.replace(
+					REGEX_IS_EMPTY_SELECTOR,
+					clearCSSRulesWithoutVW,
+				);
+			} while (REGEX_IS_EMPTY_SELECTOR.test(convertedText));
 		}
 
 		const rowsSplitted = convertedText.split(/\r?\n/);
@@ -186,7 +190,7 @@ const TextConverterPage = () => {
 									}
 								/>
 								<CheckBoxOption
-									label="Remove Rules From List:"
+									label="Remove Rules From The List:"
 									state={convertationOptions.excludeRulesEnabled}
 									setStateFn={() =>
 										setConvertationOptions({
@@ -195,9 +199,15 @@ const TextConverterPage = () => {
 										})
 									}
 								>
-									<Button size="small">
-										({`${convertationOptions.excludeRulesArray.length} rules excluded`})
-									</Button>
+									<DropdownItemsTextListWithControls
+										itemsArray={convertationOptions.excludeRulesArray}
+										saveDataFn={(newExcludedRulesArray) => {
+											setConvertationOptions({
+												...convertationOptions,
+												excludeRulesArray: [...newExcludedRulesArray],
+											});
+										}}
+									/>
 								</CheckBoxOption>
 							</Box>
 						</Paper>
