@@ -10,6 +10,7 @@ import SideSwipeableMenu from './components/SideSwipeableMenu/SideSwipeableMenu'
 import SideSwipeableMenuProvider from './context/SideSwipeableMenuProvider';
 import PATH from './constants/path';
 import './App.css';
+import RatioCalculationPage from './pages/RatioCalculationPage/RatioCalculationPage';
 
 const App = () => (
 	/**
@@ -46,6 +47,7 @@ const App = () => (
 							path={PATH.gradientGenerator}
 							element={<GradientGeneratorPage />}
 						/>
+						<Route path={PATH.ratioCalculator} element={<RatioCalculationPage />} />
 						<Route path="*" element={<Navigate to={PATH.home} />} />
 					</Routes>
 				</Box>

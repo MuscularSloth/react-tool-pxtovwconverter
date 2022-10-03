@@ -5,7 +5,7 @@ import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import SliderWithInput from '../../components/SliderWithInput/SliderWithInput';
 import ColorPickerWithInput from '../../components/ColorPickerWithInput/ColorPickerWithInput';
 import { HEXToRGBA } from '../../helpers/colorConverter';
-import ResultColorCopyButton from '../../components/ResultColorCopyButton/ResultColorCopyButton';
+import ResultStringCopyButton from '../../components/ResultStringCopyButton/ResultStringCopyButton';
 
 const ShadowGeneratorPage = () => {
 	const [bgBoxColor, setBgBoxColor] = useState<string>('#ffffff');
@@ -194,14 +194,14 @@ const ShadowGeneratorPage = () => {
 							<Box p={2} style={{ backgroundColor: bgWrapperColor }}>
 								<div style={shadowBoxStyles}>
 									{calculatedShadow ? (
-										<ResultColorCopyButton value={`box-shadow: ${calculatedShadow};`} />
+										<ResultStringCopyButton value={`box-shadow: ${calculatedShadow};`} />
 									) : (
 										'Shadow Example Box'
 									)}
 								</div>
 								<div>
 									<p style={shadowTextStyles}>Example of text shadow</p>
-									<ResultColorCopyButton
+									<ResultStringCopyButton
 										value={`text-shadow: ${calculatedTextShadow};`}
 									/>
 								</div>

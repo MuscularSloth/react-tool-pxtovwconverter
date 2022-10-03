@@ -2,7 +2,7 @@ import { Box, Button, Grid, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import ResultColorCopyButton from '../../components/ResultColorCopyButton/ResultColorCopyButton';
+import ResultStringCopyButton from '../../components/ResultStringCopyButton/ResultStringCopyButton';
 import SliderWithInput from '../../components/SliderWithInput/SliderWithInput';
 import './GradientGeneratorPage.css';
 import GradientColorsList from '../../components/GradientColorsList/GradientColorsList';
@@ -22,7 +22,7 @@ const GradientGeneratorPage = () => {
 		linearGradient: 'linear-gradient',
 		radialGradient: 'radial-gradient',
 		conicGradient: 'conic-gradient',
-		repeatinglinearGradient: 'repeating-linear-gradient',
+		repeatingLinearGradient: 'repeating-linear-gradient',
 		repeatingRadialGradient: 'repeating-radial-gradient',
 	};
 
@@ -165,7 +165,7 @@ const GradientGeneratorPage = () => {
 							<Box p={2} style={gradientStyle} />
 						</Paper>
 						<Paper>
-							<ResultColorCopyButton value={`background: ${calculatedGradient};`} />
+							<ResultStringCopyButton value={`background: ${calculatedGradient};`} />
 						</Paper>
 					</Grid>
 				</Grid>

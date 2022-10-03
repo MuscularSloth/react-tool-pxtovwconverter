@@ -64,7 +64,7 @@ const menuArray: IMenu[] = [
 		name: 'Ratio Calculator',
 		url: PATH.ratioCalculator,
 		icon: <AspectRatioIcon />,
-		disabled: true,
+		disabled: false,
 	},
 	{
 		id: 8,
