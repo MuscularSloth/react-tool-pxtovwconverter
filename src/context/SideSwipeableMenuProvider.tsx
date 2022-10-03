@@ -23,7 +23,7 @@ const SideSwipeableMenuProvider: React.FC<Props> = ({ children }) => {
 
 	const sideMenuMemo = useMemo(
 		() => ({ isSideSwipeableMenuOpen, setIsSideSwipeableMenuOpen }),
-		[],
+		[isSideSwipeableMenuOpen],
 	);
 
 	return (
