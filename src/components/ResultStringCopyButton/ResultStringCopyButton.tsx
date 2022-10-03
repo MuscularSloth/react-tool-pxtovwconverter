@@ -6,7 +6,7 @@ interface propTypes {
 	value: string | null;
 }
 
-const ResultColorCopyButton = ({ value }: propTypes) => {
+const ResultStringCopyButton = ({ value }: propTypes) => {
 	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
 	const handleCopyResultClick = () => {
@@ -41,4 +41,4 @@ const ResultColorCopyButton = ({ value }: propTypes) => {
 	);
 };
 
-export default ResultColorCopyButton;
+export default ResultStringCopyButton;

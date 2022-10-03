@@ -17,7 +17,7 @@ import { Ref } from 'semantic-ui-react';
 import ClearIcon from '@mui/icons-material/Clear';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import CircleIcon from '@mui/icons-material/Circle';
-import ResultColorCopyButton from '../ResultColorCopyButton/ResultColorCopyButton';
+import ResultStringCopyButton from '../ResultStringCopyButton/ResultStringCopyButton';
 import {
 	colorObjectType,
 	prevCalculatedColorsType,
@@ -140,9 +140,9 @@ const PreviousColorCalcTable = ({
 															}}
 															align="center"
 														>
-															<ResultColorCopyButton value={row.calculatedHEX} />
+															<ResultStringCopyButton value={row.calculatedHEX} />
 															<br />
-															<ResultColorCopyButton value={row.calculatedHEXA} />
+															<ResultStringCopyButton value={row.calculatedHEXA} />
 														</TableCell>
 														<TableCell
 															style={{
@@ -151,9 +151,9 @@ const PreviousColorCalcTable = ({
 															}}
 															align="center"
 														>
-															<ResultColorCopyButton value={row.calculatedRGB} />
+															<ResultStringCopyButton value={row.calculatedRGB} />
 															<br />
-															<ResultColorCopyButton value={row.calculatedRGBA} />
+															<ResultStringCopyButton value={row.calculatedRGBA} />
 														</TableCell>
 														<TableCell
 															style={{
@@ -162,9 +162,9 @@ const PreviousColorCalcTable = ({
 															}}
 															align="center"
 														>
-															<ResultColorCopyButton value={row.calculatedHSL} />
+															<ResultStringCopyButton value={row.calculatedHSL} />
 															<br />
-															<ResultColorCopyButton value={row.calculatedHSV} />
+															<ResultStringCopyButton value={row.calculatedHSV} />
 														</TableCell>
 														<TableCell
 															style={{
