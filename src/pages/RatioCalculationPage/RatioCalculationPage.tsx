@@ -289,17 +289,16 @@ const RatioCalculationPage = () => {
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<Paper style={{ padding: 8 }}>
-							<Box>
-								{aspectRatioInputWidth && aspectRatioInputHeight && (
-									<AspectRatioResultsBlock
-										aspectRatioInputWidth={aspectRatioInputWidth}
-										aspectRatioInputHeight={aspectRatioInputHeight}
-									/>
-								)}
-							</Box>
+							<Box>hey</Box>
 						</Paper>
 					</Grid>
 				</Grid>
+				{aspectRatioInputWidth && aspectRatioInputHeight && (
+					<AspectRatioResultsBlock
+						aspectRatioInputWidth={aspectRatioInputWidth}
+						aspectRatioInputHeight={aspectRatioInputHeight}
+					/>
+				)}
 			</div>
 		</>
 	);

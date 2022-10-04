@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Link, TextField, Typography } from '@mui/material';
+import { Link, Typography, Grid } from '@mui/material';
 import ResultStringCopyButton from '../ResultStringCopyButton/ResultStringCopyButton';
+import TextAreaWithCopyButton from '../TextAreaWithCopyButton/TextAreaWithCopyButton';
 
 interface IAspectRatioResultsBlock {
 	aspectRatioInputWidth: string;
@@ -11,11 +12,17 @@ const AspectRatioResultsBlock = ({
 	aspectRatioInputWidth,
 	aspectRatioInputHeight,
 }: IAspectRatioResultsBlock) => {
-	const paddingCalculated = Number.isNaN(
-		+aspectRatioInputHeight / +aspectRatioInputWidth,
-	)
+	const rateRatio = +aspectRatioInputHeight / +aspectRatioInputWidth;
+
+	const paddingCalculated = Number.isNaN(rateRatio)
 		? 0
-		: ((+aspectRatioInputHeight / +aspectRatioInputWidth) * 100).toFixed(2);
+		: (+rateRatio * 100).toFixed(2);
+
+	const greatestRateRatio =
+		+aspectRatioInputHeight > +aspectRatioInputWidth
+			? rateRatio
+			: +aspectRatioInputWidth / +aspectRatioInputHeight;
+
 	const paddingCSSText = `.parent{
     height: 0;
     overflow: hidden;
@@ -29,36 +36,64 @@ const AspectRatioResultsBlock = ({
     left: 0;
     width: 100%;
     height: 100%;
+}`;
+
+	const pseudoElementsCSSText = `.element {
+    background: white;
 }
-`;
+.element::before {
+    content: "";
+    width: 1px;
+    margin-left: -1px;
+    float: left;
+    height: 0;
+    padding-top: ${paddingCalculated}%;
+}
+.element::after { 
+    content: "";
+    display: table;
+    clear: both;
+}`;
+
 	return (
-		<>
-			<Box>
-				<Typography>
-					Aspect Ratio Variant (
-					<Link target="_blank" href="https://caniuse.com/?search=aspect-ratio">
-						check support
-					</Link>
-					)
-				</Typography>
-				<ResultStringCopyButton
-					value={`aspect-ratio: ${aspectRatioInputWidth}/${aspectRatioInputHeight}`}
-				/>
-			</Box>
-			<Box>
-				<Typography>Padding Variant</Typography>
-				<TextField
-					InputProps={{
-						style: { fontSize: '12px' },
-						readOnly: true,
-					}}
-					multiline
-					rows={15}
-					fullWidth
-					value={paddingCSSText}
-				/>
-			</Box>
-		</>
+		<Grid container direction="row" justifyContent="center" mt={2}>
+			{+aspectRatioInputWidth > 0 && +aspectRatioInputHeight > 0 && (
+				<>
+					<Grid item xs={12} md={4}>
+						<Typography>
+							Aspect Ratio Variant (
+							<Link target="_blank" href="https://caniuse.com/?search=aspect-ratio">
+								check support
+							</Link>
+							)
+						</Typography>
+						<ResultStringCopyButton
+							value={`aspect-ratio: ${aspectRatioInputWidth}/${aspectRatioInputHeight};`}
+						/>
+						<Typography variant="body1">or</Typography>
+						<ResultStringCopyButton
+							value={`aspect-ratio: ${
+								aspectRatioInputWidth < aspectRatioInputHeight
+									? greatestRateRatio.toFixed(2)
+									: 1
+							}/${
+								aspectRatioInputWidth > aspectRatioInputHeight
+									? greatestRateRatio.toFixed(2)
+									: 1
+							};`}
+						/>
+					</Grid>
+					<Grid item xs={12} md={4}>
+						<Typography>Padding Variant (fixed height)</Typography>
+						<TextAreaWithCopyButton content={paddingCSSText} rows={15} />
+					</Grid>
+					<Grid item xs={12} md={4}>
+						<Typography>Pseudo Elements Variant (flexible height)</Typography>
+						<TextAreaWithCopyButton content={pseudoElementsCSSText} rows={17} />
+					</Grid>
+				</>
+			)}
+		</Grid>
 	);
 };
 
