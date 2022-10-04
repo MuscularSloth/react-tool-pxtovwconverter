@@ -18,9 +18,9 @@ import { IConvertationOptions } from './IConvertationOptions';
 import CheckBoxOption from '../../components/CheckBoxOption/CheckBoxOption';
 import DropdownItemsTextListWithControls from '../../components/DropdownItemsTextListWithControls/DropdownItemsTextListWithControls';
 import TextAreaWithCopyButton from '../../components/TextAreaWithCopyButton/TextAreaWithCopyButton';
+import presetedViewportWidth from '../../constants/presetedViewportWidth';
 
 const TextConverterPage = () => {
-	const presetedWidth = [1920, 2160, 1440, 1280];
 	const [selectedWidth, setSelectedWidth] = useState<number>(1920);
 	const [customPresetedWidth, setCustomPresetedWidth] = useState<number[]>([
 		720,
@@ -113,7 +113,7 @@ const TextConverterPage = () => {
 			<div>
 				<Grid container direction="row" justifyContent="center">
 					<Grid item xs={12} md={7}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<Box p={2}>
 								<InputSlider
 									selectedWidth={selectedWidth}
@@ -197,12 +197,12 @@ const TextConverterPage = () => {
 						</Paper>
 					</Grid>
 					<Grid item xs={12} md={5}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<Box p={2}>
 								<WidthPresetsBlock
 									title="Viewport Width Presets:"
 									hintText="Clicking on a preset sets the width value."
-									widthList={presetedWidth}
+									widthList={presetedViewportWidth}
 									canDelete={false}
 									handlePresetClick={handlePresetClick}
 									handlePresetDelete={handlePresetDelete}

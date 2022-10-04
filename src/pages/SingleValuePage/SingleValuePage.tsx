@@ -20,6 +20,7 @@ import ResultCopyButton from '../../components/ResultCopyButton/ResultCopyButton
 import WidthPresetsBlock from '../../components/WidthPresets/WidthPresetsBlock';
 import PreviousCalcTable from '../../components/PreviousCalcTable/PreviousCalcTable';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import presetedViewportWidth from '../../constants/presetedViewportWidth';
 
 export interface previousCalcValuesType {
 	selectedWidth: number;
@@ -28,7 +29,6 @@ export interface previousCalcValuesType {
 }
 
 const SingleValuePage = () => {
-	const initialPresetedWidthValue: number[] = [1920, 2160, 1440, 1280];
 	const initialCustomPresetedWidth: number[] = [720];
 	const initialSelectedWidthValue: number = 1920;
 
@@ -42,7 +42,7 @@ const SingleValuePage = () => {
 	});
 
 	const [presetedWidth, setPresetedWidth] = useState<number[]>(
-		initialPresetedWidthValue,
+		presetedViewportWidth,
 	);
 
 	const [customPresetedWidth, setCustomPresetedWidth] = useState<number[]>(
@@ -200,8 +200,8 @@ const SingleValuePage = () => {
 		}
 	};
 
-	const handleReserDataClick = () => {
-		setPresetedWidth(initialPresetedWidthValue);
+	const handleResetDataClick = () => {
+		setPresetedWidth(presetedViewportWidth);
 		setSelectedWidth(initialSelectedWidthValue);
 		setCustomPresetedWidth(initialCustomPresetedWidth);
 		setPreviousCalcValues([]);
@@ -213,7 +213,7 @@ const SingleValuePage = () => {
 			<div>
 				<Grid container direction="row" justifyContent="center">
 					<Grid item xs={12} md={7}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<Box p={2}>
 								<InputSlider
 									selectedWidth={selectedWidth}
@@ -289,7 +289,7 @@ const SingleValuePage = () => {
 						</Paper>
 					</Grid>
 					<Grid item xs={12} md={5}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<Box p={2}>
 								<WidthPresetsBlock
 									title="Viewport Width Presets:"
@@ -313,7 +313,7 @@ const SingleValuePage = () => {
 								<Button
 									variant="outlined"
 									style={{ marginRight: 15 }}
-									onClick={handleReserDataClick}
+									onClick={handleResetDataClick}
 								>
 									Reset Data
 								</Button>
