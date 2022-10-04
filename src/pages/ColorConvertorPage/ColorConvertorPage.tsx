@@ -237,7 +237,7 @@ const ColorConvertorPage = () => {
 				</Grid>
 				<Grid container direction="row" justifyContent="center">
 					<Grid item xs={12} md={4}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<Typography sx={{ p: 1 }}>Colors with opacity:</Typography>
 							<ColorStringBlock
 								label="RGBA"
@@ -254,7 +254,7 @@ const ColorConvertorPage = () => {
 						</Paper>
 					</Grid>
 					<Grid item xs={12} md={4}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<Typography sx={{ p: 1 }}>Clear Colors:</Typography>
 							<ColorStringBlock
 								label="RGB"
@@ -283,7 +283,7 @@ const ColorConvertorPage = () => {
 						</Paper>
 					</Grid>
 					<Grid item xs={12} md={4}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<ColorShadesBlock shadesHSLData={shadesHSLData} />
 						</Paper>
 					</Grid>
