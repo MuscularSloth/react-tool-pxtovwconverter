@@ -119,7 +119,7 @@ const RatioCalculationPage = () => {
 			<div>
 				<Grid container direction="row" justifyContent="center" mt={2}>
 					<Grid item xs={12} md={8}>
-						<Paper style={{ padding: 8 }}>
+						<Paper style={{ padding: 8, height: '100%' }}>
 							<Autocomplete
 								id="ratio-presets-grouped"
 								options={aspectRatioPresetList}
