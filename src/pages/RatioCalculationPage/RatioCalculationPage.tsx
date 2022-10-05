@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Autocomplete,
 	Box,
@@ -9,6 +9,7 @@ import {
 	Paper,
 	TextField,
 	Tooltip,
+	Typography,
 } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -20,6 +21,14 @@ import {
 } from '../../constants/aspectRatioPresetList';
 import getGreatestCommonDivisor from '../../helpers/getGreatestCommonDivisor';
 import AspectRatioResultsBlock from '../../components/AspectRatioResultsBlock/AspectRatioResultsBlock';
+import RatioAccuracySlider from '../../components/RatioAccuracySlider/RatioAccuracySlider';
+import { IAspectRatioSettings } from './IAspectRatioSettings';
+import {
+	getNearestDivByFive,
+	getNearestDivByTen,
+	getNearestEven,
+	getNearestOdd,
+} from '../../helpers/mathFunctions';
 
 const RatioCalculationPage = () => {
 	const initialRatioPresetState = aspectRatioPresetList.filter(
@@ -37,6 +46,10 @@ const RatioCalculationPage = () => {
 	const [aspectSizeInputHeight, setAspectSizeInputHeight] =
 		useState<string>('0');
 	const [isSizeWithLocked, setIsSizeWithLocked] = useState<boolean>(true);
+	const [aspectRatioSettings, setAspectRatioSettings] =
+		useState<IAspectRatioSettings>({
+			accuracy: 100,
+		});
 
 	const handleNumberChange = (
 		value: string,
@@ -66,10 +79,29 @@ const RatioCalculationPage = () => {
 		if (Number.isNaN(sizeWidth) || Number.isNaN(sizeHeight)) return;
 		if (sizeWidth <= 0 || sizeHeight <= 0) return;
 
-		const gcd = getGreatestCommonDivisor(sizeWidth, sizeHeight);
+		let sizeWidthToCount = sizeWidth;
+		let sizeHeightToCount = sizeHeight;
+
+		if (aspectRatioSettings.accuracy !== 100) {
+			if (aspectRatioSettings.accuracy === 75) {
+				sizeWidthToCount = getNearestEven(sizeWidth);
+				sizeHeightToCount = getNearestEven(sizeHeight);
+			} else if (aspectRatioSettings.accuracy === 50) {
+				sizeWidthToCount = getNearestOdd(sizeWidth);
+				sizeHeightToCount = getNearestOdd(sizeHeight);
+			} else if (aspectRatioSettings.accuracy === 25) {
+				sizeWidthToCount = getNearestDivByFive(sizeWidth);
+				sizeHeightToCount = getNearestDivByFive(sizeHeight);
+			} else if (aspectRatioSettings.accuracy === 0) {
+				sizeWidthToCount = getNearestDivByTen(sizeWidth);
+				sizeHeightToCount = getNearestDivByTen(sizeHeight);
+			}
+		}
+
+		const gcd = getGreatestCommonDivisor(sizeWidthToCount, sizeHeightToCount);
 		if (gcd) {
-			setAspectRatioInputWidth(`${sizeWidth / gcd}`);
-			setAspectRatioInputHeight(`${sizeHeight / gcd}`);
+			setAspectRatioInputWidth(`${sizeWidthToCount / gcd}`);
+			setAspectRatioInputHeight(`${sizeHeightToCount / gcd}`);
 		}
 	};
 
@@ -77,13 +109,17 @@ const RatioCalculationPage = () => {
 		console.log('calculate size!');
 	};
 
+	useEffect(() => {
+		calculateRatio();
+	}, [aspectRatioSettings.accuracy]);
+
 	return (
 		<>
 			<NavigationBar title="Ratio Calculator" />
 			<div>
 				<Grid container direction="row" justifyContent="center" mt={2}>
 					<Grid item xs={12} md={8}>
-						<Paper style={{ padding: 8 }}>
+						<Paper style={{ padding: 8, height: '100%' }}>
 							<Autocomplete
 								id="ratio-presets-grouped"
 								options={aspectRatioPresetList}
@@ -289,7 +325,15 @@ const RatioCalculationPage = () => {
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<Paper style={{ padding: 8 }}>
-							<Box>hey</Box>
+							<Box>
+								<Typography variant="h6">Settings:</Typography>
+								<RatioAccuracySlider
+									aspectRatioSettings={aspectRatioSettings}
+									setAspectRatioSettings={setAspectRatioSettings}
+									sizeWidth={+aspectSizeInputWidth}
+									sizeHeight={+aspectSizeInputHeight}
+								/>
+							</Box>
 						</Paper>
 					</Grid>
 				</Grid>

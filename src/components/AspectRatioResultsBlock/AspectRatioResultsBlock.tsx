@@ -73,11 +73,11 @@ const AspectRatioResultsBlock = ({
 						<Typography variant="body1">or</Typography>
 						<ResultStringCopyButton
 							value={`aspect-ratio: ${
-								aspectRatioInputWidth < aspectRatioInputHeight
+								+aspectRatioInputWidth < +aspectRatioInputHeight
 									? greatestRateRatio.toFixed(2)
 									: 1
 							}/${
-								aspectRatioInputWidth > aspectRatioInputHeight
+								+aspectRatioInputWidth > +aspectRatioInputHeight
 									? greatestRateRatio.toFixed(2)
 									: 1
 							};`}

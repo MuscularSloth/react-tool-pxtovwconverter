@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { getColorName } from '../../helpers/colorLists';
+import ResultStringCopyButton from '../ResultStringCopyButton/ResultStringCopyButton';
 
 interface propsType {
 	calculatedHEX: string;
@@ -19,16 +20,22 @@ const ColorNameBlock = ({ calculatedHEX, isWhiteText }: propsType) => {
 		}
 	}, [calculatedHEX]);
 	return (
-		<Box
-			p={2}
-			sx={{
-				backgroundColor: calculatedHEX,
-				color: isWhiteText ? 'white' : 'black',
-			}}
-		>
-			<Box p={1}>Color Name: [{calculatedColorName}]</Box>
-			<Box p={1}>$color{calculatedColorName.replace(/ /g, '')}</Box>
-		</Box>
+		<Paper>
+			<Box
+				p={2}
+				sx={{
+					backgroundColor: calculatedHEX,
+					color: isWhiteText ? 'white' : 'black',
+				}}
+			>
+				<Box p={1}>Color Name: [{calculatedColorName}]</Box>
+				<Box p={1} sx={{ backgroundColor: 'white' }}>
+					<ResultStringCopyButton
+						value={`$color${calculatedColorName.replace(/ /g, '')}`}
+					/>
+				</Box>
+			</Box>
+		</Paper>
 	);
 };
 

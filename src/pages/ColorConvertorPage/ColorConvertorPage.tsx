@@ -218,16 +218,16 @@ const ColorConvertorPage = () => {
 		<>
 			<NavigationBar title="Color Converter" />
 			<div>
-				<Grid container direction="row" justifyContent="center">
+				<Grid container direction="row" justifyContent="center" mt={2}>
 					<Grid item xs={12} md={8}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<Box p={2}>
 								<InputColorBlock setCalculatedColor={setCalculatedColor} />
 							</Box>
 						</Paper>
 					</Grid>
 					<Grid item xs={12} md={4}>
-						<Paper>
+						<Paper style={{ height: '100%' }}>
 							<ColorNameBlock
 								calculatedHEX={calculatedHEX}
 								isWhiteText={isWhiteText}
@@ -235,7 +235,7 @@ const ColorConvertorPage = () => {
 						</Paper>
 					</Grid>
 				</Grid>
-				<Grid container direction="row" justifyContent="center">
+				<Grid container direction="row" justifyContent="center" mt={2}>
 					<Grid item xs={12} md={4}>
 						<Paper style={{ height: '100%' }}>
 							<Typography sx={{ p: 1 }}>Colors with opacity:</Typography>
@@ -288,7 +288,7 @@ const ColorConvertorPage = () => {
 						</Paper>
 					</Grid>
 				</Grid>
-				<Grid container direction="row" justifyContent="center">
+				<Grid container direction="row" justifyContent="center" mt={2}>
 					<Grid item xs={12} sx={{ display: { xs: 'none', md: 'block' } }}>
 						<Paper>
 							<PreviousColorCalcTable
