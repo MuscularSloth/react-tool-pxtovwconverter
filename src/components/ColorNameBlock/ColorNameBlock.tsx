@@ -29,7 +29,7 @@ const ColorNameBlock = ({ calculatedHEX, isWhiteText }: propsType) => {
 				}}
 			>
 				<Box p={1}>Color Name: [{calculatedColorName}]</Box>
-				<Box p={1} sx={{ backgroundColor: isWhiteText ? 'white' : 'black' }}>
+				<Box p={1} sx={{ backgroundColor: 'white' }}>
 					<ResultStringCopyButton
 						value={`$color${calculatedColorName.replace(/ /g, '')}`}
 					/>
