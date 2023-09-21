@@ -1,44 +1,41 @@
-import { Button, Snackbar, Tooltip, Typography } from '@mui/material';
-import React, { useState } from 'react';
+//Vendor
+import React from 'react';
+import {Button, Tooltip, Typography} from '@mui/material';
+import {toast} from 'react-toastify';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 interface propsTypes {
-	value: number | null | undefined;
+  value: number | null | undefined;
 }
 
-const ResultCopyButton = ({ value }: propsTypes) => {
-	const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+const ResultCopyButton = ({value}: propsTypes) => {
+  const handleCopyResultClick = async () => {
+    try {
+      await navigator.clipboard.writeText(`${value}vw`);
+      toast.success(`Result has been copied! - ${value}vw`);
+    } catch (error) {
+      toast.error(`Error writing to clipboard`);
+      console.error('Error writing to clipboard:', error);
+    }
+  };
 
-	const handleCopyResultClick = () => {
-		navigator.clipboard.writeText(`${value}vw`);
-		setIsNotificationOpen(true);
-	};
-
-	return (
-		<>
-			<Snackbar
-				autoHideDuration={2000}
-				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-				open={isNotificationOpen}
-				onClose={() => setIsNotificationOpen(false)}
-				message={`Result has been copied! - ${value}vw`}
-				key={value}
-			/>
-			<Tooltip
-				style={{ cursor: 'pointer' }}
-				title="Click To Copy"
-				onClick={handleCopyResultClick}
-			>
-				<Button
-					style={{ textTransform: 'none' }}
-					size="small"
-					endIcon={<ContentCopyIcon />}
-				>
-					<Typography id="current-calculated-value">{value}vw</Typography>
-				</Button>
-			</Tooltip>
-		</>
-	);
+  return (
+    <>
+      <Tooltip
+        style={{cursor: 'pointer'}}
+        title="Click To Copy"
+        onClick={handleCopyResultClick}
+      >
+        <Button
+          style={{textTransform: 'none'}}
+          size="small"
+          endIcon={<ContentCopyIcon />}
+        >
+          <Typography>{value}vw</Typography>
+        </Button>
+      </Tooltip>
+    </>
+  );
 };
 
 export default ResultCopyButton;
