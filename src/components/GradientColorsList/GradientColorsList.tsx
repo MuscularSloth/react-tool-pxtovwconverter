@@ -1,5 +1,5 @@
 //Vendor
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {IconButton, Box, TextField, Tooltip, Grid, Typography} from '@mui/material';
 import {DragDropContext, Draggable, Droppable} from '@hello-pangea/dnd';
 import {Ref} from 'semantic-ui-react';
@@ -11,7 +11,7 @@ import type {GradientColorsListTypes} from '../../pages/GradientGeneratorPage/Gr
 
 interface propsTypes {
   gradientColorsSet: GradientColorsListTypes[];
-  setGradientColorsSet: Function;
+  setGradientColorsSet: Dispatch<SetStateAction<GradientColorsListTypes[]>>;
 }
 
 const GradientColorsList = ({gradientColorsSet, setGradientColorsSet}: propsTypes) => {

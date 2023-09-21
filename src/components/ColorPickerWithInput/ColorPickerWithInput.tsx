@@ -8,19 +8,19 @@ import useClickOutside from '../../helpers/useClickOutside';
 //Styles
 import './ColorPickerWithInput.scss';
 
-interface propsTypes {
+interface PropsTypes {
   title?: string;
   color?: string;
-  setColor: Function;
+  setColor?: (...props: any) => any;
   isColorPickerOpened?: boolean;
 }
 
-const ColorPickerWithInput = ({
+const ColorPickerWithInput: React.FC<PropsTypes> = ({
   title,
   color,
   setColor,
   isColorPickerOpened = false,
-}: propsTypes) => {
+}) => {
   const [newColor, setNewColor] = useState<string>(color || '#aabbcc');
 
   const popover = useRef<HTMLHeadingElement>(null);

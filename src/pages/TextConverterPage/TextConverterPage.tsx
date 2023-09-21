@@ -1,11 +1,10 @@
 //Vendor
 import React, {useState} from 'react';
-import {Button, Box, Grid, Input, Paper, Typography} from '@mui/material';
+import {Button, Box, Grid, Paper} from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import ClearIcon from '@mui/icons-material/Clear';
 //Components
 import WidthPresetsBlock from '../../components/WidthPresets/WidthPresetsBlock';
-import InputSlider from '../../components/InputSlider/InputSlider';
 import DragDropTextArea from '../../components/DragDropTextArea/DragDropTextArea';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import TextAreaWithCopyButton from '../../components/TextAreaWithCopyButton/TextAreaWithCopyButton';
