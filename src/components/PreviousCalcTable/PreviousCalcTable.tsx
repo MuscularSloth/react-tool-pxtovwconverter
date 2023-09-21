@@ -16,11 +16,11 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { Ref } from 'semantic-ui-react';
 import ResultCopyButton from '../ResultCopyButton/ResultCopyButton';
-import { previousCalcValuesType } from '../../pages/SingleValuePage/SingleValuePage';
+import { PreviousCalcValuesType } from '../../pages/SingleValuePage/SingleValuePage';
 
 interface propsTypes {
-	previousCalcValues: previousCalcValuesType[];
-	setPreviousCalcValues: Dispatch<SetStateAction<previousCalcValuesType[] | []>>;
+	previousCalcValues: PreviousCalcValuesType[];
+	setPreviousCalcValues: Dispatch<SetStateAction<PreviousCalcValuesType[] | []>>;
 }
 
 const PreviousCalcTable = ({
