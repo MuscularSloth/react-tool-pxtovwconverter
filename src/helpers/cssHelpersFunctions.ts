@@ -1,4 +1,6 @@
 export const clearCSSRulesWithoutVW = (match: string): string => {
+  console.log({match});
+
   if (match.includes('vw')) {
     return match;
   }

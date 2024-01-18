@@ -2,9 +2,10 @@ export const HEX_WEBCOLOR_PATTERN = '^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3}|[a-fA-F0-
 export const ONLY_HEX_CHARACTERS = '^#?[A-Fa-f0-9]{0,8}$';
 export const REGEX_IS_PX_VALUE = /([0-9]+)px/g;
 export const REGEX_IS_CSS_RULE = /^[/\w\s-]+\s*:\s*[\w\s#'"(),.$:%/!-]+\t*\n*\r*;$/gm;
-export const REGEX_IS_EMPTY_SELECTOR = /[^{}]*\w*\s*\d*{{1}[^\w\d}]*}{1}$/gm;
-// export const REGEX_IS_EXACTLY_RULE =
-//   /(rule-here)[\w\s#'"(),.$:%/!-]*:\s*[\w\s#'"(),.$:%/!-]+\t*\n*\r*;$/gm;
+
+// eslint-disable-next-line no-useless-escape
+export const REGEX_IS_EMPTY_SELECTOR = /[\t\s\]*[\.\w\-&:]+{[\s\t\n\r]*}/g;
+
 export const REGEX_IS_EXACTLY_RULE_FN = (rule: string) =>
   // eslint-disable-next-line no-useless-escape
   new RegExp(
