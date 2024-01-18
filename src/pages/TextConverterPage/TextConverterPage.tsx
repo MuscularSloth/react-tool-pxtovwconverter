@@ -72,6 +72,12 @@ const TextConverterPage = () => {
     }
 
     if (convertationOptions.removeEmptySelectors) {
+      // convertedText = convertedText.replace(
+      //   REGEX_IS_EMPTY_SELECTOR,
+      //   clearCSSRulesWithoutVW,
+      // );
+      // console.log({test: REGEX_IS_EMPTY_SELECTOR.test(convertedText), convertedText});
+
       do {
         convertedText = convertedText.replace(
           REGEX_IS_EMPTY_SELECTOR,
