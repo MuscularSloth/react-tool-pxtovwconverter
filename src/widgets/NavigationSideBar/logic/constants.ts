@@ -20,7 +20,6 @@ export const menuItems = [
     title: 'Text PX to VW',
     url: ROUTES.TEXT_CONVERT,
     icon: ReceiptText,
-    disabled: true,
   },
   {
     title: 'Color Converter',
