@@ -9,8 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TextPxToVwRouteImport } from './routes/textPxToVw'
+import { Route as ShadowGeneratorRouteImport } from './routes/shadowGenerator'
+import { Route as RatioCalculatorRouteImport } from './routes/ratioCalculator'
+import { Route as GradientGeneratorRouteImport } from './routes/gradientGenerator'
+import { Route as ColorConverterRouteImport } from './routes/colorConverter'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TextPxToVwRoute = TextPxToVwRouteImport.update({
+  id: '/textPxToVw',
+  path: '/textPxToVw',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShadowGeneratorRoute = ShadowGeneratorRouteImport.update({
+  id: '/shadowGenerator',
+  path: '/shadowGenerator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RatioCalculatorRoute = RatioCalculatorRouteImport.update({
+  id: '/ratioCalculator',
+  path: '/ratioCalculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GradientGeneratorRoute = GradientGeneratorRouteImport.update({
+  id: '/gradientGenerator',
+  path: '/gradientGenerator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ColorConverterRoute = ColorConverterRouteImport.update({
+  id: '/colorConverter',
+  path: '/colorConverter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +49,102 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/colorConverter': typeof ColorConverterRoute
+  '/gradientGenerator': typeof GradientGeneratorRoute
+  '/ratioCalculator': typeof RatioCalculatorRoute
+  '/shadowGenerator': typeof ShadowGeneratorRoute
+  '/textPxToVw': typeof TextPxToVwRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/colorConverter': typeof ColorConverterRoute
+  '/gradientGenerator': typeof GradientGeneratorRoute
+  '/ratioCalculator': typeof RatioCalculatorRoute
+  '/shadowGenerator': typeof ShadowGeneratorRoute
+  '/textPxToVw': typeof TextPxToVwRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/colorConverter': typeof ColorConverterRoute
+  '/gradientGenerator': typeof GradientGeneratorRoute
+  '/ratioCalculator': typeof RatioCalculatorRoute
+  '/shadowGenerator': typeof ShadowGeneratorRoute
+  '/textPxToVw': typeof TextPxToVwRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/colorConverter'
+    | '/gradientGenerator'
+    | '/ratioCalculator'
+    | '/shadowGenerator'
+    | '/textPxToVw'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/colorConverter'
+    | '/gradientGenerator'
+    | '/ratioCalculator'
+    | '/shadowGenerator'
+    | '/textPxToVw'
+  id:
+    | '__root__'
+    | '/'
+    | '/colorConverter'
+    | '/gradientGenerator'
+    | '/ratioCalculator'
+    | '/shadowGenerator'
+    | '/textPxToVw'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ColorConverterRoute: typeof ColorConverterRoute
+  GradientGeneratorRoute: typeof GradientGeneratorRoute
+  RatioCalculatorRoute: typeof RatioCalculatorRoute
+  ShadowGeneratorRoute: typeof ShadowGeneratorRoute
+  TextPxToVwRoute: typeof TextPxToVwRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/textPxToVw': {
+      id: '/textPxToVw'
+      path: '/textPxToVw'
+      fullPath: '/textPxToVw'
+      preLoaderRoute: typeof TextPxToVwRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shadowGenerator': {
+      id: '/shadowGenerator'
+      path: '/shadowGenerator'
+      fullPath: '/shadowGenerator'
+      preLoaderRoute: typeof ShadowGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ratioCalculator': {
+      id: '/ratioCalculator'
+      path: '/ratioCalculator'
+      fullPath: '/ratioCalculator'
+      preLoaderRoute: typeof RatioCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gradientGenerator': {
+      id: '/gradientGenerator'
+      path: '/gradientGenerator'
+      fullPath: '/gradientGenerator'
+      preLoaderRoute: typeof GradientGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/colorConverter': {
+      id: '/colorConverter'
+      path: '/colorConverter'
+      fullPath: '/colorConverter'
+      preLoaderRoute: typeof ColorConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +157,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ColorConverterRoute: ColorConverterRoute,
+  GradientGeneratorRoute: GradientGeneratorRoute,
+  RatioCalculatorRoute: RatioCalculatorRoute,
+  ShadowGeneratorRoute: ShadowGeneratorRoute,
+  TextPxToVwRoute: TextPxToVwRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

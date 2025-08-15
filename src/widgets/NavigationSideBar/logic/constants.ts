@@ -8,37 +8,43 @@ import {
 } from 'lucide-react'
 
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa'
+import { ROUTES } from '@/shared/constants/routes.ts'
 
 export const menuItems = [
   {
     title: 'Single PX to VW',
-    url: '#',
+    url: ROUTES.HOME,
     icon: Binary,
   },
   {
     title: 'Text PX to VW',
-    url: '#',
+    url: ROUTES.TEXT_CONVERT,
     icon: ReceiptText,
+    disabled: true,
   },
   {
     title: 'Color Converter',
-    url: '#',
+    url: ROUTES.COLOR_CONVERTER,
     icon: Palette,
+    disabled: true,
   },
   {
     title: 'Ratio Calculator',
-    url: '#',
+    url: ROUTES.RATIO_CALCULATOR,
     icon: Proportions,
+    disabled: true,
   },
   {
     title: 'Shadow Generator',
-    url: '#',
+    url: ROUTES.SHADOW_GENERATOR,
     icon: SquareStack,
+    disabled: true,
   },
   {
     title: 'Gradient Generator',
-    url: '#',
+    url: ROUTES.GRADIENT_GENERATOR,
     icon: Blend,
+    disabled: true,
   },
 ]
 

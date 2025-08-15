@@ -1,6 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { App } from '@/app/components/App/App.tsx'
+import { SingleValueCalculation } from '@/widgets/SingleValueCalculation/SingleValueCalculation.tsx'
 
 export const Route = createFileRoute('/')({
-  component: App,
+  component: RouteComponent,
 })
+
+function RouteComponent() {
+  return <SingleValueCalculation />
+}
