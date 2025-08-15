@@ -2,15 +2,12 @@ import { useCustomWidthPresets } from '@/shared/hooks/use-custom-width-presets.t
 import { useSelectedWidth } from '@/shared/hooks/use-selected-width.ts'
 
 export function usePresenter() {
-  const { customPresetWidth, handleRemoveCustomWidth, handleResetCustomWidth } =
-    useCustomWidthPresets()
+  const { handleAddNewCustomWidth } = useCustomWidthPresets()
   const { selectedWidth, onSelectedWidthChange } = useSelectedWidth()
 
   return {
     selectedWidth,
     onSelectedWidthChange,
-    customPresetWidth,
-    handleRemoveCustomWidth,
-    handleResetCustomWidth,
+    handleAddNewCustomWidth,
   }
 }

@@ -27,5 +27,14 @@ export function useCustomWidthPresets() {
     [setCustomPresetWidth],
   )
 
-  return { customPresetWidth, handleAddNewCustomWidth, handleRemoveCustomWidth }
+  const handleResetCustomWidth = useCallback(() => {
+    setCustomPresetWidth(DEFAULT_CUSTOM_PRESET)
+  }, [setCustomPresetWidth])
+
+  return {
+    customPresetWidth,
+    handleAddNewCustomWidth,
+    handleRemoveCustomWidth,
+    handleResetCustomWidth,
+  }
 }
