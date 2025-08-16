@@ -19,7 +19,7 @@ export function AppLayout() {
     <SidebarProvider defaultOpen={!!sidebar_state}>
       <NavigationSideBar />
       <SidebarInset className={styles.container}>
-        <div className="flex items-center gap-2 px-4 w-full">
+        <div className="flex items-center gap-2 px-4 py-2 w-full">
           <SidebarTrigger className="-ml-1" />
           <Separator
             orientation="vertical"

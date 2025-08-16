@@ -13,7 +13,7 @@ export function HoverTooltip({
 }) {
   return (
     <Tooltip>
-      <TooltipTrigger>{children}</TooltipTrigger>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
       <TooltipContent className="max-w-sm">{content}</TooltipContent>
     </Tooltip>
   )
