@@ -8,11 +8,13 @@ import {
   PRESET_WIDTH_LIST,
 } from '@/shared/constants/width-settings.ts'
 import { useCopyResult } from '@/shared/components/ResultCopyButton'
+import { usePrevCalcValues } from '@/shared/hooks/use-prev-calculations.ts'
 
 export function usePresenter() {
   const { handleCopyResultClick } = useCopyResult()
   const { selectedWidth } = useSelectedWidth()
   const { customPresetWidth, handleAddNewCustomWidth } = useCustomWidthPresets()
+  const { addPreviousValue } = usePrevCalcValues()
 
   const [autoCopy, setAutoCopy] = useLocalStorage<boolean>(
     'wt-auto-copy',
@@ -37,6 +39,8 @@ export function usePresenter() {
 
     const result = ((calculatedValue / selectedWidth) * 100).toFixed(3)
     setLastResult(+result)
+
+    addPreviousValue(selectedWidth, calculatedValue, +result)
 
     if (autoCopy) {
       await handleCopyResultClick(`${result}vw`)

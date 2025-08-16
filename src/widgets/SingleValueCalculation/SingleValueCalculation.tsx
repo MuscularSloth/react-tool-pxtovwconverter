@@ -1,5 +1,6 @@
 import { WidthPresets } from '@/features/WidthPresets/WidthPresets.tsx'
 import { SingleValueConverterBlock } from '@/features/SingleValueConverterBlock/SingleValueConverterBlock.tsx'
+import { PrevResultsTable } from '@/features/PrevResultsTable/PrevResultsTable.tsx'
 
 export function SingleValueCalculation() {
   return (
@@ -8,7 +9,9 @@ export function SingleValueCalculation() {
         <SingleValueConverterBlock />
         <WidthPresets />
       </div>
-      <div>Prev Results Table</div>
+      <div>
+        <PrevResultsTable />
+      </div>
     </div>
   )
 }
