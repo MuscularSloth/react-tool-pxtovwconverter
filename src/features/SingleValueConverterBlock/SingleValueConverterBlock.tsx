@@ -13,6 +13,8 @@ export function SingleValueConverterBlock() {
     onCalculateClick,
     calculatedValue,
     handleChangeCalculatedValue,
+    handleOnBlurCalculatedValue,
+    handleOnKeyPress,
     lastResult,
   } = usePresenter()
 
@@ -26,6 +28,8 @@ export function SingleValueConverterBlock() {
             min={0}
             value={calculatedValue}
             onChange={handleChangeCalculatedValue}
+            onBlur={handleOnBlurCalculatedValue}
+            onKeyDown={handleOnKeyPress}
           />
         </span>
         <Button onClick={onCalculateClick}>Calculate</Button>
