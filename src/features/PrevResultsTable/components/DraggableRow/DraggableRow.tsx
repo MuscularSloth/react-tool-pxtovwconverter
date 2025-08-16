@@ -81,7 +81,7 @@ export function DraggableRow({
       <TableCell>{row.selectedWidth}</TableCell>
       <TableCell>{row.calculatedValue}</TableCell>
       <TableCell>
-        <ResultCopyButton value={row.result} />
+        <ResultCopyButton value={`${row.result}vw`} />
       </TableCell>
       <TableCell>
         <HoverTooltip content="Delete result">
