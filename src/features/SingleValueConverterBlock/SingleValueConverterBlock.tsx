@@ -2,9 +2,9 @@ import { BlockContainer } from '@/shared/components/BlockContainer/BlockContaine
 import { SliderWidthSelector } from '@/shared/components/SliderWidthSelector/SliderWidthSelector.tsx'
 import { Input } from '@/shared/components/ui/input.tsx'
 import { Button } from '@/shared/components/ui/button.tsx'
-import { Checkbox } from '@/shared/components/ui/checkbox.tsx'
 import { usePresenter } from '@/features/SingleValueConverterBlock/logic/usePresenter.ts'
 import { ResultCopyButton } from '@/shared/components/ResultCopyButton/ResultCopyButton.tsx'
+import { CheckboxBlock } from '@/shared/components/CheckboxBlock/CheckboxBlock.tsx'
 
 export function SingleValueConverterBlock() {
   const {
@@ -35,15 +35,12 @@ export function SingleValueConverterBlock() {
         <Button onClick={onCalculateClick}>Calculate</Button>
         {lastResult ? <ResultCopyButton value={`${lastResult}vw`} /> : null}
       </div>
-      <label className="flex items-center gap-4 mt-6 cursor-pointer">
-        <Checkbox
-          checked={autoCopy}
-          onCheckedChange={(checked) => setAutoCopy(checked === true)}
-        />
-        <span className="text-sm text-gray-600 dark:text-gray-200">
-          Copy result to the clipboard automatically
-        </span>
-      </label>
+      <CheckboxBlock
+        checked={autoCopy}
+        onCheckedChange={(checked) => setAutoCopy(checked === true)}
+        label="Copy result to the clipboard automatically"
+        className="mt-6"
+      />
     </BlockContainer>
   )
 }
