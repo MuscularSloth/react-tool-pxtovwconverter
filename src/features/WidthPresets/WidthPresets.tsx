@@ -10,7 +10,7 @@ export function WidthPresets() {
     customPresetWidth,
     onSelectedWidthChange,
     handleRemoveCustomWidth,
-    handleResetCustomWidth,
+    onReset,
   } = usePresenter()
 
   return (
@@ -33,7 +33,7 @@ export function WidthPresets() {
             customPresetWidth.length > 1 ? handleRemoveCustomWidth : undefined
           }
         />
-        <Button onClick={handleResetCustomWidth}>Reset</Button>
+        <Button onClick={onReset}>Reset</Button>
       </div>
     </BlockContainer>
   )

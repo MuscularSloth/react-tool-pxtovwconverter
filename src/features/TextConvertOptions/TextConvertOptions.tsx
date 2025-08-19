@@ -19,7 +19,7 @@ export function TextConvertOptions() {
   return (
     <BlockContainer>
       <SliderWidthSelector />
-      <div className="flex flex-col gap-4 mt-4 flex-wrap">
+      <div className="flex flex-col gap-4 mt-4 flex-wrap relative z-100">
         <div className="text-sm text-gray-600 dark:text-gray-200 font-bold">
           Options
         </div>

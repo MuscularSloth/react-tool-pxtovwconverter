@@ -1,5 +1,6 @@
 import { WidthPresets } from '@/features/WidthPresets/WidthPresets.tsx'
 import { TextConvertOptions } from '@/features/TextConvertOptions/TextConvertOptions.tsx'
+import { TextConvertBlock } from '@/features/TextConvertBlock/TextConvertBlock.tsx'
 
 export function PxToVwTextConverter() {
   return (
@@ -8,7 +9,7 @@ export function PxToVwTextConverter() {
         <TextConvertOptions />
         <WidthPresets />
       </div>
-      <div>Text block</div>
+      <TextConvertBlock />
     </div>
   )
 }
