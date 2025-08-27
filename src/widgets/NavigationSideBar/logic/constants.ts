@@ -31,7 +31,6 @@ export const menuItems = [
     title: 'Ratio Calculator',
     url: ROUTES.RATIO_CALCULATOR,
     icon: Proportions,
-    disabled: true,
   },
   {
     title: 'Shadow Generator',
